@@ -5,21 +5,35 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
-  <updated>2018-08-28T09:45:53.688Z</updated>
-  <id>http://yoursite.com/</id>
+  <link href="http://dcLunatic.github.io/"/>
+  <updated>2018-08-28T02:46:36.692Z</updated>
+  <id>http://dcLunatic.github.io/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>dcLunatic</name>
     
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>test_my_site</title>
+    <link href="http://dcLunatic.github.io/2018/08/28/test-my-site/"/>
+    <id>http://dcLunatic.github.io/2018/08/28/test-my-site/</id>
+    <published>2018-08-28T02:46:36.000Z</published>
+    <updated>2018-08-28T02:46:36.692Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>linux learnning——top</title>
-    <link href="http://yoursite.com/2018/08/28/linux/"/>
-    <id>http://yoursite.com/2018/08/28/linux/</id>
+    <link href="http://dcLunatic.github.io/2018/08/28/linux/"/>
+    <id>http://dcLunatic.github.io/2018/08/28/linux/</id>
     <published>2018-08-28T02:46:36.000Z</published>
     <updated>2018-08-28T09:45:53.688Z</updated>
     
@@ -35,32 +49,18 @@
     </summary>
     
     
-      <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
+      <category term="linux" scheme="http://dcLunatic.github.io/tags/linux/"/>
     
-      <category term="top" scheme="http://yoursite.com/tags/top/"/>
+      <category term="top" scheme="http://dcLunatic.github.io/tags/top/"/>
     
-      <category term="command" scheme="http://yoursite.com/tags/command/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>test_my_site</title>
-    <link href="http://yoursite.com/2018/08/28/test-my-site/"/>
-    <id>http://yoursite.com/2018/08/28/test-my-site/</id>
-    <published>2018-08-28T02:46:36.000Z</published>
-    <updated>2018-08-28T02:46:36.692Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
+      <category term="command" scheme="http://dcLunatic.github.io/tags/command/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/2018/08/28/hello-world/"/>
-    <id>http://yoursite.com/2018/08/28/hello-world/</id>
+    <link href="http://dcLunatic.github.io/2018/08/28/hello-world/"/>
+    <id>http://dcLunatic.github.io/2018/08/28/hello-world/</id>
     <published>2018-08-28T02:45:45.356Z</published>
     <updated>2018-08-28T02:45:45.356Z</updated>
     
