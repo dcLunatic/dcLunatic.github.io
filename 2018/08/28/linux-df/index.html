@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>dcLunatic&#39;s blog</title>
+    <title>linux-df · dcLunatic&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -196,12 +196,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >dcLunatic&#39;s blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">linux-df</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>dcLunatic's blog</a>
 </header>
@@ -213,24 +224,76 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/images/linux-df.png)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            linux-df
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">964</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/08/28</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -331,373 +394,99 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-du/" >
-            
-                <span>linux-du</span>
-        </a>
-        <div class="abstract-content">
-            du命令作用du命令是用来查看使用空间的，但是对文件和目录磁盘使用空间情况的查看，与df命令不同
-格式df [选项] [文件]/目录]
-选项
--a –all 显示目录中所有文件的大小
--b –bytes 以bytes为单位
--k –kilobytes 以KB为单位
--m –megabytes 以MB为单位
--h –human-readable 以K/M/G为单位，提高阅读性
--H –si 与-h参数一样，换算单位为1000
--c –total 除了显示个别目录或文件的大小，同时也显示所有目录或文件的总和
--s –summarize 仅显示总计，只列出最后加总的值
--S –separate...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-df/" >
-            
-                <span>linux-df</span>
-        </a>
-        <div class="abstract-content">
-            df命令作用linux中df命令的功能是用来检查该系统已挂载的文件系统的空间占用情况。可以使用该命令来获取硬盘占用了多少空间，还剩多少空间等信息。如果该命令使用时，没有指定任何文件名，则默认是当前所有已挂载了的文件系统的可用空间将被显示。默认情况下，单位是1KB，当然，也可以利用环境变量POSIXLY_CORRECT指定。
-用法df [选项] [参数]
-选项
--a 全部文件系统列表
--h 方便阅读方式显示
--H 等同于-h，但是计算式是1K=1000
--i 显示inode信息，linux采用了类似指针的方式管理磁盘空间影射
--k 区块为1024字节，即1K
--l 只显示本地文件系统，如果...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-dd/" >
-            
-                <span>linux-dd</span>
-        </a>
-        <div class="abstract-content">
-            dd命令(转载复制粘贴)
-linux下dd命令详解
-   名称: dd 
-使用权限: 所有使用者dd 这个指令在 manual 里的定义是 convert and copy a file 
-使用方式: 
-dd [option] 
-如果你想要在线看 manual, 可以试试: 
-dd –help 
-或是 
-info dd 
-如果你想要看看这个版本如何: 
-dd –version 
-输入或输出 
-dd if=[STDIN] of=[STDOUT] 
-强迫输入或输出的Size为多少Bytes 
-bs: dd -ibs=[BYTE] -obs=[SIZE] 
-强迫一次只做多少个 Bytes 
-c...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "拷贝烧录">拷贝烧录</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-bc/" >
-            
-                <span>linux-bc</span>
-        </a>
-        <div class="abstract-content">
-            bc命令简介Bash内置了对整数四则运算的支持，但是并不支持浮点运算，而bc命令可以很方便的进行浮点运算，当然整数运算也不再话下。手册页上说bc是An arbitrary precision calculator language，即一个任意精度的计算语言，注意是一种语言，它提供了一些语法结构，比如条件判断、循环等，可以说是很强大的，但是一般用不着 。另外一个用途就是用来进行进制转换。
-格式bc [选项] [文件]
-选项
--h –help 输出帮助信息
--l –mathlib 使用数学库
--q –quiet 安静模式
--v –version 输出版本信息
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="df命令"><a href="#df命令" class="headerlink" title="df命令"></a>df命令</h1><h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>linux中df命令的功能是用来检查该系统已挂载的文件系统的空间占用情况。可以使用该命令来获取硬盘占用了多少空间，还剩多少空间等信息。如果该命令使用时，没有指定任何文件名，则默认是当前所有已挂载了的文件系统的可用空间将被显示。默认情况下，单位是1KB，当然，也可以利用环境变量POSIXLY_CORRECT指定。</p>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>df [选项] [参数]</p>
+<h2 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h2><ul>
+<li>-a 全部文件系统列表</li>
+<li>-h 方便阅读方式显示</li>
+<li>-H 等同于-h，但是计算式是1K=1000</li>
+<li>-i 显示inode信息，linux采用了类似指针的方式管理磁盘空间影射</li>
+<li>-k 区块为1024字节，即1K</li>
+<li>-l 只显示本地文件系统，如果服务器nfs了远程服务器的磁盘,那么在df上加上-l后系统显示的是过滤nsf驱动器后的结果</li>
+<li>-m 区块为1024 * 1024 = 1048576字节，即1M</li>
+<li>–no-sync 忽略sync命令</li>
+<li>-P 输出格式为POSIX</li>
+<li>–sync 在取得磁盘信息前，先执行sync命令</li>
+<li>-T 列出文件系统类型</li>
+</ul>
+<ul>
+<li>–block-size=&lt;区块大小&gt; 指定区块大小</li>
+<li>-t&lt;文件系统类型&gt; 只显示选定文件系统的磁盘信息</li>
+<li>-x&lt;文件系统类型&gt; 不显示选定文件系统的磁盘信息</li>
+<li>–help 显示帮助信息</li>
+<li>–version 显示版本信息</li>
+</ul>
+<h2 id="使用例子"><a href="#使用例子" class="headerlink" title="使用例子"></a>使用例子</h2><ol>
+<li>显示磁盘使用情况</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# df</span><br><span class="line">Filesystem     1K-blocks     Used Available Use% Mounted on</span><br><span class="line">udev             1945008        0   1945008   0% /dev</span><br><span class="line">tmpfs             392676    12096    380580   4% /run</span><br><span class="line">/dev/sda2      118016904 80682300  31296640  73% /</span><br><span class="line">tmpfs            1963376   216364   1747012  12% /dev/shm</span><br><span class="line">tmpfs               5120        4      5116   1% /run/lock</span><br><span class="line">tmpfs            1963376        0   1963376   0% /sys/fs/cgroup</span><br><span class="line">/dev/sda1         523248      132    523116   1% /boot/efi</span><br><span class="line">tmpfs             392672       16    392656   1% /run/user/131</span><br><span class="line">tmpfs             392672       76    392596   1% /run/user/0</span><br><span class="line">/dev/mmcblk0p1  15549952  6555200   8994752  43% /media/root/AEB8-0F90</span><br><span class="line">/dev/sdb2      609747072 64171404 545575668  11% /media/root/本地磁盘</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>以inode模式来显示磁盘使用情况</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# df -i</span><br><span class="line">Filesystem        Inodes  IUsed     IFree IUse% Mounted on</span><br><span class="line">udev              486252    485    485767    1% /dev</span><br><span class="line">tmpfs             490844    891    489953    1% /run</span><br><span class="line">/dev/sda2        7528448 686858   6841590   10% /</span><br><span class="line">tmpfs             490844    253    490591    1% /dev/shm</span><br><span class="line">tmpfs             490844      4    490840    1% /run/lock</span><br><span class="line">tmpfs             490844     16    490828    1% /sys/fs/cgroup</span><br><span class="line">/dev/sda1              0      0         0     - /boot/efi</span><br><span class="line">tmpfs             490844     25    490819    1% /run/user/131</span><br><span class="line">tmpfs             490844     46    490798    1% /run/user/0</span><br><span class="line">/dev/mmcblk0p1         0      0         0     - /media/root/AEB8-0F90</span><br><span class="line">/dev/sdb2      545641204     35 545641169    1% /media/root/本地磁盘</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>显示ext4类型的磁盘使用情况</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# df -t ext4</span><br><span class="line">Filesystem     1K-blocks     Used Available Use% Mounted on</span><br><span class="line">/dev/sda2      118016904 80682408  31296532  73% /</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>显示除了ext4类型的磁盘的使用情况</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# df -x ext4</span><br><span class="line">Filesystem     1K-blocks     Used Available Use% Mounted on</span><br><span class="line">udev             1945008        0   1945008   0% /dev</span><br><span class="line">tmpfs             392676    17008    375668   5% /run</span><br><span class="line">tmpfs            1963376   222868   1740508  12% /dev/shm</span><br><span class="line">tmpfs               5120        4      5116   1% /run/lock</span><br><span class="line">tmpfs            1963376        0   1963376   0% /sys/fs/cgroup</span><br><span class="line">/dev/sda1         523248      132    523116   1% /boot/efi</span><br><span class="line">tmpfs             392672       16    392656   1% /run/user/131</span><br><span class="line">tmpfs             392672       76    392596   1% /run/user/0</span><br><span class="line">/dev/mmcblk0p1  15549952  6555200   8994752  43% /media/root/AEB8-0F90</span><br><span class="line">/dev/sdb2      609747072 64171404 545575668  11% /media/root/本地磁盘</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>显示/root目录所在的文件系统的使用情况，并以更容易阅读的方式显示</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# df /root -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/sda2       113G   77G   30G  73% /</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>列出文件系统的类型</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# df -Th</span><br><span class="line">Filesystem     Type      Size  Used Avail Use% Mounted on</span><br><span class="line">udev           devtmpfs  1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs          tmpfs     384M   17M  367M   5% /run</span><br><span class="line">/dev/sda2      ext4      113G   77G   30G  73% /</span><br><span class="line">tmpfs          tmpfs     1.9G  223M  1.7G  12% /dev/shm</span><br><span class="line">tmpfs          tmpfs     5.0M  4.0K  5.0M   1% /run/lock</span><br><span class="line">tmpfs          tmpfs     1.9G     0  1.9G   0% /sys/fs/cgroup</span><br><span class="line">/dev/sda1      vfat      511M  132K  511M   1% /boot/efi</span><br><span class="line">tmpfs          tmpfs     384M   16K  384M   1% /run/user/131</span><br><span class="line">tmpfs          tmpfs     384M   76K  384M   1% /run/user/0</span><br><span class="line">/dev/mmcblk0p1 vfat       15G  6.3G  8.6G  43% /media/root/AEB8-0F90</span><br><span class="line">/dev/sdb2      fuseblk   582G   62G  521G  11% /media/root/本地磁盘</span><br></pre></td></tr></table></figure>
 
-用法在bc默认的工作环境下，可...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "calculate">calculate</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-iconv/" >
-            
-                <span>linux-iconv</span>
-        </a>
-        <div class="abstract-content">
-            iconv命令作用iconv命令是用来转换文件的编码方式的，比如它可以把utf-8编码的转换成gb18030编码，当然，反过来也是可以的 。jdk中也提供了类似的工具native2ascii。
-语法iconv -f encoding [-t encoding] [inputfile]...
-选项
--f encoding: 把字符从encoding编码开始转换
--t encoding: 把字符转换到encoding编码
--l: 列出已知的编码字符集合
--o file: 指定输出文件，如果不指定，则在当前窗口输出。
--c: 忽略输出的非法字符
--s: 禁止警告信息，但是不是错误信息
-–ver...
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://dcLunatic.github.io">dcLunatic</a>
+            <p>原文链接：<a href="http://dcLunatic.github.io/2018/08/28/linux-df/">http://dcLunatic.github.io/2018/08/28/linux-df/</a>
+            <p>发表日期：<a href="http://dcLunatic.github.io/2018/08/28/linux-df/">August 28th 2018, 9:34:17 pm</a>
+            <p>更新日期：<a href="http://dcLunatic.github.io/2018/08/28/linux-df/">August 28th 2018, 9:44:41 pm</a>
+            <p>版权声明：转载的时候,记得注明来处</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-od/" >
-            
-                <span>linux-od</span>
-        </a>
-        <div class="abstract-content">
-            od功能od 命令用于将文件内容以八进制、十进制、十六进制、浮点格式或ASCII编码字符方式显示，通常用于显示或查看文件中不能直接显示在终端的字符。默认显示方式是八进制，名称源于Octal Dump。
-命令格式od [&lt;选项&gt;|&lt;参数&gt;] [&lt;文件名&gt;]
-命令选项
-A,–address-radix=RADIX:选择以何种基数表示地址偏移，可选基数有: d(decimal) o(octal) x(hexadecimal) n(none)
--j,–skip-bytes=BYTES:跳过指定数目的字节
--N,–read-bytes=BYTES:输出指定字节数...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-free/" >
-            
-                <span>linux-free</span>
-        </a>
-        <div class="abstract-content">
-            free命令作用free命令可以显示Linux系统中空闲的、已用的物理内存及swap内存,及被内核使用的buffer。在Linux系统监控的工具中，free命令是最经常使用的命令之一。
-格式free [选项]
-常用选项
--b 以Byte为单位显示内存使用情况
--k 以KB为单位显示内存使用情况
--m 以MB为单位显示内存使用情况
--g 以GB为单位显示内存使用情况
--s&lt;间隔秒数&gt; 持续观察内存使用情况，每隔指定时间刷新一次
--c&lt;显示次数&gt; 以-s指定的时间间隔刷新显示指定次(默认1s)
--l 显示最高最低统计信息
--t 显示内存总和列
--V显示版本信息
--w ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-ln/" >
-            
-                <span>linux-ln</span>
-        </a>
-        <div class="abstract-content">
-            ln命令作用ln命令的作用是为某一个文件在另外一个位置建立一个同步的链接。当我们需要在不同的目录，用到相同的文件时，我们不需要在每一个目录下放一个必须相同的文件，我们只需要在某个固定的目录，放置文件，然后在其他目录使用ln命令来链接它即可，不需要占用其他的磁盘空间。
-链接的分类linux系统中，有所谓的链接，分两种：一种是软连接(symbolic link)，一种是硬链接(hard link)，硬链接的意思是一个文件可以有多个名称，而软链接是产生一个特殊的文件，或者叫档案，指向另外一个文件的位置。硬链接必须要存在同一个文件系统中，而软链接是可以跨越不同的文件系统。
-软链接：1.软链接，以...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-top/" >
-            
-                <span>top命令</span>
-        </a>
-        <div class="abstract-content">
-            top命令作用top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于windows的任务管理器。top是一个动态显示过程，即可以通过用户按键输入来不断的刷新当前的状态，会占用前台。top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式命令或者在个人定制文件中进行设定.
-格式top [参数]
-常用参数
--b 批处理
--c 显示完整的命令
--I 忽略失效的进程
--s 保密模式
--S 累计模式
--d&lt;时间&gt; 设置刷新间...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/08/28/linux-du/" title= "linux-du">
+                    <div class="nextTitle">linux-du</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/08/28/linux-dd/" title= "linux-dd">
+                    <div class="prevTitle">linux-dd</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -781,6 +570,24 @@ A,–address-radix=RADIX:选择以何种基数表示地址偏移，可选基数�
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#df命令"><span class="toc-number">1.</span> <span class="toc-text">df命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#作用"><span class="toc-number">1.1.</span> <span class="toc-text">作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用法"><span class="toc-number">1.2.</span> <span class="toc-text">用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选项"><span class="toc-number">1.3.</span> <span class="toc-text">选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用例子"><span class="toc-number">1.4.</span> <span class="toc-text">使用例子</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1068,6 +875,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
