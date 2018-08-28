@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>linux learnning——top | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="top命令作用top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于windows的任务管理器。top是一个动态显示过程，即可以通过用户按键输入来不断的刷新当前的状态，会占用前台。top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式">
+<meta name="keywords" content="linux top">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux learnning——top">
+<meta property="og:url" content="http://yoursite.com/2018/08/28/linux/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="top命令作用top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于windows的任务管理器。top是一个动态显示过程，即可以通过用户按键输入来不断的刷新当前的状态，会占用前台。top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-28T02:58:09.721Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux learnning——top">
+<meta name="twitter:description" content="top命令作用top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于windows的任务管理器。top是一个动态显示过程，即可以通过用户按键输入来不断的刷新当前的状态，会占用前台。top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-linux" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/28/linux/" class="article-date">
+  <time datetime="2018-08-28T02:46:36.000Z" itemprop="datePublished">2018-08-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      linux learnning——top
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="top命令"><a href="#top命令" class="headerlink" title="top命令"></a>top命令</h1><h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于windows的任务管理器。top是一个动态显示过程，即可以通过用户按键输入来不断的刷新当前的状态，会占用前台。top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式命令或者在个人定制文件中进行设定.</p>
+<h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><p>top [参数]</p>
+<h2 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h2><ul>
+<li>-b 批处理</li>
+<li>-c 显示完整的命令</li>
+<li>-I 忽略失效的进程</li>
+<li>-s 保密模式</li>
+<li>-S 累计模式</li>
+<li>-d&lt;时间&gt; 设置刷新间隔时间，单位s</li>
+<li>-u&lt;用户名&gt; 指定显示某个用户的</li>
+<li>-p&lt;进程号&gt; 指定显示某个进程的</li>
+<li>-n&lt;次数&gt; 指定循环次数<blockquote>
+<p>当指定了-d参数而没有指定-n参数时，会不断的循环刷新，默认的刷新时间是5s</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="使用例子"><a href="#使用例子" class="headerlink" title="使用例子"></a>使用例子</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# top</span><br><span class="line"></span><br><span class="line">top - 01:02:01 up 11:58,  1 user,  load average: 1.45, 1.27, 0.88</span><br><span class="line">Tasks: 260 total,   2 running, 258 sleeping,   0 stopped,   0 zombie</span><br><span class="line"><span class="meta">%</span><span class="bash">Cpu(s):  4.1 us,  1.2 sy,  0.0 ni, 94.6 id,  0.0 wa,  0.0 hi,  0.2 si,  0.0 st</span></span><br><span class="line">MiB Mem :   3834.7 total,    751.4 free,   2192.0 used,    891.4 buff/cache</span><br><span class="line">MiB Swap:   3982.0 total,   3106.7 free,    875.2 used.    986.5 avail Mem </span><br><span class="line"></span><br><span class="line">  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                </span><br><span class="line"> 1314 root      20   0 2898636 260680  42968 R   5.6   6.6  42:37.61 gnome-shell            </span><br><span class="line"> 2322 root      20   0  655776 127692  38068 S   5.3   3.3  66:20.56 chrome                 </span><br><span class="line"> 9985 root      20   0  945984 263208 172800 S   5.3   6.7   4:58.68 chrome                 </span><br><span class="line"> 2287 root      20   0 1470104 191996  73624 S   3.6   4.9  60:25.74 chrome                 </span><br><span class="line"> 1135 root      20   0  476540  56436  39240 S   2.0   1.4  24:52.52 Xorg                   </span><br><span class="line"> 1625 root      20   0  283808  15124   4756 S   0.7   0.4   1:28.57 ibus-engine-pin        </span><br><span class="line">    8 root      20   0       0      0      0 I   0.3   0.0   0:46.93 rcu_sched              </span><br><span class="line"> 1236 root      20   0  410500   7568   3408 S   0.3   0.2   3:03.01 ibus-daemon            </span><br><span class="line"> 1264 root      20   0  453988  10424   8188 S   0.3   0.3   1:37.77 ibus-x11               </span><br><span class="line"> 4686 root      20   0  535284  37820  18140 S   0.3   1.0   0:36.24 gnome-terminal-        </span><br><span class="line"> 5090 root      20   0  799096 113792  47004 S   0.3   2.9   1:43.60 chrome                 </span><br><span class="line"> 5105 root      20   0  899760 191356  56888 S   0.3   4.9   0:58.34 chrome                 </span><br><span class="line">10163 root      20   0       0      0      0 D   0.3   0.0   0:02.05 kworker/u8:3           </span><br><span class="line">10224 root      20   0       0      0      0 I   0.3   0.0   0:00.25 kworker/u8:4           </span><br><span class="line">10232 root      20   0   29096   3716   3100 R   0.3   0.1   0:00.03 top                    </span><br><span class="line">    1 root      20   0  206180   4376   3060 S   0.0   0.1   0:44.02 systemd                </span><br><span class="line">    2 root      20   0       0      0      0 S   0.0   0.0   0:00.03 kthreadd</span><br></pre></td></tr></table></figure>
+<h2 id="前五行是当前系统情况的统计信息区"><a href="#前五行是当前系统情况的统计信息区" class="headerlink" title="前五行是当前系统情况的统计信息区"></a>前五行是当前系统情况的统计信息区</h2><ol>
+<li>第一行，任务队列信息，同uptime命令的执行结果，具体参数说明情况如下</li>
+</ol>
+<p><code>top - 01:02:01 up 11:58,  1 user,  load average: 1.45, 1.27, 0.88</code></p>
+<ul>
+<li>01:02:01 当前系统时间</li>
+<li>up 11:58 系统已经运行了11:58时间长了</li>
+<li>1 user 当前有1个用户登录系统</li>
+<li>load average: 1.45, 1.27, 0.88 当前系统的负载统计值，分别是1分钟，5分钟，15分钟的。每5s钟检查一次活跃的进程数，然后按照特定的算法计算出负载情况。如果这个数除以逻辑cpu的数量，结果高于5就表明系统在超负荷运行了</li>
+</ul>
+<ol start="2">
+<li>第二行，Tasks，任务(进程)，具体信息说明情况如下</li>
+</ol>
+<p><code>Tasks: 260 total,   2 running, 258 sleeping,   0 stopped,   0 zombie</code></p>
+<p>系统现在总共有206个进程，其中处于运行中的有两个，258个在休眠(sleep)，stoped状态的有0个，僵尸进程0个。</p>
+<ol start="3">
+<li>第三行，%Cpu(s)，cpu状态信息，具体属性说明如下</li>
+</ol>
+<p><code>%Cpu(s):  4.1 us,  1.2 sy,  0.0 ni, 94.6 id,  0.0 wa,  0.0 hi,  0.2 si,  0.0 st</code></p>
+<ul>
+<li>4.1 us 用户空间占用cpu的百分比</li>
+<li>1.2 sy 内核空间占用cpu的百分比</li>
+<li>0.0 ni 改变过优先级的进程占用cpu的百分比</li>
+<li>94.6 id 空闲cpu百分比</li>
+<li>0.0 wa IO等待占用cpu的百分比</li>
+<li>0.0 hi 硬中断(Hardware IRQ)占用cpu的百分比</li>
+<li>0.2 si 软中断(Software Interrupts)占用cpu的百分比</li>
+</ul>
+<ol start="4">
+<li>第四行，内存状态，具体信息如下</li>
+</ol>
+<p><code>MiB Mem :   3834.7 total,    751.4 free,   2192.0 used,    891.4 buff/cache</code></p>
+<ul>
+<li>3834.7 total 物理内存大小为3834.7M，大概是4G</li>
+<li>751.4 free 空闲的内存总量为751.4M</li>
+<li>2192.0 used 使用中的内存总量为2192.0M</li>
+<li>891.4 buff/cache 缓冲的交换区总量891.4M</li>
+</ul>
+<ol start="5">
+<li>第五行，swap交换分区信息，具体信息说明如下</li>
+</ol>
+<p><code>MiB Swap:   3982.0 total,   3106.7 free,    875.2 used.    986.5 avail Mem</code></p>
+<ul>
+<li>3982.0 total 总共有3982.0M的交换空间</li>
+<li>3106.7 free 空闲中的交换空间有3106.7M</li>
+<li>875.2 used 使用中的交换空间有875.2M</li>
+<li>986.5 avail 缓冲中的(可利用的)交换空间有986.5M</li>
+</ul>
+<p>使用中的内存总量（used）指的是现在系统内核控制的内存数，空闲内存总量（free）是内核还未纳入其管控范围的数量。纳入内核管理的内存不见得都在使用中，还包括过去使用过的现在可以被重复利用的内存，内核并不把这些可被重新使用的内存交还到free中去，因此在linux上free内存会越来越少，但不用为此担心。</p>
+<ol start="6">
+<li>第六行，空行，这一行是用来交互实时执行一些东西的。</li>
+<li>第七行，各进程(任务)的状态监控，项目列信息说明如下</li>
+</ol>
+<p><code>PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND</code></p>
+<ul>
+<li>PID 进程的id</li>
+<li>USER 进程所有者</li>
+<li>PR 进程优先级</li>
+<li>NI nice值，负责表示高优先级，正则表示低优先级</li>
+<li>VIRT 进程中使用虚拟内存总量，单位是kb。VIRT=SWAP+RES</li>
+<li>RES 进程中使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA</li>
+<li>SHA 共享内存大小，单位kb</li>
+<li>S 进程状态 D=不可中断的睡眠状态 R=运行 S=睡眠 T=跟踪/停止 Z=僵尸进程</li>
+<li>%CPU 上次更新到现在CPU时间占用百分比</li>
+<li>%MEM 进程使用的物理内存占用百分比</li>
+<li>TIME+ 进程使用的CPU时间总计，单位ms</li>
+<li>COMMAND 进程名称或者命令行</li>
+</ul>
+<h2 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h2><ol>
+<li>多核cpu监控</li>
+</ol>
+<p>在top的基本视图中，按下键盘数字’1’，可监控每个逻辑cpu的状况</p>
+<p><code>%Cpu(s):  2.7 us,  0.8 sy,  0.0 ni, 96.5 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</code></p>
+<p>按下1后变成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%Cpu0  :  0.3 us,  0.7 sy,  0.0 ni, 98.7 id,  0.3 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">%Cpu1  :  0.3 us,  0.7 sy,  0.0 ni, 99.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">%Cpu2  :  0.3 us,  0.0 sy,  1.0 ni, 98.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">%Cpu3  :  0.3 us,  0.3 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li><p>高亮显示当前运行进程</p>
+<ol>
+<li>敲击键盘’b’，打开关闭<code>加亮</code>当前正在running中的进程</li>
+<li>敲击键盘’y’，打开关闭<code>高亮</code>当前正在running中的进程</li>
+</ol>
+</li>
+<li><p>进程显示的字段排序</p>
+<p>默认进入top时，各进程是通过cpu的占用量来排序的。</p>
+<ol>
+<li>敲击键盘’x’，打开关闭排序列的加亮效果</li>
+<li>通过’shift+&lt;’或’shift+&gt;’来左右改变排序列</li>
+</ol>
+</li>
+</ol>
+<p>​    </p>
+<h2 id="top交互命令"><a href="#top交互命令" class="headerlink" title="top交互命令"></a>top交互命令</h2><p>在top命令过程中可以使用一些交互命令，这些命令都是单字母的，如果在命令行中使用了s选项，其中一些命令可能会给屏蔽。</p>
+<ul>
+<li>h 显示帮助画面，给出一些简短命令总结说明</li>
+<li>k 终止一个进程</li>
+<li>i 忽略闲置和僵死进程</li>
+<li>q 退出程序</li>
+<li>r 重新安排一个进程的nice值</li>
+<li>S 打开关闭累计模式</li>
+<li>s 改变两次刷新的间隔时间，如果有小数，就换算成ms，输入0表示不断刷新</li>
+<li>f 从当前的显示中添加项目</li>
+<li>F 从当前的显示中删除项目</li>
+<li>I 切换平均负载和启动时间信息</li>
+<li>t 切换显示进程和cpu状态信息</li>
+<li>c 切换显示命令名称和完整命令行</li>
+<li>M 根据驻留内存大小进行排序</li>
+<li>P 根据CPU使用百分比大小进行排序</li>
+<li>T 根据时间/累计时间进行排序</li>
+<li>w 将当前设置写入~/.toprc配置文件中</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/28/linux/" data-id="cjld4wh1c00014mqsgh8kagik" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux-top/">linux top</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/28/test-my-site/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">test_my_site</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-top/">linux top</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/linux-top/" style="font-size: 10px;">linux top</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/28/linux/">linux learnning——top</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/28/test-my-site/">test_my_site</a>
+          </li>
+        
+          <li>
+            <a href="/2018/08/28/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
