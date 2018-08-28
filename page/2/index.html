@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>linux-dd · dcLunatic&#39;s blog</title>
+    <title>dcLunatic&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,8 +70,6 @@
 
     <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
-    
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -196,23 +194,14 @@
 </head>
 
     
-        <body class="post-body">
+        <body class="home-body">
     
     
-<header class="header">
+<header class="header index-header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/" >dcLunatic&#39;s blog</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">linux-dd</a>
-            </div>
-    </div>
     
     <a class="home-link" href=/>dcLunatic's blog</a>
 </header>
@@ -231,17 +220,17 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 404页  -->
+    <!-- 文章页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/images/linux-dd.png)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            linux-dd
-            <!-- 404 -->
+            dcLunatic's blog
+            <!-- 文章页  -->
             
         </h1>
         <!-- 副标题 -->
@@ -249,53 +238,12 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-            <!-- 404 -->
+                it's better to burn out than to fade away
+            
+            <!-- 文章页  -->
             
         </p>
         <!-- 文章页meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "拷贝烧录">拷贝烧录</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1,401</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2018/08/28</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
         
     </div>
 </div>
@@ -396,164 +344,155 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <p>dd命令(转载复制粘贴)</p>
-<p>linux下dd命令详解</p>
-<p>   名称: dd </p>
-<p>使用权限: 所有使用者dd 这个指令在 manual 里的定义是 convert and copy a file </p>
-<p>使用方式: </p>
-<p>dd [option] </p>
-<p>如果你想要在线看 manual, 可以试试: </p>
-<p>dd –help </p>
-<p>或是 </p>
-<p>info dd </p>
-<p>如果你想要看看这个版本如何: </p>
-<p>dd –version </p>
-<p>输入或输出 </p>
-<p>dd if=[STDIN] of=[STDOUT] </p>
-<p>强迫输入或输出的Size为多少Bytes </p>
-<p>bs: dd -ibs=[BYTE] -obs=[SIZE] </p>
-<p>强迫一次只做多少个 Bytes </p>
-<p>cbs=BYTES </p>
-<p>跳过一段以后才输出 </p>
-<p>seek=BLOCKS </p>
-<p>跳过一段以后才输入 </p>
-<p>skip=BLOCKS </p>
-<p>当然你可以拿这个来方便的拷贝光碟(注意，你的光碟是标准的 iso9660格式才可以这么做唷！) </p>
-<p>dd if=/dev/cdrom of=cdrom.iso </p>
-<p>其中 if 后面以及 of 后面的内容依你的需求调整。 </p>
-<p>然后给系统这个指令就可以烧了: </p>
-<p>cdrecord -v cdrom.iso </p>
-<p>这篇不是在讲 cdrecord 的，所以上面的指令是最为简单但是不一定能符合您的硬件环境…</p>
-<p>功能：把指定的输入文件拷贝到指定的输出文件中，并且在拷贝过程中可以进行格式转换。可以用该命令实现DOS下的diskcopy命令的作用。先用dd命令把软盘上的数据写成硬盘的一个寄存文件，再把这个寄存文件写入第二张软盘上，完成diskcopy的功能。需要注意的是，应该将硬盘上的寄存文件用rm命令删除掉。系统默认使用标准输入文件和标准输出文件。 </p>
-<p>语法：dd [选项] </p>
-<p>if =输入文件（或设备名称）。 </p>
-<p>of =输出文件（或设备名称）。 </p>
-<p>ibs = bytes 一次读取bytes字节，即读入缓冲区的字节数。 </p>
-<p>skip = blocks 跳过读入缓冲区开头的ibs*blocks块。 </p>
-<p>obs = bytes 一次写入bytes字节，即写入缓冲区的字节数。 </p>
-<p>bs = bytes 同时设置读/写缓冲区的字节数（等于设置ibs和obs）。 </p>
-<p>cbs = byte 一次转换bytes字节。 </p>
-<p>count=blocks 只拷贝输入的blocks块。 </p>
-<p>conv = ASCII 把EBCDIC码转换为ASCIl码。 </p>
-<p>conv = ebcdic 把ASCIl码转换为EBCDIC码。 </p>
-<p>conv = ibm 把ASCIl码转换为alternate EBCDIC码。 </p>
-<p>conv = block 把变动位转换成固定字符。 </p>
-<p>conv = ublock 把固定位转换成变动位。 </p>
-<p>conv = ucase 把字母由小写转换为大写。 </p>
-<p>conv = lcase 把字母由大写转换为小写。 </p>
-<p>conv = notrunc 不截短输出文件。 </p>
-<p>conv = swab 交换每一对输入字节。 </p>
-<p>conv = noerror 出错时不停止处理。 </p>
-<p>conv = sync 把每个输入记录的大小都调到ibs的大小（用NUL填充）。 </p>
-<p>例1：要把一张软盘的内容拷贝到另一张软盘上，利用/tmp作为临时存储区。把源盘插入驱动器中，输入下述命令： </p>
-<p>$ dd if =/dev/fd0 of = /tmp/tmpfile </p>
-<p>拷贝完成后，将源盘从驱动器中取出，把目标盘插入，输入命令： </p>
-<p>$ dd if = /tmp/tmpfile of =/dev/fd0 </p>
-<p>软盘拷贝完成后，应该将临时文件删除： </p>
-<p>$ rm /tmp/tmpfile </p>
-<p>例2：把net.i这个文件写入软盘中，并设定读/写缓冲区的数目。 </p>
-<p>（注意：软盘中的内容会被完全覆盖掉） </p>
-<p>$ dd if = net.i of = /dev/fd0 bs = 16384 </p>
-<p>例3：将文件sfile拷贝到文件 dfile中。 </p>
-<p>$ dd if=sfile of=dfile</p>
-<hr>
-<p>dd 是 Linux/UNIX 下的一个非常有用的命令，作用是用指定大小的块拷贝一个文件，并在拷贝的同时进行指定的转换。</p>
-<p>dd 的主要选项：</p>
-<p>指定数字的地方若以下列字符结尾乘以相应的数字:</p>
-<p>b=512, c=1, k=1024, w=2, xm=number m</p>
-<p>if=file</p>
-<p>输入文件名，缺省为标准输入。</p>
-<p>of=file</p>
-<p>输出文件名，缺省为标准输出。</p>
-<p>ibs=bytes</p>
-<p>一次读入 bytes 个字节(即一个块大小为 bytes 个字节)。</p>
-<p>obs=bytes</p>
-<p>一次写 bytes 个字节(即一个块大小为 bytes 个字节)。</p>
-<p>bs=bytes</p>
-<p>同时设置读写块的大小为 bytes ，可代替 ibs 和 obs 。</p>
-<p>cbs=bytes</p>
-<p>一次转换 bytes 个字节，即转换缓冲区大小。</p>
-<p>skip=blocks</p>
-<p>从输入文件开头跳过 blocks 个块后再开始复制。</p>
-<p>seek=blocks</p>
-<p>从输出文件开头跳过 blocks 个块后再开始复制。(通常只有当输出文件是磁盘或磁带时才有效)</p>
-<p>count=blocks</p>
-<p>仅拷贝 blocks 个块，块大小等于 ibs 指定的字节数。</p>
-<p>conv=conversion[,conversion…]</p>
-<p>用指定的参数转换文件。</p>
-<p>转换参数:</p>
-<p>ascii 转换 EBCDIC 为 ASCII。</p>
-<p>ebcdic 转换 ASCII 为 EBCDIC。</p>
-<p>ibm 转换 ASCII 为 alternate EBCDIC.</p>
-<p>block 把每一行转换为长度为 cbs 的记录，不足部分用空格填充。</p>
-<p>unblock</p>
-<p>使每一行的长度都为 cbs ，不足部分用空格填充。</p>
-<p>lcase 把大写字符转换为小写字符。</p>
-<p>ucase 把小写字符转换为大写字符。</p>
-<p>swab 交换输入的每对字节。 Unlike the</p>
-<p>Unix dd, this works when an odd number of</p>
-<p>bytes are read. If the input file contains</p>
-<p>an odd number of bytes, the last byte is</p>
-<p>simply copied (since there is nothing to</p>
-<p>swap it with).</p>
-<p>noerror</p>
-<p>出错时不停止。</p>
-<p>notrunc</p>
-<p>不截短输出文件。</p>
-<p>sync 把每个输入块填充到ibs个字节，不足部分用空(NUL)字符补齐。</p>
-<p>由于 dd 命令允许二进制方式读写，所以特别适合在原始物理设备上进行输入/输出。例如可以用下面的命令为软盘建立镜像文件：</p>
-<p>dd if=/dev/fd0 of=disk.img bs=1440k</p>
-<p>有趣的是，这个镜像文件能被 HD-Copy ，Winimage 等工具软件读出。再如把第一个硬盘的前 512 个字节存为一个文件：</p>
-<p>dd if=/dev/hda of=disk.mbr bs=512 count=1 </p>
-
-    </article>
-    <!-- license  -->
+            <main class="main index-page">
     
-        <div class="license-wrapper">
-            <p>原文作者：<a href="http://dcLunatic.github.io">dcLunatic</a>
-            <p>原文链接：<a href="http://dcLunatic.github.io/2018/08/28/linux-dd/">http://dcLunatic.github.io/2018/08/28/linux-dd/</a>
-            <p>发表日期：<a href="http://dcLunatic.github.io/2018/08/28/linux-dd/">August 28th 2018, 9:32:56 pm</a>
-            <p>更新日期：<a href="http://dcLunatic.github.io/2018/08/28/linux-dd/">August 28th 2018, 9:45:31 pm</a>
-            <p>版权声明：转载的时候,记得注明来处</p>
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2018/08/28/linux-top/" >
+            
+                <span>top命令</span>
+        </a>
+        <div class="abstract-content">
+            top命令作用top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于windows的任务管理器。top是一个动态显示过程，即可以通过用户按键输入来不断的刷新当前的状态，会占用前台。top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式命令或者在个人定制文件中进行设定.
+格式top [参数]
+常用参数
+-b 批处理
+-c 显示完整的命令
+-I 忽略失效的进程
+-s 保密模式
+-S 累计模式
+-d&lt;时间&gt; 设置刷新间...
         </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
+    
+</div>
+            
+        </div>
+    </article>
     
     <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/08/28/linux-df/" title= "linux-df">
-                    <div class="nextTitle">linux-df</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/08/28/linux-bc/" title= "linux-bc">
-                    <div class="prevTitle">linux-bc</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
     
+    <nav class="page-nav">
+        <a class="extend prev" rel="prev" href="/">&#60; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </nav>
     
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
-
-
-    
-    
-
-    <!-- 评论 -->
 </main>
             <!-- profile -->
+            
+            <div class="profile">
+    <img class="profile-avatar" alt="avatar" src= /avatar/Misaka.jpg >
+    <div class="profile-name">dcLunatic</div>
+    
+    <div class="profile-signature">
+        witness me
+    </div>
+    
+    
+    <div class="profile-social">
+        
+    
+        
+            
+                <a href="mailto:dcLunatic6@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/dcLunatic" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="//zhihu.com/people/dclunatic" class="iconfont-archer zhihu" target="_blank" title=zhihu></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    
+        <div class="friends">
+            <div>FRIENDS</div>
+            
+                
+                    <span>
+                        <a href= //rovo98.github.io target="_black">rovo98</a>
+                    </span>
+                
+            
+                
+                    <span>
+                        <a href= //github.com/Adj325 target="_black">Adj325</a>
+                    </span>
+                
+            
+                
+                    <span>
+                        <a href= //github.com/Ace-Zephyr target="_black">Ace-Zephyr</a>
+                    </span>
+                
+            
+        </div>
+    
+    
+        <div class="about-me">
+            <a href = "/about" >ABOUT ME</a>
+        </div>
+    
+</div>
             
         </div>
         <footer class="footer footer-unloaded">
@@ -635,24 +574,6 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -962,8 +883,6 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
