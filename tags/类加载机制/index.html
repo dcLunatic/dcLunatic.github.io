@@ -339,66 +339,27 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-ln/" >
+        <a class="abstract-title" href = "/2018/08/31/java类加载机制/" >
             
-                <span>linux-ln</span>
+                <span>java类加载机制</span>
         </a>
         <div class="abstract-content">
-            ln命令作用ln命令的作用是为某一个文件在另外一个位置建立一个同步的链接。当我们需要在不同的目录，用到相同的文件时，我们不需要在每一个目录下放一个必须相同的文件，我们只需要在某个固定的目录，放置文件，然后在其他目录使用ln命令来链接它即可，不需要占用其他的磁盘空间。
-链接的分类linux系统中，有所谓的链接，分两种：一种是软连接(symbolic link)，一种是硬链接(hard link)，硬链接的意思是一个文件可以有多个名称，而软链接是产生一个特殊的文件，或者叫档案，指向另外一个文件的位置。硬链接必须要存在同一个文件系统中，而软链接是可以跨越不同的文件系统。
-软链接：1.软链接，以...
+            java类加载机制类加载器能够通过一个类的全限定名来获取此类的二进制字节流的代码模块称之为类加载器。加载类的这个动作是放在JVM外部实现的，以便让应用程序决定如何获取所需的类。
+虽然说类加载器的主要目的是完成这个动作，但是其作用却远远不仅于此。对于任意一个类，都需要由加载它的类加载器和这个类本身一同确立其在Java虚拟机中的唯一性，每一个类加载器，都需要
+每一个类在编译后都会产生一个Class对象，存储在.class文件中，JVM使用类加载器(Class Loader)来加载类的字节码文件(.class文件)，而类加载器实际上就是一条类加载链，原生的类加载器(java.lang.Clas...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/31</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-top/" >
-            
-                <span>top命令</span>
-        </a>
-        <div class="abstract-content">
-            top命令作用top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于windows的任务管理器。top是一个动态显示过程，即可以通过用户按键输入来不断的刷新当前的状态，会占用前台。top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式命令或者在个人定制文件中进行设定.
-格式top [参数]
-常用参数
--b 批处理
--c 显示完整的命令
--I 忽略失效的进程
--s 保密模式
--S 累计模式
--d&lt;时间&gt; 设置刷新间...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "类加载机制">类加载机制</a>
     
 </div>
             
@@ -406,10 +367,6 @@
     </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-    </nav>
     
 </main>
             <!-- profile -->
