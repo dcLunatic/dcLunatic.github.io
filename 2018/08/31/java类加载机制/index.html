@@ -414,7 +414,7 @@ height:50vh;
 <li>扩展类加载器(Extension ClassLoader)：负载加载JAVA_HOME\lib\ext目录中的，活通过java.ext.dirs系统变量指定路径中的类库。</li>
 <li>应用程序类加载器(Application ClassLoader)：负责加载用户路径(classpath)上的类库。</li>
 </ul>
-<p><img src="images/javaClassLoader/1.png" alt="classLoader"></p>
+<p><img src="/images/JavaClassLoader/1.png" alt="classLoader"></p>
 <p>双亲委派模型:</p>
 <p>双亲委派模型是一种组织类加载器之间关系的一种规范,他的工作原理是:如果一个类加载器收到了类加载的请求,它不会自己去尝试加载这个类,而是把这个请求委派给父类加载器去完成,这样层层递进,最终所有的加载请求都被传到最顶层的启动类加载器中,只有当父类加载器无法完成这个加载请求(它的搜索范围内没有找到所需的类)时,才会交给子类加载器去尝试加载.</p>
 <p>这样做的好处是，Java类随着它的类加载器一起具备了带有优先级的层次关系。比如存放在rt.jar中的Object类，无论那个类加载器加载哪个类，最终都是会让启动类加载器加载这个Object类，加载的都是同一个Object对象。如果由各自的加载器去加载的话，会不止出现一个Object类，最基础的行为都无法保证，应用程序会一派你混乱。</p>
@@ -441,7 +441,7 @@ height:50vh;
 <li><p>将类信息、静态变量、字节码、常量这些.class文件中的内容放入方法区中</p>
 </li>
 <li><p>在内存中生成一个代表这个.class文件的java.lang.Class的对象，作为方法区这个类的各种数据的访问入口。</p>
-<p><img src="images/javaClassLoader/2.png" alt="2"></p>
+<p><img src="/images/JavaClassLoader/2.png" alt="2"></p>
 </li>
 </ul>
 <h3 id="验证-Verification"><a href="#验证-Verification" class="headerlink" title="验证(Verification)"></a>验证(Verification)</h3><p>这一阶段的目的是为了确保.class文件中的字节流文件包含的信息符合当前虚拟机的要求，且不会危害虚拟机。之所以要检查，是因为.class文件可以由很多种方式得到，并不一定都要由java源码编译而来，甚至可以直接通过十六进制编辑器编辑。所以验证，就变得很重要了。<br>大概分为以下几个方面的验证</p>
@@ -476,7 +476,7 @@ height:50vh;
 <li>类、类的class对象、类的实例对象<br>一个类的实例总是引用代表这个类的Class对象，在Object类中定义类getClass方法，这个方法返回代表对象所属类的Class对象的引用。此外，所有的Java类都有一个静态属性class，他引用代表这个类的Class对象。</li>
 </ol>
 <p>一个例子</p>
-<p><img src="images/javaClassLoader/3.png" alt="3"></p>
+<p><img src="/images/JavaClassLoader/3.png" alt="3"></p>
 <p>loader1变量和obj变量间接应用代表Sample类的Class对象，而objClass变量则直接引用它。</p>
 <p> 　　如果程序运行过程中，将上图左侧三个引用变量都置为null，此时Sample对象结束生命周期，MyClassLoader对象结束生命周期，代表Sample类的Class对象也结束生命周期，Sample类在方法区内的二进制数据<strong>被卸载</strong>。</p>
 
@@ -487,7 +487,7 @@ height:50vh;
             <p>原文作者：<a href="http://dcLunatic.github.io">dcLunatic</a>
             <p>原文链接：<a href="http://dcLunatic.github.io/2018/08/31/java类加载机制/">http://dcLunatic.github.io/2018/08/31/java类加载机制/</a>
             <p>发表日期：<a href="http://dcLunatic.github.io/2018/08/31/java类加载机制/">August 31st 2018, 5:44:30 pm</a>
-            <p>更新日期：<a href="http://dcLunatic.github.io/2018/08/31/java类加载机制/">August 31st 2018, 5:52:23 pm</a>
+            <p>更新日期：<a href="http://dcLunatic.github.io/2018/08/31/java类加载机制/">August 31st 2018, 5:57:24 pm</a>
             <p>版权声明：转载的时候,记得注明来处</p>
         </div>
     
@@ -866,9 +866,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
     
-        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
-    
         <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
     
         <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
     
