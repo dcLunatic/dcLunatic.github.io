@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://dcLunatic.github.io/"/>
+  <link href="https://dcLunatic.github.io/"/>
   <updated>2018-09-03T04:37:15.000Z</updated>
-  <id>http://dcLunatic.github.io/</id>
+  <id>https://dcLunatic.github.io/</id>
   
   <author>
     <name>dcLunatic</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>(转)makefile总结</title>
-    <link href="http://dcLunatic.github.io/2018/09/03/makefile%E6%80%BB%E7%BB%93%E2%80%94%E2%80%94%E8%BD%AC/"/>
-    <id>http://dcLunatic.github.io/2018/09/03/makefile总结——转/</id>
+    <link href="https://dcLunatic.github.io/2018/09/03/makefile%E6%80%BB%E7%BB%93%E2%80%94%E2%80%94%E8%BD%AC/"/>
+    <id>https://dcLunatic.github.io/2018/09/03/makefile总结——转/</id>
     <published>2018-09-03T04:04:25.000Z</published>
     <updated>2018-09-03T04:37:15.000Z</updated>
     
@@ -35,22 +35,22 @@
     </summary>
     
     
-      <category term="linux" scheme="http://dcLunatic.github.io/tags/linux/"/>
+      <category term="linux" scheme="https://dcLunatic.github.io/tags/linux/"/>
     
-      <category term="command" scheme="http://dcLunatic.github.io/tags/command/"/>
+      <category term="command" scheme="https://dcLunatic.github.io/tags/command/"/>
     
-      <category term="makefile" scheme="http://dcLunatic.github.io/tags/makefile/"/>
+      <category term="makefile" scheme="https://dcLunatic.github.io/tags/makefile/"/>
     
-      <category term="编译器" scheme="http://dcLunatic.github.io/tags/%E7%BC%96%E8%AF%91%E5%99%A8/"/>
+      <category term="编译器" scheme="https://dcLunatic.github.io/tags/%E7%BC%96%E8%AF%91%E5%99%A8/"/>
     
-      <category term="file" scheme="http://dcLunatic.github.io/tags/file/"/>
+      <category term="file" scheme="https://dcLunatic.github.io/tags/file/"/>
     
   </entry>
   
   <entry>
     <title>java类加载机制</title>
-    <link href="http://dcLunatic.github.io/2018/08/31/java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/"/>
-    <id>http://dcLunatic.github.io/2018/08/31/java类加载机制/</id>
+    <link href="https://dcLunatic.github.io/2018/08/31/java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/"/>
+    <id>https://dcLunatic.github.io/2018/08/31/java类加载机制/</id>
     <published>2018-08-31T09:44:30.000Z</published>
     <updated>2018-09-03T04:15:42.000Z</updated>
     
@@ -66,16 +66,16 @@
     </summary>
     
     
-      <category term="java" scheme="http://dcLunatic.github.io/tags/java/"/>
+      <category term="java" scheme="https://dcLunatic.github.io/tags/java/"/>
     
-      <category term="类加载机制" scheme="http://dcLunatic.github.io/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/"/>
+      <category term="类加载机制" scheme="https://dcLunatic.github.io/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/"/>
     
   </entry>
   
   <entry>
     <title>java-reflect</title>
-    <link href="http://dcLunatic.github.io/2018/08/28/java-reflect/"/>
-    <id>http://dcLunatic.github.io/2018/08/28/java-reflect/</id>
+    <link href="https://dcLunatic.github.io/2018/08/28/java-reflect/"/>
+    <id>https://dcLunatic.github.io/2018/08/28/java-reflect/</id>
     <published>2018-08-28T14:05:05.000Z</published>
     <updated>2018-09-03T04:15:42.000Z</updated>
     
@@ -92,16 +92,16 @@
     </summary>
     
     
-      <category term="java" scheme="http://dcLunatic.github.io/tags/java/"/>
+      <category term="java" scheme="https://dcLunatic.github.io/tags/java/"/>
     
-      <category term="反射" scheme="http://dcLunatic.github.io/tags/%E5%8F%8D%E5%B0%84/"/>
+      <category term="反射" scheme="https://dcLunatic.github.io/tags/%E5%8F%8D%E5%B0%84/"/>
     
   </entry>
   
   <entry>
     <title>linux-du</title>
-    <link href="http://dcLunatic.github.io/2018/08/28/linux-du/"/>
-    <id>http://dcLunatic.github.io/2018/08/28/linux-du/</id>
+    <link href="https://dcLunatic.github.io/2018/08/28/linux-du/"/>
+    <id>https://dcLunatic.github.io/2018/08/28/linux-du/</id>
     <published>2018-08-28T13:35:17.000Z</published>
     <updated>2018-09-03T04:15:42.000Z</updated>
     
@@ -117,16 +117,16 @@
     </summary>
     
     
-      <category term="linux" scheme="http://dcLunatic.github.io/tags/linux/"/>
+      <category term="linux" scheme="https://dcLunatic.github.io/tags/linux/"/>
     
-      <category term="command" scheme="http://dcLunatic.github.io/tags/command/"/>
+      <category term="command" scheme="https://dcLunatic.github.io/tags/command/"/>
     
   </entry>
   
   <entry>
     <title>linux-df</title>
-    <link href="http://dcLunatic.github.io/2018/08/28/linux-df/"/>
-    <id>http://dcLunatic.github.io/2018/08/28/linux-df/</id>
+    <link href="https://dcLunatic.github.io/2018/08/28/linux-df/"/>
+    <id>https://dcLunatic.github.io/2018/08/28/linux-df/</id>
     <published>2018-08-28T13:34:17.000Z</published>
     <updated>2018-09-03T04:15:42.000Z</updated>
     
@@ -142,16 +142,16 @@
     </summary>
     
     
-      <category term="linux" scheme="http://dcLunatic.github.io/tags/linux/"/>
+      <category term="linux" scheme="https://dcLunatic.github.io/tags/linux/"/>
     
-      <category term="command" scheme="http://dcLunatic.github.io/tags/command/"/>
+      <category term="command" scheme="https://dcLunatic.github.io/tags/command/"/>
     
   </entry>
   
   <entry>
     <title>linux-dd</title>
-    <link href="http://dcLunatic.github.io/2018/08/28/linux-dd/"/>
-    <id>http://dcLunatic.github.io/2018/08/28/linux-dd/</id>
+    <link href="https://dcLunatic.github.io/2018/08/28/linux-dd/"/>
+    <id>https://dcLunatic.github.io/2018/08/28/linux-dd/</id>
     <published>2018-08-28T13:32:56.000Z</published>
     <updated>2018-09-03T04:15:42.000Z</updated>
     
@@ -172,18 +172,18 @@
     </summary>
     
     
-      <category term="linux" scheme="http://dcLunatic.github.io/tags/linux/"/>
+      <category term="linux" scheme="https://dcLunatic.github.io/tags/linux/"/>
     
-      <category term="command" scheme="http://dcLunatic.github.io/tags/command/"/>
+      <category term="command" scheme="https://dcLunatic.github.io/tags/command/"/>
     
-      <category term="拷贝烧录" scheme="http://dcLunatic.github.io/tags/%E6%8B%B7%E8%B4%9D%E7%83%A7%E5%BD%95/"/>
+      <category term="拷贝烧录" scheme="https://dcLunatic.github.io/tags/%E6%8B%B7%E8%B4%9D%E7%83%A7%E5%BD%95/"/>
     
   </entry>
   
   <entry>
     <title>linux-bc</title>
-    <link href="http://dcLunatic.github.io/2018/08/28/linux-bc/"/>
-    <id>http://dcLunatic.github.io/2018/08/28/linux-bc/</id>
+    <link href="https://dcLunatic.github.io/2018/08/28/linux-bc/"/>
+    <id>https://dcLunatic.github.io/2018/08/28/linux-bc/</id>
     <published>2018-08-28T13:31:42.000Z</published>
     <updated>2018-09-03T04:15:42.000Z</updated>
     
@@ -199,18 +199,18 @@
     </summary>
     
     
-      <category term="linux" scheme="http://dcLunatic.github.io/tags/linux/"/>
+      <category term="linux" scheme="https://dcLunatic.github.io/tags/linux/"/>
     
-      <category term="command" scheme="http://dcLunatic.github.io/tags/command/"/>
+      <category term="command" scheme="https://dcLunatic.github.io/tags/command/"/>
     
-      <category term="calculate" scheme="http://dcLunatic.github.io/tags/calculate/"/>
+      <category term="calculate" scheme="https://dcLunatic.github.io/tags/calculate/"/>
     
   </entry>
   
   <entry>
     <title>linux-iconv</title>
-    <link href="http://dcLunatic.github.io/2018/08/28/linux-iconv/"/>
-    <id>http://dcLunatic.github.io/2018/08/28/linux-iconv/</id>
+    <link href="https://dcLunatic.github.io/2018/08/28/linux-iconv/"/>
+    <id>https://dcLunatic.github.io/2018/08/28/linux-iconv/</id>
     <published>2018-08-28T13:20:24.000Z</published>
     <updated>2018-09-03T04:15:42.000Z</updated>
     
@@ -226,16 +226,16 @@
     </summary>
     
     
-      <category term="linux" scheme="http://dcLunatic.github.io/tags/linux/"/>
+      <category term="linux" scheme="https://dcLunatic.github.io/tags/linux/"/>
     
-      <category term="command" scheme="http://dcLunatic.github.io/tags/command/"/>
+      <category term="command" scheme="https://dcLunatic.github.io/tags/command/"/>
     
   </entry>
   
   <entry>
     <title>linux-od</title>
-    <link href="http://dcLunatic.github.io/2018/08/28/linux-od/"/>
-    <id>http://dcLunatic.github.io/2018/08/28/linux-od/</id>
+    <link href="https://dcLunatic.github.io/2018/08/28/linux-od/"/>
+    <id>https://dcLunatic.github.io/2018/08/28/linux-od/</id>
     <published>2018-08-28T13:16:21.000Z</published>
     <updated>2018-09-03T04:15:42.000Z</updated>
     
@@ -251,16 +251,16 @@
     </summary>
     
     
-      <category term="linux" scheme="http://dcLunatic.github.io/tags/linux/"/>
+      <category term="linux" scheme="https://dcLunatic.github.io/tags/linux/"/>
     
-      <category term="command" scheme="http://dcLunatic.github.io/tags/command/"/>
+      <category term="command" scheme="https://dcLunatic.github.io/tags/command/"/>
     
   </entry>
   
   <entry>
     <title>linux-free</title>
-    <link href="http://dcLunatic.github.io/2018/08/28/linux-free/"/>
-    <id>http://dcLunatic.github.io/2018/08/28/linux-free/</id>
+    <link href="https://dcLunatic.github.io/2018/08/28/linux-free/"/>
+    <id>https://dcLunatic.github.io/2018/08/28/linux-free/</id>
     <published>2018-08-28T13:12:41.000Z</published>
     <updated>2018-09-03T04:15:42.000Z</updated>
     
@@ -276,16 +276,16 @@
     </summary>
     
     
-      <category term="linux" scheme="http://dcLunatic.github.io/tags/linux/"/>
+      <category term="linux" scheme="https://dcLunatic.github.io/tags/linux/"/>
     
-      <category term="command" scheme="http://dcLunatic.github.io/tags/command/"/>
+      <category term="command" scheme="https://dcLunatic.github.io/tags/command/"/>
     
   </entry>
   
   <entry>
     <title>linux目录&#39;/proc&#39;详解</title>
-    <link href="http://dcLunatic.github.io/2018/08/28/linux%E7%9B%AE%E5%BD%95-proc-%E8%AF%A6%E8%A7%A3/"/>
-    <id>http://dcLunatic.github.io/2018/08/28/linux目录-proc-详解/</id>
+    <link href="https://dcLunatic.github.io/2018/08/28/linux%E7%9B%AE%E5%BD%95-proc-%E8%AF%A6%E8%A7%A3/"/>
+    <id>https://dcLunatic.github.io/2018/08/28/linux目录-proc-详解/</id>
     <published>2018-08-28T13:10:39.000Z</published>
     <updated>2018-09-03T04:15:42.000Z</updated>
     
@@ -301,16 +301,16 @@
     </summary>
     
     
-      <category term="linux" scheme="http://dcLunatic.github.io/tags/linux/"/>
+      <category term="linux" scheme="https://dcLunatic.github.io/tags/linux/"/>
     
-      <category term="文件目录详解" scheme="http://dcLunatic.github.io/tags/%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E8%AF%A6%E8%A7%A3/"/>
+      <category term="文件目录详解" scheme="https://dcLunatic.github.io/tags/%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E8%AF%A6%E8%A7%A3/"/>
     
   </entry>
   
   <entry>
     <title>linux-ln</title>
-    <link href="http://dcLunatic.github.io/2018/08/28/linux-ln/"/>
-    <id>http://dcLunatic.github.io/2018/08/28/linux-ln/</id>
+    <link href="https://dcLunatic.github.io/2018/08/28/linux-ln/"/>
+    <id>https://dcLunatic.github.io/2018/08/28/linux-ln/</id>
     <published>2018-08-28T13:04:32.000Z</published>
     <updated>2018-09-03T04:15:42.000Z</updated>
     
@@ -326,16 +326,16 @@
     </summary>
     
     
-      <category term="linux" scheme="http://dcLunatic.github.io/tags/linux/"/>
+      <category term="linux" scheme="https://dcLunatic.github.io/tags/linux/"/>
     
-      <category term="command" scheme="http://dcLunatic.github.io/tags/command/"/>
+      <category term="command" scheme="https://dcLunatic.github.io/tags/command/"/>
     
   </entry>
   
   <entry>
     <title>top命令</title>
-    <link href="http://dcLunatic.github.io/2018/08/28/linux-top/"/>
-    <id>http://dcLunatic.github.io/2018/08/28/linux-top/</id>
+    <link href="https://dcLunatic.github.io/2018/08/28/linux-top/"/>
+    <id>https://dcLunatic.github.io/2018/08/28/linux-top/</id>
     <published>2018-08-28T02:46:36.000Z</published>
     <updated>2018-09-03T04:15:42.000Z</updated>
     
@@ -351,9 +351,9 @@
     </summary>
     
     
-      <category term="linux" scheme="http://dcLunatic.github.io/tags/linux/"/>
+      <category term="linux" scheme="https://dcLunatic.github.io/tags/linux/"/>
     
-      <category term="command" scheme="http://dcLunatic.github.io/tags/command/"/>
+      <category term="command" scheme="https://dcLunatic.github.io/tags/command/"/>
     
   </entry>
   
