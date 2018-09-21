@@ -339,17 +339,83 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2018/09/03/makefile总结——转/" >
+        <a class="abstract-title" href = "/2018/09/21/virtualbox添加虚拟磁盘/" >
             
-                <span>(转)makefile总结</span>
+                <span>virtualbox添加虚拟磁盘</span>
         </a>
         <div class="abstract-content">
-            1. makefile很重要什么是makefile？或许很多Winodws的程序员都不知道这个东西，因为那些Windows的IDE都为你做了这个工作，但我觉得要作一个好的和professional的程序员，makefile还是要懂。这就好像现在有这么多的HTML的编辑器，但如果你想成为一个专业...
+            Virutalbox如何添加现有的物理磁盘/分区给虚拟机使用
+使用VBoxManage internalcommands listpartitions -rawdisk \.\PhysicalDrive0列出某个磁盘下的分区信息
+通过分区信息之前的Number，选择想要的分区
+再执行VBoxM...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/03</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/21</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "virtualbox">virtualbox</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2018/09/21/vim中的编码/" >
+            
+                <span>vim中的编码</span>
+        </a>
+        <div class="abstract-content">
+            Vim中的编码的编码四种编码encoding(enc)该选项是内存中编码，就是程序读取文件会转换为encoding所指向的编码存在内存中
+fileencoding(fenc)该选项是vim写入文件时采用的编码类型。
+fileencodings(fencs)该选项是vim在识别文件时采用的不同编...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/21</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "vim">vim</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "编码">编码</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2018/09/21/linux中的命令链接操作符/" >
+            
+                <span>linux中的命令链接操作符</span>
+        </a>
+        <div class="abstract-content">
+            Linux中的命令链接操作符在linux中，我们可以通过一些特殊的操作符，比如说管道“|”，来将几个不同的命令结合起来执行，这些操作符就叫做命令链接操作符。
+&amp;&amp;的作用是让当前命令在后台执行，当我们在执行一些比较耗时的命令时，比如apt-get update，这样子就不会占用当...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/21</span>
             </div>
             <!-- tags  -->
             
@@ -357,14 +423,6 @@
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "makefile">makefile</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "编译器">编译器</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "file">file</a>
-    
 </div>
             
         </div>
@@ -376,52 +434,57 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/31/java类加载机制/" >
+        <a class="abstract-title" href = "/2018/09/21/kali安装stream/" >
             
-                <span>java类加载机制</span>
+                <span>kali安装stream</span>
         </a>
         <div class="abstract-content">
-            java类加载机制类加载器能够通过一个类的全限定名来获取此类的二进制字节流的代码模块称之为类加载器。加载类的这个动作是放在JVM外部实现的，以便让应用程序决定如何获取所需的类。
-虽然说类加载器的主要目的是完成这个动作，但是其作用却远远不仅于此。对于任意一个类，都需要由加载它的类加载器和这个类本...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/31</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "类加载机制">类加载机制</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/java-reflect/" >
-            
-                <span>java-reflect</span>
-        </a>
-        <div class="abstract-content">
-            java反射[TOC]反射:能够分析类能力的程序叫做反射。
-概述Java反射机制在运行状态中，也就是说是动态的，对于任意一个类，都可以知道这个类的所有属性和方法；对于任意一个对象，都可以调用它任意一个方法和属性，这种动态获取的信息以及动态调用对象的方法的功能称为反射机制。
+            kali(或者其他如Debian系列)下安装steam
+这里建议开启电脑的独显，不然游戏效果不佳，详见
 
-在Java中，在运...
+Steam安装：
+官网下载deb包
+sudo dpkg -i filename.deb
+如果报错：missing lib32 …..libGL.so.1 and libdrm.so.2
+在...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/21</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "kali">kali</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "steam">steam</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2018/09/21/Java中获得实例的方法/" >
+            
+                <span>Java中获得实例的方法</span>
+        </a>
+        <div class="abstract-content">
+            获取实例的方法通过new关键字通过new来获得一个类的实例，这是最最最常见的了。
+通过clone方法首先该类实现了Cloneable接口，实现了clone()方法，这时候，便可以通过调用某个已存在的对象的clone()方法来获得实例了。
+12345678910111213public clas...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/21</span>
             </div>
             <!-- tags  -->
             
@@ -429,7 +492,39 @@
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "反射">反射</a>
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2018/09/21/Java网络编程/" >
+            
+                <span>Java网络编程</span>
+        </a>
+        <div class="abstract-content">
+            网络编程InetAddress简述java中使用InetAddress类来表示ip地址，其两个子类Inet4Address和Inet6Address分别表示ipv4地址和ipv6地址。
+没有明显的构造函数，通过静态方法获得实例
+方法
+public static InetAddress getB...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/21</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java">Java</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "网络编程">网络编程</a>
     
 </div>
             
@@ -442,31 +537,28 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-du/" >
+        <a class="abstract-title" href = "/2018/09/21/Java序列化/" >
             
-                <span>linux-du</span>
+                <span>Java序列化</span>
         </a>
         <div class="abstract-content">
-            du命令作用du命令是用来查看使用空间的，但是对文件和目录磁盘使用空间情况的查看，与df命令不同
-格式df [选项] [文件]/目录]
-选项
--a –all 显示目录中所有文件的大小
--b –bytes 以bytes为单位
--k –kilobytes 以KB为单位
--m –megabytes ...
+            序列化和反序列化[TOC]
+概念把对象转换为字节序列的过程称为对象的序列化。把字节序列恢复为对象的过程称为对象的反序列化
+用途对象的序列化主要有两种用途：1） 把对象的字节序列永久地保存到硬盘上，通常存放在一个文件中；2） 在网络上传送对象的字节序列。
+Java中使用方法java.io.Obj...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/21</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "序列化">序列化</a>
     
 </div>
             
@@ -479,25 +571,29 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-df/" >
+        <a class="abstract-title" href = "/2018/09/21/Java-线程通信/" >
             
-                <span>linux-df</span>
+                <span>Java 线程通信——转</span>
         </a>
         <div class="abstract-content">
-            df命令作用linux中df命令的功能是用来检查该系统已挂载的文件系统的空间占用情况。可以使用该命令来获取硬盘占用了多少空间，还剩多少空间等信息。如果该命令使用时，没有指定任何文件名，则默认是当前所有已挂载了的文件系统的可用空间将被显示。默认情况下，单位是1KB，当然，也可以利用环境变量POS...
+            (转)java线程通信的三种方式1、传统的线程通信。
+​    在synchronized修饰的同步方法或者修饰的同步代码块中使用Object类提供的wait(),notify()和notifyAll()3个方法进行线程通信。
+​    关于这3个方法的解释：
+
+​    wait():导致当...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/21</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "线程通信">线程通信</a>
     
 </div>
             
@@ -510,34 +606,26 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-dd/" >
+        <a class="abstract-title" href = "/2018/09/21/volatile关键字/" >
             
-                <span>linux-dd</span>
+                <span>volatile关键字</span>
         </a>
         <div class="abstract-content">
-            dd命令(转载复制粘贴)
-linux下dd命令详解
-   名称: dd 
-使用权限: 所有使用者dd 这个指令在 manual 里的定义是 convert and copy a file 
-使用方式: 
-dd [option] 
-如果你想要在线看 manual, 可以试试: 
-dd –help...
+            volatile关键字内存模型的相关概念
+如上图所示，在java中，每个线程都拥有自己的本地空间，在需要对共享变量操作时，会将共享变量复制一份到自己的本地空间，操作完成后，在某个时间刷回主内存。线程与线程所拥有的空间是相互独立的，一般情况下是不可见的，这个时候，就会出现一个问题，内存可见性问题...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/21</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "拷贝烧录">拷贝烧录</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "volatile">volatile</a>
     
 </div>
             
@@ -550,128 +638,26 @@ dd –help...
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-bc/" >
+        <a class="abstract-title" href = "/2018/09/21/synchronized关键字/" >
             
-                <span>linux-bc</span>
+                <span>synchronized关键字</span>
         </a>
         <div class="abstract-content">
-            bc命令简介Bash内置了对整数四则运算的支持，但是并不支持浮点运算，而bc命令可以很方便的进行浮点运算，当然整数运算也不再话下。手册页上说bc是An arbitrary precision calculator language，即一个任意精度的计算语言，注意是一种语言，它提供了一些语法结构...
+            synchronized关键字写一个测试类，里面包含了同步方法，同步代码块，还有一个不加同步的
+1234567891011121314public class SyncDemo&#123;    public synchronized void doSth1()&#123;        Sy...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/21</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "calculate">calculate</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-iconv/" >
-            
-                <span>linux-iconv</span>
-        </a>
-        <div class="abstract-content">
-            iconv命令作用iconv命令是用来转换文件的编码方式的，比如它可以把utf-8编码的转换成gb18030编码，当然，反过来也是可以的 。jdk中也提供了类似的工具native2ascii。
-语法iconv -f encoding [-t encoding] [inputfile]...
-选...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-od/" >
-            
-                <span>linux-od</span>
-        </a>
-        <div class="abstract-content">
-            od功能od 命令用于将文件内容以八进制、十进制、十六进制、浮点格式或ASCII编码字符方式显示，通常用于显示或查看文件中不能直接显示在终端的字符。默认显示方式是八进制，名称源于Octal Dump。
-命令格式od [&lt;选项&gt;|&lt;参数&gt;] [&lt;文件名&gt;]
-命...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/28/linux-free/" >
-            
-                <span>linux-free</span>
-        </a>
-        <div class="abstract-content">
-            free命令作用free命令可以显示Linux系统中空闲的、已用的物理内存及swap内存,及被内核使用的buffer。在Linux系统监控的工具中，free命令是最经常使用的命令之一。
-格式free [选项]
-常用选项
--b 以Byte为单位显示内存使用情况
--k 以KB为单位显示内存使用情况...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "同步锁">同步锁</a>
     
 </div>
             
@@ -681,7 +667,7 @@ dd –help...
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/2018/page/2/">2</a><a class="extend next" rel="next" href="/archives/2018/page/2/">NEXT &#62;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/archives/2018/page/2/">2</a><a class="page-number" href="/archives/2018/page/3/">3</a><a class="page-number" href="/archives/2018/page/4/">4</a><a class="extend next" rel="next" href="/archives/2018/page/2/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -758,7 +744,7 @@ dd –help...
         <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
     </div>
     -->
-        <span id="hexo-power">我自倾杯思卿状，一杯凉，两杯霜。</span>
+        <span id="hexo-power">我自倾杯思卿妆，一杯凉，两杯霜。</span>
     <!-- 不蒜子  -->
     
     <div class="busuanzi-container">
@@ -958,9 +944,399 @@ dd –help...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 13
+        Total : 35
         </div>
         <!-- search  -->
         
@@ -973,6 +1349,116 @@ dd –help...
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/virtualbox添加虚拟磁盘/" >virtualbox添加虚拟磁盘</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/volatile关键字/" >volatile关键字</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java函数式接口/" >Java函数式接口——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/java-Lock包实现锁/" >java Lock包实现锁</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java-线程通信/" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/linux中的命令链接操作符/" >linux中的命令链接操作符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java网络编程/" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java序列化/" >Java序列化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/内网穿透——转/" >内网穿透——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java字节和字符的区别/" >Java字节和字符的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java-IO分析/" >Java IO性能分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/synchronized关键字/" >synchronized关键字</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/vim中的编码/" >vim中的编码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java克隆/" >Java克隆</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/ngrok简单使用/" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java中获得实例的方法/" >Java中获得实例的方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java多线程/" >Java多线程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/kali安装stream/" >kali安装stream</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java-class文件解析/" >Java class文件解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java-IO/" >Java IO</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2018/09/17/vim使用系统粘贴板/" >如何在vim中使用系统的粘贴板</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2018/09/10/独显/" >arch如何使用独显</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -991,17 +1477,7 @@ dd –help...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-ln/" >linux-ln</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-free/" >linux-free</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-dd/" >linux-dd</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-iconv/" >linux-iconv</a>
         </li>
     
     
@@ -1011,7 +1487,7 @@ dd –help...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-od/" >linux-od</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-free/" >linux-free</a>
         </li>
     
     
@@ -1021,7 +1497,7 @@ dd –help...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-iconv/" >linux-iconv</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-dd/" >linux-dd</a>
         </li>
     
     
@@ -1036,6 +1512,16 @@ dd –help...
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-od/" >linux-od</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-ln/" >linux-ln</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-top/" >top命令</a>
         </li>
     
@@ -1046,7 +1532,17 @@ dd –help...
     
         <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
     
+        <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
+    
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
+        <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
+    
         <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
     
         <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
     
@@ -1058,7 +1554,49 @@ dd –help...
     
         <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
     
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
+    
+        <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
+    
+        <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
+    
+        <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
+    
+        <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
+    
+        <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
+    
         <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
+    
+        <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
+    
+        <span class="sidebar-tag-name" data-tags="arch"><span class="iconfont-archer">&#xe606;</span>arch</span>
+    
+        <span class="sidebar-tag-name" data-tags="独立显卡"><span class="iconfont-archer">&#xe606;</span>独立显卡</span>
+    
+        <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
+    
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
+    
+        <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
     
         <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
     
