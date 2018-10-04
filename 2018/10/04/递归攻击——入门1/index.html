@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>dcLunatic&#39;s blog</title>
+    <title>递归攻击——入门1 · dcLunatic&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -196,12 +196,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >dcLunatic&#39;s blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">递归攻击——入门1</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>dcLunatic's blog</a>
 </header>
@@ -213,24 +224,76 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            递归攻击——入门1
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "C">C</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "递归攻击">递归攻击</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1,316</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/10/04</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -331,80 +394,75 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/09/30/Kali安装Virtualbox/" >
-            
-                <span>Kali安装Virtualbox</span>
-        </a>
-        <div class="abstract-content">
-            关于Kali Linux安装Virtualbox出现需要重新安装头文件的问题
- 一般的问题可以参考一下这篇文章,基本可以解决大部分问题了。
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="递归攻击——入门1"><a href="#递归攻击——入门1" class="headerlink" title="递归攻击——入门1"></a>递归攻击——入门1</h1><h2 id="递归概要"><a href="#递归概要" class="headerlink" title="递归概要"></a>递归概要</h2><p>递归可以分为两类，直接递归和间接递归。直接递归出现在程序调用自身的时候。直接递归的例子很多，比如数学算法，列表排序和二叉搜索树。<br>直接递归的例子如下所示，这个例子返回某个整数的阶乘（一系列递减整数的乘积）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">uint32_t factorial(uint32_t number)</span><br><span class="line">&#123;</span><br><span class="line">    if (number &lt;= 1)</span><br><span class="line">    &#123;</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    return number * factorial(number -1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>间接递归是提程序调用另一个程序，并最终调用原始程序。<br>间接递归最实际的使用是在目录遍历程序中， 在这样的程序里，程序在树中导航，另一个程序处理文件。<br>如果这个文件是目录，就调用原始程序。<br>另一个例子是，判断某个数是偶数还是奇数，如下所示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int is_odd(int number)</span><br><span class="line">&#123;</span><br><span class="line">    return number == 0 ? 0 : is_even(abs(number) - 1);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int is_even(int number)</span><br><span class="line">&#123;</span><br><span class="line">    return number == 0 ? 1 : is_odd(abs(number) - 1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="栈溢出导致拒绝服务"><a href="#栈溢出导致拒绝服务" class="headerlink" title="栈溢出导致拒绝服务"></a>栈溢出导致拒绝服务</h3><p> 递归的问题通常出现在没有合理的估计递归调用的次数时。<br> 当函数由 x86 处理器执行时，返回地址和函数参数被压入栈中。<br> 在递归调用中，栈以指数级增长。如果递归层数太深，就会在分配的栈大小超出时发生栈溢出。<br> 递归引发的栈溢出非常难以利用，通常会导致拒绝服务。<br> 这是因为，随着递归调用的进行，栈持续增长，使得栈溢出超出了栈顶。<br> 在栈上面（大多数时候）有一个防护页，用于预防栈破坏其他内存区域。<br> 当然也有技术能够跳过这个防护页，溢出到堆中。<br> 这一实现要求递归函数申请足够大的栈变量以及堆内存靠近防护页的另一端。</p>
+<h3 id="使用递归攻击未初始化的栈变量"><a href="#使用递归攻击未初始化的栈变量" class="headerlink" title="使用递归攻击未初始化的栈变量"></a>使用递归攻击未初始化的栈变量</h3><p>递归在漏洞利用中的另一个作用是攻击未初始化的栈变量。<br>正如前面提到的，x86 调用约定中规定函数参数由调用者压入栈中。<br>如果攻击者能够控制递归中函数参数的值，他们就能通过初始化未初始化的栈变量来控制栈。<br>编译器假设当你申明一个变量时，你会初始化它（在使用之前）。</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *使用递归攻击未初始化的栈变量--污染栈</span></span><br><span class="line"><span class="comment"> *编译器会在栈中会为栈变量分配一个虚拟地址，即使是未初始化的栈变量。</span></span><br><span class="line"><span class="comment"> *而由于函数调用的栈帧会重叠（因为重用），所以一个未初始化的栈变量通常会包含上次使用过的遗留数据，直到它被初始化。</span></span><br><span class="line"><span class="comment"> *而基于这个，我们就可以来尝试写一段程序了。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">takeInt</span><span class="params">(<span class="keyword">int</span> integer)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (integer == <span class="number">1337</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"How could this be? Integer was never initialized!\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recursiveFunc</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    i++;</span><br><span class="line">    <span class="keyword">if</span> (i == <span class="number">10</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        recursiveFunc(n);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line">    takeInt(j);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = atoi(argv[<span class="number">1</span>]);</span><br><span class="line">    recursiveFunc(n);</span><br><span class="line">    function();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**************************************************************************************************</span></span><br><span class="line"><span class="comment">* We can use it in console as follow:</span></span><br><span class="line"><span class="comment">*  $ gcc dirtyStack.c -o dirtyStack</span></span><br><span class="line"><span class="comment">*  $ ./dirtyStack 1337</span></span><br><span class="line"><span class="comment">* And the result is:</span></span><br><span class="line"><span class="comment">*  How could this be? Integer was never initialized!</span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">* 很明显，integer并没有给初始化，但是为什么条件判断会是真呢？</span></span><br><span class="line"><span class="comment">* 其实在递归调用的时候，栈指针会被不断修改成更低的内存地址，</span></span><br><span class="line"><span class="comment">* 而n和返回地址一起给压入栈中。而这样子，每当函数调用一次，我们便会有更大的机率访问到我们的未初始化变量。</span></span><br><span class="line"><span class="comment">* 但是，在返回地址和函数参数之外，栈中也会有其他的数据生成，这就使得在攻击未初始化变量增加了难度。</span></span><br><span class="line"><span class="comment">* 而且，要使用你自己的数据覆盖到未初始化的变量的偏移地址也是十分困难的，即使在没有其他指令清楚它的值的时候，</span></span><br><span class="line"><span class="comment">* 你的变量要给引用也很困难。</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* 注：编译运行结果与gcc版本也有一定的关系，有些版本的gcc指令生成的时候会有所不同。</span></span><br><span class="line"><span class="comment">* 可能高版本的gcc编译生成的指令有其他的优化，使得运行结果不一样。</span></span><br><span class="line"><span class="comment">* 后面我会附上二进制文件。</span></span><br><span class="line"><span class="comment">* 有兴趣的也可以自己使用调试工具如OD等动态跟踪一下整个运行的过程，</span></span><br><span class="line"><span class="comment">* 也可以利用这个自行解决问题。</span></span><br><span class="line"><span class="comment">**************************************************************************************************/</span></span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>复杂的递归程序通常难以理解，因此会导致一些程序错误。<br>无限的递归调用可以用于破坏栈，在某些条件下，递归能被用于影响栈的布局以攻击未初始化的变量。<br>如果你对例子中的递归漏洞感兴趣，我推荐这个项目。</p>
+<blockquote>
+<p>Project Zero: Exploiting Recursion in the Linux Kernel </p>
+</blockquote>
 
-问题但是呢，笔者在解决virtualbox编译进内核的时候，遇到了问题。
-
-一般的来说，这个问题只需要一句apt-get install linux-h...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "virtualbox">virtualbox</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "kali">kali</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/09/21/virtualbox添加虚拟磁盘/" >
-            
-                <span>virtualbox添加虚拟磁盘</span>
-        </a>
-        <div class="abstract-content">
-            Virutalbox如何添加现有的物理磁盘/分区给虚拟机使用
-使用VBoxManage internalcommands listpartitions -rawdisk \.\PhysicalDrive0列出某个磁盘下的分区信息
-通过分区信息之前的Number，选择想要的分区
-再执行VBoxM...
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://dcLunatic.github.io">dcLunatic</a>
+            <p>原文链接：<a href="http://dcLunatic.github.io/2018/10/04/递归攻击——入门1/">http://dcLunatic.github.io/2018/10/04/递归攻击——入门1/</a>
+            <p>发表日期：<a href="http://dcLunatic.github.io/2018/10/04/递归攻击——入门1/">October 4th 2018, 9:04:42 pm</a>
+            <p>更新日期：<a href="http://dcLunatic.github.io/2018/10/04/递归攻击——入门1/">October 4th 2018, 9:05:59 pm</a>
+            <p>版权声明：转载的时候,记得注明来处</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/21</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "virtualbox">virtualbox</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
-    
-</main>
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/09/30/Kali安装Virtualbox/" title= "Kali安装Virtualbox">
+                    <div class="prevTitle">Kali安装Virtualbox</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
 
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id: "递归攻击——入门1", // 可选。默认为 location.href
+        owner: 'dcLunatic',
+        repo: 'dcLunatic.github.io',
+        oauth: {
+            client_id: 'dcdfc17413c9cce237ea',
+            client_secret: 'd3d46b4d5b027ea8c7665700b763989784d43215',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
             <!-- profile -->
             
         </div>
@@ -491,6 +549,24 @@
 
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#递归攻击——入门1"><span class="toc-number">1.</span> <span class="toc-text">递归攻击——入门1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#递归概要"><span class="toc-number">1.1.</span> <span class="toc-text">递归概要</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#栈溢出导致拒绝服务"><span class="toc-number">1.1.1.</span> <span class="toc-text">栈溢出导致拒绝服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用递归攻击未初始化的栈变量"><span class="toc-number">1.1.2.</span> <span class="toc-text">使用递归攻击未初始化的栈变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子"><span class="toc-number">1.1.3.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">1.1.4.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1504,6 +1580,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":75,"height":150},"mobile":{"show":false}});</script></body>
 </html>
