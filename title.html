@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>java-reflect · dcLunatic&#39;s blog</title>
+    <title>top命令 · dcLunatic&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -210,7 +210,7 @@
                 <a href="/" >dcLunatic&#39;s blog</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">java-reflect</a>
+                <a href="#" class="post-name">top命令</a>
             </div>
     </div>
     
@@ -234,13 +234,13 @@ height:50vh;
     <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/images/linux-top.png)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            java-reflect
+            top命令
             <!-- 404 -->
             
         </h1>
@@ -259,15 +259,15 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "反射">反射</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "command">command</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1,105</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2,212</span>阅读时长: <span class="post-count reading-time">10 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -396,40 +396,140 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="java反射"><a href="#java反射" class="headerlink" title="java反射"></a>java反射</h1><p>[TOC]<br>反射:能够分析类能力的程序叫做反射。</p>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Java反射机制在运行状态中，也就是说是动态的，对于任意一个类，都可以知道这个类的所有属性和方法；对于任意一个对象，都可以调用它任意一个方法和属性，这种动态获取的信息以及动态调用对象的方法的功能称为反射机制。</p>
-<blockquote>
-<p>在Java中，在运行时识别对象和类的信息的方式主要有两种，一种是传统的<strong>RTTI(Run-Time Type Identification运行时类型识别)</strong>，它假定我们在编译时已经知道了所有的类型信息，编译器在编译时打开和检查.class文件；另外一种就是<strong>反射机制</strong>了，它允许我们在运行时发现和使用类的信息，运行时会打开和检查.class文件。反射也是一种RTTI的方式。</p>
+        <h1 id="top命令"><a href="#top命令" class="headerlink" title="top命令"></a>top命令</h1><h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于windows的任务管理器。top是一个动态显示过程，即可以通过用户按键输入来不断的刷新当前的状态，会占用前台。top命令提供了实时的对系统处理器的状态监视.它将显示系统中CPU最“敏感”的任务列表.该命令可以按CPU使用.内存使用和执行时间对任务进行排序；而且该命令的很多特性都可以通过交互式命令或者在个人定制文件中进行设定.</p>
+<h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><p>top [参数]</p>
+<h2 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h2><ul>
+<li>-b 批处理</li>
+<li>-c 显示完整的命令</li>
+<li>-I 忽略失效的进程</li>
+<li>-s 保密模式</li>
+<li>-S 累计模式</li>
+<li>-d&lt;时间&gt; 设置刷新间隔时间，单位s</li>
+<li>-u&lt;用户名&gt; 指定显示某个用户的</li>
+<li>-p&lt;进程号&gt; 指定显示某个进程的</li>
+<li>-n&lt;次数&gt; 指定循环次数<blockquote>
+<p>当指定了-d参数而没有指定-n参数时，会不断的循环刷新，默认的刷新时间是5s</p>
 </blockquote>
-<h2 id="瞎扯"><a href="#瞎扯" class="headerlink" title="瞎扯"></a>瞎扯</h2><h3 id="Class对象"><a href="#Class对象" class="headerlink" title="Class对象"></a>Class对象</h3><p>类型信息，在Java中，主要是通过Class对象来保存的，它包含了与类有关的信息。Java使用Class对象来执行RTTI。每一个类都会产生一个对应的Class对象，也就是保存在.class文件。所有的类都是在对其第一次使用时，动态加载到JVM的，当程序创建一个对类的静态成员的引用时，就会加载这个类。Class对象仅在需要的时候才会加载，static初始化就是在类加载时进行的。类加载器首先会检查这个类的Class对象是否已经备加载过，如果尚未加载，默认的类加载器就会根据类型查找对应的.class文件。</p>
-<p>想要在运行时使用类型信息，必须获取对象的Class对象的引用（可以通过Class.forName方法获得，或者使用.class获得等，两者有所差别，前者会自动初始化Class对象，后者不会）</p>
-<p>在使用类之前，需要</p>
-<ul>
-<li>加载：由类加载器找到对应的字节码，创建一个Class对象；</li>
-<li>链接：验证类中的字节码，为静态域分配空间；</li>
-<li>初始化：如果该类有超类，则对其初始化，执行静态初始化器和静态初始化块。</li>
+</li>
 </ul>
-<h2 id="传统的RTTI"><a href="#传统的RTTI" class="headerlink" title="传统的RTTI"></a>传统的RTTI</h2><p>严格的说，反射也是一种形式的RTTI，不过，一般的文档资料中把RTTI和反射分开，因为一般的，大家认为RTTI指的是传统的RTTI，通过继承和多态来实现，在运行时通过调用超类的方法来实现具体的功能（超类会自动实例化为子类，或使用instance of）。</p>
-<p>传统的RTTI有3种实现方式：</p>
+<h2 id="使用例子"><a href="#使用例子" class="headerlink" title="使用例子"></a>使用例子</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# top</span><br><span class="line"></span><br><span class="line">top - 01:02:01 up 11:58,  1 user,  load average: 1.45, 1.27, 0.88</span><br><span class="line">Tasks: 260 total,   2 running, 258 sleeping,   0 stopped,   0 zombie</span><br><span class="line"><span class="meta">%</span><span class="bash">Cpu(s):  4.1 us,  1.2 sy,  0.0 ni, 94.6 id,  0.0 wa,  0.0 hi,  0.2 si,  0.0 st</span></span><br><span class="line">MiB Mem :   3834.7 total,    751.4 free,   2192.0 used,    891.4 buff/cache</span><br><span class="line">MiB Swap:   3982.0 total,   3106.7 free,    875.2 used.    986.5 avail Mem </span><br><span class="line"></span><br><span class="line">  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                </span><br><span class="line"> 1314 root      20   0 2898636 260680  42968 R   5.6   6.6  42:37.61 gnome-shell            </span><br><span class="line"> 2322 root      20   0  655776 127692  38068 S   5.3   3.3  66:20.56 chrome                 </span><br><span class="line"> 9985 root      20   0  945984 263208 172800 S   5.3   6.7   4:58.68 chrome                 </span><br><span class="line"> 2287 root      20   0 1470104 191996  73624 S   3.6   4.9  60:25.74 chrome                 </span><br><span class="line"> 1135 root      20   0  476540  56436  39240 S   2.0   1.4  24:52.52 Xorg                   </span><br><span class="line"> 1625 root      20   0  283808  15124   4756 S   0.7   0.4   1:28.57 ibus-engine-pin        </span><br><span class="line">    8 root      20   0       0      0      0 I   0.3   0.0   0:46.93 rcu_sched              </span><br><span class="line"> 1236 root      20   0  410500   7568   3408 S   0.3   0.2   3:03.01 ibus-daemon            </span><br><span class="line"> 1264 root      20   0  453988  10424   8188 S   0.3   0.3   1:37.77 ibus-x11               </span><br><span class="line"> 4686 root      20   0  535284  37820  18140 S   0.3   1.0   0:36.24 gnome-terminal-        </span><br><span class="line"> 5090 root      20   0  799096 113792  47004 S   0.3   2.9   1:43.60 chrome                 </span><br><span class="line"> 5105 root      20   0  899760 191356  56888 S   0.3   4.9   0:58.34 chrome                 </span><br><span class="line">10163 root      20   0       0      0      0 D   0.3   0.0   0:02.05 kworker/u8:3           </span><br><span class="line">10224 root      20   0       0      0      0 I   0.3   0.0   0:00.25 kworker/u8:4           </span><br><span class="line">10232 root      20   0   29096   3716   3100 R   0.3   0.1   0:00.03 top                    </span><br><span class="line">    1 root      20   0  206180   4376   3060 S   0.0   0.1   0:44.02 systemd                </span><br><span class="line">    2 root      20   0       0      0      0 S   0.0   0.0   0:00.03 kthreadd</span><br></pre></td></tr></table></figure>
+<h2 id="前五行是当前系统情况的统计信息区"><a href="#前五行是当前系统情况的统计信息区" class="headerlink" title="前五行是当前系统情况的统计信息区"></a>前五行是当前系统情况的统计信息区</h2><ol>
+<li>第一行，任务队列信息，同uptime命令的执行结果，具体参数说明情况如下</li>
+</ol>
+<p><code>top - 01:02:01 up 11:58,  1 user,  load average: 1.45, 1.27, 0.88</code></p>
 <ul>
-<li>向上转型或向下转型（upcasting and downcasting），在java中，向下转型（父类转成子类）需要强制类型转换</li>
-<li>Class对象（用了Class对象，不代表就是反射，如果只是用Class对象cast成指定的类，那就还是传统的RTTI）</li>
-<li>instanceof或isInstance()</li>
+<li>01:02:01 当前系统时间</li>
+<li>up 11:58 系统已经运行了11:58时间长了</li>
+<li>1 user 当前有1个用户登录系统</li>
+<li>load average: 1.45, 1.27, 0.88 当前系统的负载统计值，分别是1分钟，5分钟，15分钟的。每5s钟检查一次活跃的进程数，然后按照特定的算法计算出负载情况。如果这个数除以逻辑cpu的数量，结果高于5就表明系统在超负荷运行了</li>
 </ul>
-<p>传统的RTTI与反射最主要的区别，在于RTTI在编译期需要.class文件，而反射不需要。传统的RTTI使用转型或Instance形式实现，但都需要指定要转型的类型，比如</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(Object o)</span></span>&#123;</span><br><span class="line">    Double d = (Double)o;</span><br><span class="line">    <span class="comment">//这里在编译时，就需要知道被转成的类型Double，也就是需要Double的.class文件。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p>反射有的时候页成为内省(Introspection)，而事实上，反射就是内省的一种方式，Java不允许在运行时改变程序结构或者类型变量的结构，但允许在运行时去探知，加载调用编译时完全未知的class，可以在运行时加载该class，生成实例对象等等。实现主要是结合了Class类和reflect包。至于反射的api以及使用方法，直接查看API就好了。</p>
-<h2 id="反射的性能"><a href="#反射的性能" class="headerlink" title="反射的性能"></a>反射的性能</h2><p>反射机制给予Java开发很大的灵活性，但反射机制本身也有缺点，代表性的缺陷就是反射的性能，一般来说，通过反射调用方法的效率比直接调用的效率要至少慢一倍以上。</p>
-<h2 id="反射与设计模式"><a href="#反射与设计模式" class="headerlink" title="反射与设计模式"></a>反射与设计模式</h2><p>反射的一个很重要的作用，就是在设计模式中的应用，包括在工厂模式和代理模式中的应用。</p>
+<ol start="2">
+<li>第二行，Tasks，任务(进程)，具体信息说明情况如下</li>
+</ol>
+<p><code>Tasks: 260 total,   2 running, 258 sleeping,   0 stopped,   0 zombie</code></p>
+<p>系统现在总共有206个进程，其中处于运行中的有两个，258个在休眠(sleep)，stoped状态的有0个，僵尸进程0个。</p>
+<ol start="3">
+<li>第三行，%Cpu(s)，cpu状态信息，具体属性说明如下</li>
+</ol>
+<p><code>%Cpu(s):  4.1 us,  1.2 sy,  0.0 ni, 94.6 id,  0.0 wa,  0.0 hi,  0.2 si,  0.0 st</code></p>
+<ul>
+<li>4.1 us 用户空间占用cpu的百分比</li>
+<li>1.2 sy 内核空间占用cpu的百分比</li>
+<li>0.0 ni 改变过优先级的进程占用cpu的百分比</li>
+<li>94.6 id 空闲cpu百分比</li>
+<li>0.0 wa IO等待占用cpu的百分比</li>
+<li>0.0 hi 硬中断(Hardware IRQ)占用cpu的百分比</li>
+<li>0.2 si 软中断(Software Interrupts)占用cpu的百分比</li>
+</ul>
+<ol start="4">
+<li>第四行，内存状态，具体信息如下</li>
+</ol>
+<p><code>MiB Mem :   3834.7 total,    751.4 free,   2192.0 used,    891.4 buff/cache</code></p>
+<ul>
+<li>3834.7 total 物理内存大小为3834.7M，大概是4G</li>
+<li>751.4 free 空闲的内存总量为751.4M</li>
+<li>2192.0 used 使用中的内存总量为2192.0M</li>
+<li>891.4 buff/cache 缓冲的交换区总量891.4M</li>
+</ul>
+<ol start="5">
+<li>第五行，swap交换分区信息，具体信息说明如下</li>
+</ol>
+<p><code>MiB Swap:   3982.0 total,   3106.7 free,    875.2 used.    986.5 avail Mem</code></p>
+<ul>
+<li>3982.0 total 总共有3982.0M的交换空间</li>
+<li>3106.7 free 空闲中的交换空间有3106.7M</li>
+<li>875.2 used 使用中的交换空间有875.2M</li>
+<li>986.5 avail 缓冲中的(可利用的)交换空间有986.5M</li>
+</ul>
+<p>使用中的内存总量（used）指的是现在系统内核控制的内存数，空闲内存总量（free）是内核还未纳入其管控范围的数量。纳入内核管理的内存不见得都在使用中，还包括过去使用过的现在可以被重复利用的内存，内核并不把这些可被重新使用的内存交还到free中去，因此在linux上free内存会越来越少，但不用为此担心。</p>
+<ol start="6">
+<li>第六行，空行，这一行是用来交互实时执行一些东西的。</li>
+<li>第七行，各进程(任务)的状态监控，项目列信息说明如下</li>
+</ol>
+<p><code>PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND</code></p>
+<ul>
+<li>PID 进程的id</li>
+<li>USER 进程所有者</li>
+<li>PR 进程优先级</li>
+<li>NI nice值，负责表示高优先级，正则表示低优先级</li>
+<li>VIRT 进程中使用虚拟内存总量，单位是kb。VIRT=SWAP+RES</li>
+<li>RES 进程中使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA</li>
+<li>SHA 共享内存大小，单位kb</li>
+<li>S 进程状态 D=不可中断的睡眠状态 R=运行 S=睡眠 T=跟踪/停止 Z=僵尸进程</li>
+<li>%CPU 上次更新到现在CPU时间占用百分比</li>
+<li>%MEM 进程使用的物理内存占用百分比</li>
+<li>TIME+ 进程使用的CPU时间总计，单位ms</li>
+<li>COMMAND 进程名称或者命令行</li>
+</ul>
+<h2 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h2><ol>
+<li>多核cpu监控</li>
+</ol>
+<p>在top的基本视图中，按下键盘数字’1’，可监控每个逻辑cpu的状况</p>
+<p><code>%Cpu(s):  2.7 us,  0.8 sy,  0.0 ni, 96.5 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</code></p>
+<p>按下1后变成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%Cpu0  :  0.3 us,  0.7 sy,  0.0 ni, 98.7 id,  0.3 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">%Cpu1  :  0.3 us,  0.7 sy,  0.0 ni, 99.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">%Cpu2  :  0.3 us,  0.0 sy,  1.0 ni, 98.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">%Cpu3  :  0.3 us,  0.3 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li><p>高亮显示当前运行进程</p>
+<ol>
+<li>敲击键盘’b’，打开关闭<code>加亮</code>当前正在running中的进程</li>
+<li>敲击键盘’y’，打开关闭<code>高亮</code>当前正在running中的进程</li>
+</ol>
+</li>
+<li><p>进程显示的字段排序</p>
+<p>默认进入top时，各进程是通过cpu的占用量来排序的。</p>
+<ol>
+<li>敲击键盘’x’，打开关闭排序列的加亮效果</li>
+<li>通过’shift+&lt;’或’shift+&gt;’来左右改变排序列</li>
+</ol>
+</li>
+</ol>
+<h2 id="top交互命令"><a href="#top交互命令" class="headerlink" title="top交互命令"></a>top交互命令</h2><p>在top命令过程中可以使用一些交互命令，这些命令都是单字母的，如果在命令行中使用了s选项，其中一些命令可能会给屏蔽。</p>
+<ul>
+<li>h 显示帮助画面，给出一些简短命令总结说明</li>
+<li>k 终止一个进程</li>
+<li>i 忽略闲置和僵死进程</li>
+<li>q 退出程序</li>
+<li>r 重新安排一个进程的nice值</li>
+<li>S 打开关闭累计模式</li>
+<li>s 改变两次刷新的间隔时间，如果有小数，就换算成ms，输入0表示不断刷新</li>
+<li>f 从当前的显示中添加项目</li>
+<li>F 从当前的显示中删除项目</li>
+<li>I 切换平均负载和启动时间信息</li>
+<li>t 切换显示进程和cpu状态信息</li>
+<li>c 切换显示命令名称和完整命令行</li>
+<li>M 根据驻留内存大小进行排序</li>
+<li>P 根据CPU使用百分比大小进行排序</li>
+<li>T 根据时间/累计时间进行排序</li>
+<li>w 将当前设置写入~/.toprc配置文件中</li>
+</ul>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="http://dcLunatic.github.io">dcLunatic</a>
-            <p>原文链接：<a href="http://dcLunatic.github.io/2018/08/28/java-reflect/">http://dcLunatic.github.io/2018/08/28/java-reflect/</a>
-            <p>发表日期：<a href="http://dcLunatic.github.io/2018/08/28/java-reflect/">August 28th 2018, 10:05:05 pm</a>
-            <p>更新日期：<a href="http://dcLunatic.github.io/2018/08/28/java-reflect/">September 3rd 2018, 12:15:42 pm</a>
+            <p>原文链接：<a href="http://dcLunatic.github.io/title.html">http://dcLunatic.github.io/title.html</a>
+            <p>发表日期：<a href="http://dcLunatic.github.io/title.html">August 28th 2018, 10:46:36 am</a>
+            <p>更新日期：<a href="http://dcLunatic.github.io/title.html">September 3rd 2018, 12:15:42 pm</a>
             <p>版权声明：转载的时候,记得注明来处</p>
         </div>
     
@@ -438,17 +538,12 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/08/31/java类加载机制/" title= "java类加载机制">
-                    <div class="nextTitle">java类加载机制</div>
+                <a href= "/title.html" title= "linux-ln">
+                    <div class="nextTitle">linux-ln</div>
                 </a>
             
         </li>
         <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/08/28/linux-du/" title= "linux-du">
-                    <div class="prevTitle">linux-du</div>
-                </a>
             
         </li>
     </ul>
@@ -463,7 +558,7 @@ height:50vh;
 <script src="https://file.awen.me/gitment.browser.js"></script>
 <script>
     var gitment = new Gitment({
-        id: "java-reflect", // 可选。默认为 location.href
+        id: "top命令", // 可选。默认为 location.href
         owner: 'dcLunatic',
         repo: 'dcLunatic.github.io',
         oauth: {
@@ -587,7 +682,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java反射"><span class="toc-number">1.</span> <span class="toc-text">java反射</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瞎扯"><span class="toc-number">1.2.</span> <span class="toc-text">瞎扯</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Class对象"><span class="toc-number">1.2.1.</span> <span class="toc-text">Class对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传统的RTTI"><span class="toc-number">1.3.</span> <span class="toc-text">传统的RTTI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反射"><span class="toc-number">1.4.</span> <span class="toc-text">反射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反射的性能"><span class="toc-number">1.5.</span> <span class="toc-text">反射的性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反射与设计模式"><span class="toc-number">1.6.</span> <span class="toc-text">反射与设计模式</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#top命令"><span class="toc-number">1.</span> <span class="toc-text">top命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#作用"><span class="toc-number">1.1.</span> <span class="toc-text">作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#格式"><span class="toc-number">1.2.</span> <span class="toc-text">格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用参数"><span class="toc-number">1.3.</span> <span class="toc-text">常用参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用例子"><span class="toc-number">1.4.</span> <span class="toc-text">使用例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前五行是当前系统情况的统计信息区"><span class="toc-number">1.5.</span> <span class="toc-text">前五行是当前系统情况的统计信息区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用技巧"><span class="toc-number">1.6.</span> <span class="toc-text">使用技巧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#top交互命令"><span class="toc-number">1.7.</span> <span class="toc-text">top交互命令</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -600,24 +695,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1246,192 +1323,192 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/04</span><a class="archive-post-title" href= "/2018/10/04/递归攻击——入门1/" >递归攻击——入门1</a>
+            <span class="archive-post-date">10/04</span><a class="archive-post-title" href= "/title.html" >递归攻击——入门1</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/2018/09/30/Linux进程管理/" >Linux进程管理</a>
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/title.html" >Linux进程管理</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/2018/09/30/Kali安装Virtualbox/" >Kali安装Virtualbox</a>
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/title.html" >Kali安装Virtualbox</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/virtualbox添加虚拟磁盘/" >virtualbox添加虚拟磁盘</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >virtualbox添加虚拟磁盘</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/volatile关键字/" >volatile关键字</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >volatile关键字</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/java-Lock包实现锁/" >java Lock包实现锁</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >ngrok简单使用</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java-线程通信/" >Java 线程通信——转</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >Java序列化</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java-IO分析/" >Java IO性能分析</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >Java 线程通信——转</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/kali安装steam/" >kali安装steam</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >java Lock包实现锁</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java字节和字符的区别/" >Java字节和字符的区别</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >Java网络编程</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/内网穿透——转/" >内网穿透——转</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >Java IO性能分析</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/synchronized关键字/" >synchronized关键字</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >Java多线程</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/ngrok简单使用/" >ngrok简单使用</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >Java中获得实例的方法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/linux中的命令链接操作符/" >linux中的命令链接操作符</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >Java克隆</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java克隆/" >Java克隆</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >kali安装steam</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java多线程/" >Java多线程</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >Java函数式接口——转</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/vim中的编码/" >vim中的编码</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >Java字节和字符的区别</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java网络编程/" >Java网络编程</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >vim中的编码</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java序列化/" >Java序列化</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >synchronized关键字</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java函数式接口/" >Java函数式接口——转</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >linux中的命令链接操作符</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java中获得实例的方法/" >Java中获得实例的方法</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >内网穿透——转</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java-class文件解析/" >Java class文件解析</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >Java IO</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2018/09/21/Java-IO/" >Java IO</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/title.html" >Java class文件解析</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2018/09/17/vim使用系统粘贴板/" >如何在vim中使用系统的粘贴板</a>
+            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/title.html" >如何在vim中使用系统的粘贴板</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2018/09/10/独显/" >arch如何使用独显</a>
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/title.html" >arch如何使用独显</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/03</span><a class="archive-post-title" href= "/2018/09/03/makefile总结——转/" >(转)makefile总结</a>
+            <span class="archive-post-date">09/03</span><a class="archive-post-title" href= "/title.html" >(转)makefile总结</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2018/08/31/java类加载机制/" >java类加载机制</a>
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/title.html" >java类加载机制</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/java-reflect/" >java-reflect</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/title.html" >java-reflect</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-du/" >linux-du</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/title.html" >linux-du</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-free/" >linux-free</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/title.html" >linux-free</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-od/" >linux-od</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/title.html" >linux-od</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-bc/" >linux-bc</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/title.html" >linux-bc</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-dd/" >linux-dd</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/title.html" >linux-dd</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-df/" >linux-df</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/title.html" >linux-df</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-ln/" >linux-ln</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/title.html" >linux-ln</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux目录-proc-详解/" >linux目录'/proc'详解</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/title.html" >linux目录'/proc'详解</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-iconv/" >linux-iconv</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/title.html" >linux-iconv</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2018/08/28/linux-top/" >top命令</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/title.html" >top命令</a>
         </li>
     
     </div>
@@ -1473,17 +1550,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
     
-        <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
+        <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
     
-        <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+        <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
     
         <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
     
-        <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
-    
         <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
     
-        <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+        <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
+    
+        <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
     
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
