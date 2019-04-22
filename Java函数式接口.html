@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="dcLunatic">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="dcLunatic">
+    <meta name="keywords" content="Hexo | dcLunatic">
+    <meta name="description" content="">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Java函数式接口——转 · dcLunatic&#39;s blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >dcLunatic&#39;s blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Java函数式接口——转</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>dcLunatic's blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Java函数式接口——转
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "函数式接口">函数式接口</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2,758</span>阅读时长: <span class="post-count reading-time">10 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/09/21</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="转-深入学习Java8中的函数式接口-——出自www-sohu-com-a-123958799-465959"><a href="#转-深入学习Java8中的函数式接口-——出自www-sohu-com-a-123958799-465959" class="headerlink" title="(转)深入学习Java8中的函数式接口                     ——出自www.sohu.com/a/123958799_465959"></a>(转)深入学习Java8中的函数式接口                     ——出自<a href="http://www.sohu.com/a/123958799_465959" target="_blank" rel="noopener">www.sohu.com/a/123958799_465959</a></h1><p>引言</p>
+<p>目前由于系统已经全面切换为JDK8，所以有必要系统的了解一下Java8的一些新特性，以便后续在日常工作中可以使用一些高级特性来提高编程效率。</p>
+<p>因为Java8引入了函数式接口，在java.util.function包含了几大类函数式接口声明。这里第一篇主要研究一下Function相关的接口。</p>
+<p>FunctionalInterface注解</p>
+<p>Java8的新引入，包含函数式的设计，接口都有@FunctionalInterface的注解。就像这个注解的注释说明一样，它注解在接口层面，且注解的接口要有且仅有一个抽象方法。具体就是说，注解在Inteface上，且interface里只能有一个抽象方法，可以有default方法。因为从语义上来讲，一个函数式接口需要通过一个<strong><em>逻辑上的</em></strong>方法表达一个单一函数。那理解这个单一就很重要了，单一不是说限制你一个interface里只有一个抽象方法，单是多个方法的其他方法需要是继承自Object的public方法，或者你要想绕过，就自己实现default。函数式接口自己本身一定是只有一个抽象方法。同时，如果是Object类的public方法，也是不允许的。官方的说明翻译如下：</p>
+<p>如果一个接口I，I有一组抽象方法集合M，且这些方法都不是Object类的public签名方法，那么如果存在一个M中的方法m，满足：</p>
+<p>m的签名是所有M中方法签名的子签名。</p>
+<p>m对于M中的每个方法都是返回类型可替换的。 此时，接口I是一个函数式接口。</p>
+<p>怎么理解，看几个例子。</p>
+<p>比如：你声明一个接口：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/012b8c1a0bec4db3afcfb76918e6e6b8.png" alt="img"></p>
+<p>这会编译错，编译器会告诉你<em>no target method</em>。而如果加一个方法：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/17f0153ea3594e029f27628f5668f6a2.png" alt="img"></p>
+<p>这就OK了，一个函数式接口声明好了。再加一个呢？</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/722584407a7d4fc49f9e451716d9cc52.png" alt="img"></p>
+<p>不ok，明确说了只有一个抽象方法嘛。但是如果换一种函数签名：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/105552f28ea84e4c90accb2caca0ffde.png" alt="img"></p>
+<p>错误依旧，因为这个方法签名是Object类的public方法。而再改一下：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/79b8592fa5154590a183291f2e7ebc54.png" alt="img"></p>
+<p>这就OK了。一个抽象方法，一个Object的public方法，相安无事。Object还有其他方法，clone方法试试会怎么样？</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/597231984d374d27aa0fbf111f8614ee.png" alt="img"></p>
+<p>这又不行了，因为前面明确说了，要是Object的public方法，而clone是protected的。</p>
+<p>所以总结一句话就是：</p>
+<p>函数式接口，有且仅有一个抽象方法，Object的public方法除外。</p>
+<p>因为Java本身支持多接口实现，你定义一个Class可以implements多个interface。所以这个限制也没什么影响，如果想约定一个函数式接口来统一，也可以做一些默认的实现来达到一个接口多个抽象方法的目的，比如下面这种做法：</p>
+<p>一个普通接口NonFunc：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/5f0d5bec5cb3454884607dfb0c430053.png" alt="img"></p>
+<p>函数式接口Func：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/a99073f1579d4735acc9e7e595a20ed0_th.png" alt="img"></p>
+<p>实现的测试类：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/cd04c58b20d34c29a9a60c74c7f8dc2b_th.jpeg" alt="img"></p>
+<p>函数式接口的一大特性就是可以被lambda表达式和函数引用表达式代替。也就是说声明这样的接口，是可以灵活的以方法来传参。看个例子：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/5961eaa7b65d469aa04ae67a2b81b88b_th.jpeg" alt="img"></p>
+<p>上面例子列举了一个lambda模式和一个方法引用模式，这样就可以利用函数式编程强大的能力，将方法作为参数了。</p>
+<p>另一个大的话题是针对上文的<strong><em>逻辑上的方法</em></strong>。所谓逻辑上，就是说当你出现函数式接口多重继承其他接口时，如果继承的多个接口有相同的方法签名，那么也是OK的。而这种相同签名的方法，也包括了泛型的情况，以下的声明中的Z接口，都是函数式接口。</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/0dc3e1f4871a4aa7bc7082c4802b9a35.png" alt="img"></p>
+<p>但是要注意的是，这种泛型的支持，是因为函数式接口的官方声明规范里要求类型可替换和子签名，不是因为泛型擦除。</p>
+<p>比如下面的例子就不是函数式接口：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/ba47c313487c47a3bcfafc498be7bc62.jpeg" alt="img"></p>
+<p>最后，Java8里关于函数式接口的包是java.util.function，里面全部是函数式接口。主要包含几大类：Function、Predicate、Supplier、Consumer和*Operator（没有Operator接口，只有类似BinaryOperator这样的接口）。后面依次展开详细说明一下。</p>
+<p><strong>Function</strong></p>
+<p>关于Function接口，其接口声明是一个函数式接口，其抽象表达函数为</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/ff5302c5d96348c88d35587658b13fd2.png" alt="img"></p>
+<p>函数意为将参数T传递给一个函数，返回R。即$R=Function(T)$</p>
+<p>其默认实现了3个default方法，分别是compose、andThen和identity，对应的函数表达为：compose对应$V=Function(ParamFunction(T))$，体现嵌套关系；andThen对应$V=ParamFunction(Function(T))$，转换了嵌套的顺序；还有identity对应了一个传递自身的函数调用对应$Function(T)=T$。从这里看出来，compose和andThen对于两个函数f和g来说，f.compose(g)等价于g.andThen(f)。看个例子：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/54749aa942fd4ae9b52910a5f9b2e5b6.jpeg" alt="img"></p>
+<p><strong>高阶函数</strong></p>
+<p>只是普通的lambda表达式，其能力有限。我们会希望引入更强大的函数能力——高阶函数，可以定义任意同类计算的函数。</p>
+<p>比如这个函数定义，参数是z，返回值是一个Function，这个Function本身又接受另一个参数y，返回z+y。于是我们可以根据这个函数，定义任意加法函数：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/ac75024f4a1d49f79402c23628742072.jpeg" alt="img"></p>
+<p>由于高阶函数接受一个函数作为参数，结果返回另一个函数，所以是典型的函数到函数的映射。</p>
+<p>BiFunction提供了二元函数的一个接口声明，举例来说：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/197523ac84f347bb9b911e6976b8927d.png" alt="img"></p>
+<p>其输出结果将是：f(z)=x*y, when x=3,y=5, then f(z)=15。</p>
+<p>二元函数没有compose能力，只是默认实现了andThen。</p>
+<p>有了一元和二元函数，那么可以通过组合扩展出更多的函数可能。</p>
+<p>Function接口相关的接口包括：</p>
+<p>BiFunction ：R apply(T t, U u);接受两个参数，返回一个值，代表一个二元函数；</p>
+<p>DoubleFunction ：R apply(double value);只处理double类型的一元函数；</p>
+<p>IntFunction ：R apply(int value);只处理int参数的一元函数；</p>
+<p>LongFunction ：R apply(long value);只处理long参数的一元函数；</p>
+<p>ToDoubleFunction：double applyAsDouble(T value);返回double的一元函数；</p>
+<p>ToDoubleBiFunction：double applyAsDouble(T t, U u);返回double的二元函数；</p>
+<p>ToIntFunction：int applyAsInt(T value);返回int的一元函数；</p>
+<p>ToIntBiFunction：int applyAsInt(T t, U u);返回int的二元函数；</p>
+<p>ToLongFunction：long applyAsLong(T value);返回long的一元函数；</p>
+<p>ToLongBiFunction：long applyAsLong(T t, U u);返回long的二元函数；</p>
+<p>DoubleToIntFunction：int applyAsInt(double value);接受double返回int的一元函数；</p>
+<p>DoubleToLongFunction：long applyAsLong(double value);接受double返回long的一元函数；</p>
+<p>IntToDoubleFunction：double applyAsDouble(int value);接受int返回double的一元函数；</p>
+<p>IntToLongFunction：long applyAsLong(int value);接受int返回long的一元函数；</p>
+<p>LongToDoubleFunction：double applyAsDouble(long value);接受long返回double的一元函数；</p>
+<p>LongToIntFunction：int applyAsInt(long value);接受long返回int的一元函数；</p>
+<p><strong>Operator</strong></p>
+<p>Operator其实就是Function，函数有时候也叫作算子。算子在Java8中接口描述更像是函数的补充，和上面的很多类型映射型函数类似。</p>
+<p>算子Operator包括：UnaryOperator和BinaryOperator。分别对应单元算子和二元算子。</p>
+<p>算子的接口声明如下：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/be923310193e40a8a79646a56637b151.png" alt="img"></p>
+<p>二元算子的声明：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/ccc7c75d5f854cfb9c9768830a46775b_th.jpeg" alt="img"></p>
+<p>很明显，算子就是一个针对同类型输入输出的一个映射。在此接口下，只需声明一个泛型参数T即可。对应上面的例子：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/bbab03dd95824b719dfdfecf6f91d8d1_th.jpeg" alt="img"></p>
+<p>例子里补充一点的是，BinaryOperator提供了两个默认的static快捷实现，帮助实现二元函数min(x,y)和max(x,y)，使用时注意的是排序器可别传反了：）</p>
+<p>其他的Operator接口：（不解释了）</p>
+<p>LongUnaryOperator：long applyAsLong(long operand);</p>
+<p>IntUnaryOperator：int applyAsInt(int operand);</p>
+<p>DoubleUnaryOperator：double applyAsDouble(double operand);</p>
+<p>DoubleBinaryOperator：double applyAsDouble(double left, double right);</p>
+<p>IntBinaryOperator：int applyAsInt(int left, int right);</p>
+<p>LongBinaryOperator：long applyAsLong(long left, long right);</p>
+<p><strong>Predicate</strong></p>
+<p>predicate是一个谓词函数，主要作为一个谓词演算推导真假值存在，其意义在于帮助开发一些返回bool值的Function。本质上也是一个单元函数接口，其抽象方法test接受一个泛型参数T，返回一个boolean值。等价于一个Function的boolean型返回值的子集。</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/dd98482e6b78438e960e12c6e206f13e.png" alt="img"></p>
+<p>其默认方法也封装了and、or和negate逻辑。写个小例子看看：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/7839cfba31a54de49d6e8bda8202b389_th.jpeg" alt="img"></p>
+<p>Predicate在Stream中有应用，Stream的filter方法就是接受Predicate作为入参的。这个具体在后面使用Stream的时候再分析深入。</p>
+<p>其他Predicate接口：</p>
+<p>BiPredicate：boolean test(T t, U u);接受两个参数的二元谓词</p>
+<p>DoublePredicate：boolean test(double value);入参为double的谓词函数</p>
+<p>IntPredicate：boolean test(int value);入参为int的谓词函数</p>
+<p>LongPredicate：boolean test(long value);入参为long的谓词函数</p>
+<p><strong>Consumer</strong></p>
+<p>看名字就可以想到，这像谓词函数接口一样，也是一个Function接口的特殊表达——接受一个泛型参数，不需要返回值的函数接口。</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/289a5e7cfca14ea1911d8b691c7a5042.png" alt="img"></p>
+<p>这个接口声明太重要了，对于一些纯粹consume型的函数，没有Consumer的定义真无法被Function家族的函数接口表达。因为Function一定需要一个泛型参数作为返回值类型（当然不排除你使用Function来定义，但是一直返回一个无用的值）。比如下面的例子，如果没有Consumer，类似的行为使用Function表达就一定需要一个返回值。</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/302f866e17104aee80e42c8b20053674_th.png" alt="img"></p>
+<p>其他Consumer接口：</p>
+<p>BiConsumer：void accept(T t, U u);接受两个参数</p>
+<p>DoubleConsumer：void accept(double value);接受一个double参数</p>
+<p>IntConsumer：void accept(int value);接受一个int参数</p>
+<p>LongConsumer：void accept(long value);接受一个long参数</p>
+<p>ObjDoubleConsumer：void accept(T t, double value);接受一个泛型参数一个double参数</p>
+<p>ObjIntConsumer：void accept(T t, int value);接受一个泛型参数一个int参数</p>
+<p>ObjLongConsumer：void accept(T t, long value);接受一个泛型参数一个long参数</p>
+<p><strong>Supplier</strong></p>
+<p>最后说的是一个叫做Supplier的函数接口，其声明如下：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/ecc9f0ea65584d2bbf55e0bf0c75f7ad.png" alt="img"></p>
+<p>其简洁的声明，会让人以为不是函数。这个抽象方法的声明，同Consumer相反，是一个只声明了返回值，不需要参数的函数（这还叫函数？）。也就是说Supplier其实表达的不是从一个参数空间到结果空间的映射能力，而是表达一种生成能力，因为我们常见的场景中不止是要consume（Consumer）或者是简单的map（Function），还包括了new这个动作。而Supplier就表达了这种能力。</p>
+<p>比如你要是返回一个常量，那可以使用类似的做法：</p>
+<p>这保证supplier对象输出的一直是1。</p>
+<p>如果是要利用构造函数的能力呢？就可以这样：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/4281b4926d2c47c3900d69a9e128cd37.png" alt="img"></p>
+<p>这样的输出可以看到，全部的对象都是new出来的。</p>
+<p>这样的场景在Stream计算中会经常用到，具体在分析Java 8中Stream的时候再深入。</p>
+<p>其他Supplier接口：</p>
+<p>BooleanSupplier：boolean getAsBoolean();返回boolean</p>
+<p>DoubleSupplier：double getAsDouble();返回double</p>
+<p>IntSupplier：int getAsInt();返回int</p>
+<p>LongSupplier：long getAsLong();返回long</p>
+<p><strong>总结</strong></p>
+<p>整个函数式接口的大概总结如下：</p>
+<p><img src="http://img.mp.itc.cn/upload/20170110/a2628994ebda43eca98c787a8b2577ba_th.jpeg" alt="img"></p>
+<p><strong>-END-</strong></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://dcLunatic.github.io">dcLunatic</a>
+            <p>原文链接：<a href="http://dcLunatic.github.io/Java函数式接口.html">http://dcLunatic.github.io/Java函数式接口.html</a>
+            <p>发表日期：<a href="http://dcLunatic.github.io/Java函数式接口.html">September 21st 2018, 1:30:14 pm</a>
+            <p>更新日期：<a href="http://dcLunatic.github.io/Java函数式接口.html">September 21st 2018, 1:32:04 pm</a>
+            <p>版权声明：转载的时候,记得注明来处</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/Java多线程.html" title= "Java多线程">
+                    <div class="nextTitle">Java多线程</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/ngrok简单使用.html" title= "ngrok简单使用">
+                    <div class="prevTitle">ngrok简单使用</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://file.awen.me/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: "Java函数式接口——转", // 可选。默认为 location.href
+        owner: 'dcLunatic',
+        repo: 'dcLunatic.github.io',
+        oauth: {
+            client_id: '6d779c8d68f7d8d8ec9f',
+            client_secret: 'dec76663990c692bc924eef2916aec1f195e4a6b',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:dcLunatic6@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/dcLunatic" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="//zhihu.com/people/dclunatic" class="iconfont-archer zhihu" target="_blank" title=zhihu></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+    <!--
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    -->
+        <span id="hexo-power">我自倾杯思卿妆，一杯凉，两杯霜。</span>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#转-深入学习Java8中的函数式接口-——出自www-sohu-com-a-123958799-465959"><span class="toc-number">1.</span> <span class="toc-text">(转)深入学习Java8中的函数式接口                     ——出自www.sohu.com/a/123958799_465959</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 38
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/04</span><a class="archive-post-title" href= "/递归攻击——入门1.html" >递归攻击——入门1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/Kali安装Virtualbox.html" >Kali安装Virtualbox</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/Linux进程管理.html" >Linux进程管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/virtualbox添加虚拟磁盘.html" >virtualbox添加虚拟磁盘</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/kali安装steam.html" >kali安装steam</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-线程通信.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/volatile关键字.html" >volatile关键字</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java函数式接口.html" >Java函数式接口——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/内网穿透——转.html" >内网穿透——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java网络编程.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java字节和字符的区别.html" >Java字节和字符的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux中的命令链接操作符.html" >linux中的命令链接操作符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java中获得实例的方法.html" >Java中获得实例的方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok简单使用.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java多线程.html" >Java多线程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/vim中的编码.html" >vim中的编码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock包实现锁.html" >java Lock包实现锁</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java序列化.html" >Java序列化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-IO分析.html" >Java IO性能分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java克隆.html" >Java克隆</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized关键字.html" >synchronized关键字</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-IO.html" >Java IO</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-class文件解析.html" >Java class文件解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/vim使用系统粘贴板.html" >如何在vim中使用系统的粘贴板</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/独显.html" >arch如何使用独显</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/03</span><a class="archive-post-title" href= "/makefile总结——转.html" >(转)makefile总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/java类加载机制.html" >java类加载机制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/java-reflect.html" >java-reflect</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-df.html" >linux-df</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-od.html" >linux-od</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux目录-proc-详解.html" >linux目录'/proc'详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-bc.html" >linux-bc</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-top.html" >top命令</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
+        <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
+    
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
+        <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
+    
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="command"><span class="iconfont-archer">&#xe606;</span>command</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
+    
+        <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
+    
+        <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
+    
+        <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
+    
+        <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
+    
+        <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
+    
+        <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
+    
+        <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
+    
+        <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
+    
+        <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
+    
+        <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
+    
+        <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
+    
+        <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
+    
+        <span class="sidebar-tag-name" data-tags="arch"><span class="iconfont-archer">&#xe606;</span>arch</span>
+    
+        <span class="sidebar-tag-name" data-tags="独立显卡"><span class="iconfont-archer">&#xe606;</span>独立显卡</span>
+    
+        <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
+    
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
+    
+        <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "dcLunatic"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":75,"height":150},"mobile":{"show":false}});</script></body>
+</html>
+
+

@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="dcLunatic">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="dcLunatic">
+    <meta name="keywords" content="Hexo | dcLunatic">
+    <meta name="description" content="">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Linux进程管理 · dcLunatic&#39;s blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >dcLunatic&#39;s blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Linux进程管理</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>dcLunatic's blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Linux进程管理
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "进程管理">进程管理</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">11,974</span>阅读时长: <span class="post-count reading-time">42 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/09/30</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Linux进程"><a href="#Linux进程" class="headerlink" title="Linux进程"></a>Linux进程</h1><p>[TOC]</p>
+<blockquote>
+<p>进程是执行中一段程序，即一旦程序被载入到内存中并准备执行，它就是一个进程。进程是表示资源分配的的基本概念，又是调度运行的基本单位，是系统中的并发执行的单位。<br>线程：单个进程中执行中每个任务就是一个线程。线程是进程中执行运算的最小单位。<br>换句话说，进程线程都是对CPU工作时间段的描述（通过task_struct)。</p>
+</blockquote>
+<h2 id="而在Linux系统运行中，程序对应的进程是怎么被创建，被管理，被切换，被调度的呢？"><a href="#而在Linux系统运行中，程序对应的进程是怎么被创建，被管理，被切换，被调度的呢？" class="headerlink" title="而在Linux系统运行中，程序对应的进程是怎么被创建，被管理，被切换，被调度的呢？"></a>而在Linux系统运行中，程序对应的进程是怎么被创建，被管理，被切换，被调度的呢？</h2><h3 id="进程的组成，创建，状态机"><a href="#进程的组成，创建，状态机" class="headerlink" title="进程的组成，创建，状态机"></a>进程的组成，创建，状态机</h3><h4 id="进程的组成，创建"><a href="#进程的组成，创建" class="headerlink" title="进程的组成，创建"></a>进程的组成，创建</h4><blockquote>
+<p>所有进程都会有一个共同的父进程，PID为1的init(systemd)进程，它是内核引导后启动的第一个进程，主要用来执行一些开机初始化脚本和监视进程，读取配置文件/etc/inittab，永远不会停止。必要的时候可以作为参照。如果某个进程突然成为游离进程(其父进程终止了)，此时，这个进程会将init进程作为参照，作为它们的父进程，然后gg。<code>父进程死了它的子进程也会死。</code>可以通过pstree查看系统内正在运行的各个进程的之间的继承关系。<br>inittab 是一个不可执行的文本文件，每行的基本格式为:<em>id:runlevels:action:process</em></p>
+<ul>
+<li>id: 1-2个字符，配置行的唯一标识，不能重复。</li>
+<li>runlevels: 配置行适用的运行级别，可以填入多个运行级别，如12345或者35。<ul>
+<li>0: 关机</li>
+<li>1: 单用户字符界面</li>
+<li>2: 不具备网络文件系统(NFS)功能的多用户文字界面</li>
+<li>3: 具备网络功能的多用户字符界面</li>
+<li>4: 保留</li>
+<li>5: 具有网络功能的图形用户界面</li>
+<li>6: 重新启动系统</li>
+</ul>
+</li>
+<li>action: 表示init的行为，行为表略。</li>
+<li>process: 为init执行的进程，这些进程都保存在/etc/rcX.d/中，其中X代表运行级别，rc程序接受参数X，然后执行/etc/rcX.d/下面的程序。<ul>
+<li>这些程序其实都是符号链接，以S打头的表示启动该程序，而以K打头的标识终止该程序，后面的数字标识执行顺序，越小越先执行，剩下的标识程序名。</li>
+<li>系统启动或者切换到该运行级别时会执行以S打头的程序，系统切换到其他运行级别是会终止以K打头的程序。</li>
+<li>可以通过chkconfig程序进行管理<br>init程序也是一个进程，和普通进程拥有一样的属性，比如修改了/etc/inittab，想要立即生效，可以通过运行kill -SIGHUP 1来实现，也可以通过init q来实现。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>kill命令的工作原理是：向Linux系统的内核发送一个系统操作信号和某个程序的进程标识号，然后系统内核就可以对进程标识号指定的进程进行操作。</p>
+</blockquote>
+<p><code>在Linux内核中，进程通过一个双向链表来进行管理，每一个进程包含一个进程描述符(task_struct)</code></p>
+<ul>
+<li><h5 id="进程描述符"><a href="#进程描述符" class="headerlink" title="进程描述符"></a>进程描述符</h5><ul>
+<li>​当把一个程序加载到内存当中，此时，这个时候就有了进程，关于进程，有一个相关的叫做进程控制块（PCB），这个是系统为了方便进行管理进程所设置的一个数据结构，通过PCB，就可以记录进程的特征以及一些信息。 内核当中使用进程描述符task_struct。 这个task_struct就是一个定义的一个结构体，通过这个结构体，可以对进程的所有的相关的信息进行维护，对进程进行管理。</li>
+<li>推荐一篇<a href="https://blog.csdn.net/qq_26768741/article/details/54348586" target="_blank" rel="noopener">文章</a></li>
+</ul>
+</li>
+<li><h5 id="进程的组成"><a href="#进程的组成" class="headerlink" title="进程的组成"></a>进程的组成</h5><ul>
+<li>程序读取的上下文，表示程序读取执行的状态</li>
+<li>程序当前执行的目录</li>
+<li>程序服务的文件与目录</li>
+<li>程序访问的权限</li>
+<li>内存和其他分配给进程的系统资源</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><h5 id="进程的创建"><a href="#进程的创建" class="headerlink" title="进程的创建"></a>进程的创建</h5><ul>
+<li><p>进程总是通过fork系列的系统调用来创建的，最终都是调用do_fork函数，只是参数上的不同而已</p>
+<ul>
+<li><p>fork(do_fork(CLONE_SIGCHLD, …))</p>
+<ul>
+<li>fork创建一个进程时，子进程只是完全复制父进程的资源，复制出来的子进程有自己的task_struct结构和pid,但却复制父进程其它资源（用户空间、文件描述符集）。</li>
+<li>采用cow(copy on write)写时复制来降低系统调用的开销。</li>
+<li>一次返回两个值，对于父进程，是子程序的pid，而对于子程序，成功状态下是0。</li>
+<li>在fork之后，子进程会获得父进程的数据段，堆栈段的副本，而代码段则是共享的。</li>
+</ul>
+</li>
+<li><p>clone(do_fork(CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGCHLD, …))</p>
+<ul>
+<li>fork()是全部复制，vfork()是共享内存，而clone()是则可以将父进程资源有选择地复制给子进程，前两者都是不带参数的，后者有参数clone_flags。</li>
+</ul>
+</li>
+<li><p>vfork(do_fork(CLONE_VFORK|CLONE_VM|CLONE_SIGCHLD, …))</p>
+<ul>
+<li><p>vfork系统调用不同于fork，用vfork创建的子进程与父进程共享地址空间，也就是说子进程完全运行在父进程的地址空间上，如果这时子进程修改了某个变量，这将影响到父进程。</p>
+</li>
+<li><p>vfork也是在父进程中返回子进程的进程号，在子进程中返回0。</p>
+</li>
+<li><p>用 vfork创建子进程后，父进程会被阻塞直到子进程调用exec(exec，将一个新的可执行文件载入到地址空间并执行之)或exit。</p>
+</li>
+<li><p>vfork的好处是在子进程被创建后往往仅仅是为了调用exec执行另一个程序，因为它就不会对父进程的地址空间有任何引用，所以对地址空间的复制是多余的 ，因此通过vfork共享内存可以减少不必要的开销。</p>
+</li>
+</ul>
+</li>
+<li><p>三者的区别</p>
+<ul>
+<li>拷贝内容</li>
+<li>访问次序控制<ul>
+<li>fork不对父子进程的执行次序进行任何限制，运行顺序由内核的调度算法决定。</li>
+<li>vfork调用后，子进程先运行，父进程挂起，直到子进程调用了exec或者exit后，父子进程的执行次序才不再有限制。</li>
+<li>clone中有标志CLONE_VFORK来决定子进程在运行是父进程是阻塞的还是运行的，如果没有设置，则同时进行，设置了，与fork一样。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><blockquote>
+<p>CLONE_VM标识：表示共享地址空间（变量等）</p>
+<p>CLONE_FILES标志：表示共享文件描述符表</p>
+<p>CLONE_VFORK标识：标识父进程会被阻塞，子进程会把父进程的地址空间锁住，直到子进程退出或执行exec时才释放该锁</p>
+<p>SIGCHLD标识：共享信号</p>
+</blockquote>
+</li>
+<li><p>内核也可以通过kernel_thread函数来创建内核进程</p>
+</li>
+</ul>
+<h4 id="Linux-进程状态机"><a href="#Linux-进程状态机" class="headerlink" title="Linux 进程状态机"></a>Linux 进程状态机</h4><p><img src="/images/linux进程管理/1.jpg" alt="进程状态转换关系图"></p>
+<ul>
+<li>虽然进程的状态有好多种，但是进程状态的变迁只有两个方向，从TASK_RUNNING到非TASK_RUNNING，或者相反。总之，进程状态的转换必然会经过TASK_RUNNING，不可能在两个非RUN状态直接转换。</li>
+<li>进程从非TASK_RUNNING状态变为TASK_RUNNING状态，是由别的进程（也可能是中断处理程序）执行唤醒操作来实现的。执行唤醒的进程设置被唤醒进程的状态为TASK_RUNNING，然后将其task_struct结构加入到某个CPU的可执行队列中。于是被唤醒的进程将有机会被调度执行。</li>
+<li>进程从TASK_RUNNING状态变为非TASK_RUNNING状态，有两种途径。<ul>
+<li>响应信号而进入TASK_STOPED状态，或者TASK_DEAD状态</li>
+<li>执行程序主动进入TASK_INTERRUPTIBLE状态（如nanosleep调用)，或者是TASK_DEAD状态（如exit系统调用)，另一方面，也有可能是由于执行系统调用需要的资源得不到满足，而进入TASK_INTERRUPTIBLE状态或TASK_UNINTERRUPTIBLE状态（如select系统调用）。</li>
+</ul>
+</li>
+<li>可以通过ps命令来查看系统中存在的进程，以及它们的状态。</li>
+<li>系统中绝大部分进程都处于TASK_INTERRUPTIBLE状态，因为CPU也就那么几个，所以绝大部分进程都处于睡眠状态。</li>
+<li>TASK_UNINTERRUPTIBLE，不可中断的睡眠状态，指该进程不接受异步信号，如kill -9无法杀死该类进程，这种状态的意义在于，<strong>内核中的某些处理流程是不能被打断的，如果响应了异步信号，程序的执行流程中就会给插入了一段处理异步信号的流程（可能只存在于内核态，也可能会延伸到用户态）于是乎，原有的流程就给中断了。</strong> <em>而且，一般系统进程中存在于这个状态的进程是非常少，而且正常来说，都是非常短暂的，基本无法察觉得到的。</em>其实通过vfork调用后，父进程就是处于一种TASK_UNINTERRUPTIBLE的状态，知道子进程调用exec或者exit。</li>
+<li>TASK_STOPPED 或者 TASK_TRACED，暂停状态或跟踪状态。<ul>
+<li>向某个进程发送SIGSTOP信号或者SIGCONT信号可以进入TASK_STOPPED或者恢复到TASK_RUNNING。</li>
+<li>TASK_TRACED状态一般只发生在该进程被调试暂停的时候，该进程停下来，等待跟踪它的进程对其进行操作，TASK_TRACED状态下的进程不响应SIGCONT信号，只能是调试它的进程来恢复它，或者调试进程退出时也会恢复。</li>
+</ul>
+</li>
+<li>TASK_DEAD - EXIT_ZOMBIE，退出状态，进程成为僵尸进程。<ul>
+<li>进程在退出的过程中，处于TASK_DEAD状态，在退出过程中，进程所占有的资源将会被回收，除了task_struct结构(以及少数资源)，也就是说，进程表只存在这个进程对应的task_struct这个空壳，所以叫做僵尸，由父进程负责收集，收尸。从这个尸体(task_struct)中可以得到很多有用的信息，如子进程的退出码，一些统计信息（虽然内核也可以吧这些信息保存在其他的地方，但是不这么做）。父进程可以通过wait系列的系统调用来等待子进程的退出，然后获取退出信息，然后wait系列的系统调用会清理尸体(task_struct)。</li>
+<li>子进程在退出的时候，内核会给父进程发送一个信号(SIGCHLD)来通知父进程过来收尸。</li>
+<li>进程可以通过调用exit来进入该状态。</li>
+</ul>
+</li>
+<li>TASK_DEAD - EXIT_DEAD，退出状态，进程即将给销毁。<ul>
+<li>进程也有可能不会经历TASK_DEAD - EXIT_ZOMBIE状态而直接销毁。如detach过的进程，SIGCHLD信号的handle为SIG_IGN，忽略了SIGCHLD信号。</li>
+</ul>
+</li>
+</ul>
+<h3 id="进程的调度"><a href="#进程的调度" class="headerlink" title="进程的调度"></a>进程的调度</h3><blockquote>
+<p>无论是在<a href="https://baike.baidu.com/item/%E6%89%B9%E5%A4%84%E7%90%86%E7%B3%BB%E7%BB%9F" target="_blank" rel="noopener">批处理系统</a>还是<a href="https://baike.baidu.com/item/%E5%88%86%E6%97%B6%E7%B3%BB%E7%BB%9F" target="_blank" rel="noopener">分时系统</a>中，用户进程数一般都多于<a href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA" target="_blank" rel="noopener">处理机</a>数、这将导致它们互相争夺处理机。另外，系统进程也同样需要使用<a href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA" target="_blank" rel="noopener">处理机</a>。这就要求进程调度程序按一定的策略，动态地把<a href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA" target="_blank" rel="noopener">处理机</a>分配给处于就绪队列中的某一个<a href="https://baike.baidu.com/item/%E8%BF%9B%E7%A8%8B" target="_blank" rel="noopener">进程</a>，以使之执行。这就是进程调度。</p>
+</blockquote>
+<p>当cpu中正在执行的进程(process A)被移出(suspend),cpu中当前进程的相关信息写到需要移除的进程的进程描述符(task_strut)中,下一个进程(process B)被内核读取(该过程称为resume，恢复)到cpu中, 注意：进程的切换也是必须由内核来执行的。进程的切换就是通过<strong>用户空间和内核模式的不断切换</strong>来完成的。<strong>进程切换=CPU加载上下文+CPU执行+CPU保存上下文</strong></p>
+<h4 id="Linux-进程调度的目标"><a href="#Linux-进程调度的目标" class="headerlink" title="Linux 进程调度的目标"></a>Linux 进程调度的目标</h4><ul>
+<li>高效性: 高效性意味着在相同时间下要完成更多的任务。调度程序会被频繁的执行，所以调度程序要尽可能的高效。</li>
+<li>加强交互性能: 在系统相当的负载下，也要保证系统的响应时间。</li>
+<li>保证公平和避免饥渴</li>
+<li>SMP调度: 调度程序必须支持多处理系统。</li>
+<li>软实时调度: 系统必须有效的调用实时进程，但不保证一定满足其要求。</li>
+</ul>
+<h4 id="Linux-进程优先级"><a href="#Linux-进程优先级" class="headerlink" title="Linux 进程优先级"></a>Linux 进程优先级</h4><ol>
+<li><h5 id="普通进程的优先级"><a href="#普通进程的优先级" class="headerlink" title="普通进程的优先级"></a>普通进程的优先级</h5><ul>
+<li>使用SCHED_NORMAL调度策略</li>
+</ul>
+</li>
+<li><h5 id="实时进程的优先级"><a href="#实时进程的优先级" class="headerlink" title="实时进程的优先级"></a>实时进程的优先级</h5><ul>
+<li>使用SCHED_FIFO(一次机会做完) 或者 SCHED_RR(多次轮转) 调度策略</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>任何时候，实时进程的优先级都高于普通进程，实时进程只会被更高级的实时进程抢占</p>
+</blockquote>
+<h4 id="Linux-进程调度"><a href="#Linux-进程调度" class="headerlink" title="Linux 进程调度"></a>Linux 进程调度</h4><ul>
+<li><h5 id="实时进程调度"><a href="#实时进程调度" class="headerlink" title="实时进程调度"></a>实时进程调度</h5><ul>
+<li><p>实时进程，只有静态优先级，因为内核不会根据休眠等因素对其静态优先级做调整，范围是在0 - MAX_RT_PRIO - 1 之间。而nice值，影响的优先级在MAX_RT_PRIO - MAX_RT_PRIO + 40之间的进程。</p>
+</li>
+<li><p>MAX_RT_PRIO: 默认配置为100.</p>
+</li>
+<li><p>不同于普通进程，实时进程高的进程总是先于优先级低的进程执行，直到实时优先级高的实时进程无法执行，实时进程总是被认为处于活动状态。</p>
+</li>
+<li><p>如果有数个进程相同的实时进程，那么系统会按照进程在队列上的顺序选择进程。</p>
+</li>
+<li><p>例如CPU运行实时进程A的实时优先级为a，而此时有一个实时优先级为b的实时进程B进入可运行状态，那么只要b &gt; a，系统将会中断A的执行，而优先执行B，直到B无法执行。</p>
+</li>
+<li><h6 id="调度策略"><a href="#调度策略" class="headerlink" title="调度策略"></a>调度策略</h6><ul>
+<li>FIFO 的进程，意味着只有当前进程执行完毕才会轮到其他进程执行。</li>
+<li>RR 的进程，内核会为进程分配时间片，一旦时间片消耗完毕，内核会将该进程置于进程队列的末尾，然后运行其他相同优先级别的进程，如果没有其他相同优先级的进程，则该进程会继续执行。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>对于实时进程，高优先级别的进程执行到无法执行了，才会轮到低优先级别的进程执行。</p>
+</blockquote>
+<ul>
+<li><h5 id="非实时进程调度"><a href="#非实时进程调度" class="headerlink" title="非实时进程调度"></a>非实时进程调度</h5><ul>
+<li><p>Linux 对于普通进程，根据动态优先级进行调整，而动态优先级是由静态优先级(static_prio)调整而来的。 静态优先级是用户不可见的，隐藏在内核中，而内核会给用户一个可以影响静态优先级的接口，那就是nice值。</p>
+</li>
+<li><blockquote>
+<p>static_prio = MAX_RT_PRIO + nice + 20</p>
+</blockquote>
+</li>
+<li><p>nice 值与静态优先级的关系如上所示。nice值的范围是-20 - 19之间，所以静态优先级范围在100 - 139之间。</p>
+</li>
+<li><p>普通进程的动态优先级越低，优先越高，与实时进程相反，也就是说，nice的值越大，优先级越低。</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p> 进程时间片是完全依赖于static_prio 定制的，如下所示</p>
+<p> $$<br> base\ time\ quantum(ms) =<br> \begin{cases}<br> (140 - \text{static_prio})\times20, \text{static_prio &lt; 120}\<br> (140 - \text{static_prio})\times20, \text{static_prio } \ge \text{ 120}<br> \end{cases}<br> $$</p>
+</blockquote>
+<h4 id="进程调度的其他因素"><a href="#进程调度的其他因素" class="headerlink" title="进程调度的其他因素"></a>进程调度的其他因素</h4><blockquote>
+<p>系统在调度进程的时候，还会考虑其他因素，进而来计算出一个叫进程动态优先级的东西，基于这个来实施调度。</p>
+</blockquote>
+<ul>
+<li><h5 id="进程属性"><a href="#进程属性" class="headerlink" title="进程属性"></a>进程属性</h5><ul>
+<li>交互式进程(I/O密集型，等待IO，对cpu的需求量小)</li>
+<li>批处理进程(CPU密集型)</li>
+<li>实时进程</li>
+</ul>
+</li>
+<li><h5 id="分配策略"><a href="#分配策略" class="headerlink" title="分配策略"></a>分配策略</h5><ul>
+<li><p>不仅要考虑静态优先级，也要考虑进程的属性，如果进程是属于交互式进程，那么可以适当的调高它的优先级，使得界面反应更加迅速，从而提高用户体验。</p>
+</li>
+<li><p>交互式进程可以从一个平均睡眠时间来进行判断，如果进程过去睡眠的时间越多，则越有可能属于交互式进程。则系统在调度的时候，会给该进程更多的奖励(bonus)，以便该进程有更多的时间能够执行。奖励(bonus)的范围为0 - 10。</p>
+</li>
+<li><p>睡眠和CPU耗时反应了进程IO密集和CPU密集两大瞬时特点，不同时期，一个进程可能即是CPU密集型也是IO密集型进程。对于表现为IO密集的进程，应该经常运行，但每次时间片不要太长。对于表现为CPU密集的进程，CPU不应该让其经常运行，但每次运行时间片要长。交互进程为例，假如之前其其大部分时间在于等待CPU，这时为了调高相应速度，就需要增加奖励分。另一方面，如果此进程总是耗尽每次分配给它的时间片，为了对其他进程公平，就要增加这个进程的惩罚分数。</p>
+</li>
+<li><p>系统会严格按照动态优先级高低的顺序安排进程执行。动态优先级高的进程进入运行状态，或者时间片消耗完毕后才会轮到动态优先级低的进程执行。</p>
+</li>
+<li><p>动态优先级的计算主要考虑两个因素</p>
+<ul>
+<li>静态优先级(static_prio)</li>
+<li>平均睡眠时间(bonus)</li>
+</ul>
+</li>
+<li><blockquote>
+<p>计算公式如下<br>$$<br>\text{dynamic_prio} = max{100,\ min{static_prio- bonus+5,\ 139} }<br>$$</p>
+</blockquote>
+</li>
+<li><p>Linux2.6在计算的时候有空间换时间的策略，从而保证最优进程能够在O(1)的时间内完成。</p>
+</li>
+<li><p>CFS 的virtutime机制。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="进程切换-Context-switch"><a href="#进程切换-Context-switch" class="headerlink" title="进程切换 (Context switch)"></a>进程切换 (Context switch)</h4><p>当cpu中正在执行的进程(process A)被移出(suspend),cpu中当前进程的相关信息写到需要移除的进程的进程描述符(task_strut)中,下一个进程(process B)被内核读取(该过程称为resume，恢复)到cpu中, 注意：进程的切换也是必须由内核来执行的。进程的切换就是通过<strong>用户空间和内核模式的不断切换</strong>来完成的。<strong>进程切换=CPU加载上下文+CPU执行+CPU保存上下文</strong></p>
+<h4 id="调度触发的时机"><a href="#调度触发的时机" class="headerlink" title="调度触发的时机"></a>调度触发的时机</h4><ol>
+<li><p>当前进程进入非可执行状态</p>
+</li>
+<li><p>抢占</p>
+<ul>
+<li>进程用完了时间片</li>
+<li>出现优先级更高的进程，会被影响而唤醒。</li>
+</ul>
+<blockquote>
+<p>内核在响应时钟中断的过程中，发现当前进程的时间片已经用完</p>
+<p>内核在响应时钟中断的过程中，发现优先级更高的进程所等待的外部资源是可用的，于是唤醒它。</p>
+<p>​</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="其他相关"><a href="#其他相关" class="headerlink" title="其他相关"></a>其他相关</h3><h4 id="内核抢占"><a href="#内核抢占" class="headerlink" title="内核抢占"></a>内核抢占</h4><ul>
+<li>理想情况下，只要满足了出现优先级更高的进程这个条件，当前进程就应该被立刻抢占。但是就像多线程程序需要使用锁来保护临界区资源一样，内核中也有很多这样的临界区，来保证一些程序不给抢占。或者是处于效率考虑。</li>
+<li>Linux2.4不支持内核抢占，进程在内核态是不允许抢占的，只有返回用户态时会触发调整。</li>
+<li>Linux2.6支持内核抢占，但是很多地方为了保护临界区资源而临时性的禁用抢占。</li>
+</ul>
+<h4 id="SMP调度下的负载均衡问题"><a href="#SMP调度下的负载均衡问题" class="headerlink" title="SMP调度下的负载均衡问题"></a>SMP调度下的负载均衡问题</h4><p><code>多处理器下，每个CPU都有对应的可执行队列，但是一个可执行状态的进程同一时刻只能存在于一个可执行队列中。</code></p>
+<p>问题</p>
+<ul>
+<li>每个CPU可执行队列中进程数目不均衡的时候，要怎么调整，什么时候算作是不均衡，需要调整？</li>
+<li>CPU之间的关系，两个CPU之间，是不是相互独立的，cache可以共享吗？或者，是不是由同一个物理CPU通过超线程技术虚拟出来的</li>
+<li>反正就是乱七八糟的就是了。。。。。</li>
+</ul>
+<h4 id="优先级继承"><a href="#优先级继承" class="headerlink" title="优先级继承"></a>优先级继承</h4><p><code>假如有一个进程A，因为要进入临界区，但是临界区有了B，而在等待睡眠，直到B退出临界区后，进程A才会被唤醒。</code></p>
+<p>可能存在这么一种情况，A的优先级很高，而B的优先级很低，B进入了临界区，但是却给其他优先级高于B低于A的进程C抢占，A就等不到运行，此时叫做<strong>优先级反转</strong>。此时会通过以下方法解决:在A开始等待的时候，将A的优先级赋给B，直到B退出临界区后恢复其原本的优先级。</p>
+<p>这就是优先级继承。</p>
+<h4 id="中断处理程序的优化"><a href="#中断处理程序的优化" class="headerlink" title="中断处理程序的优化"></a>中断处理程序的优化</h4><p><code>正常来说，中断处理程序处于一个不可调度的上下文中，CPU响应硬件中断自动跳转到内核设定的中断处理程序去执行，再到处理程序执行完。这整个过程中是不能被抢占的。</code></p>
+<p>一个进程如果被抢占了，可以通过保存在它的进程控制块（task_struct）中的信息，在之后的某个时间恢复它的运行，而中断上下文是没有task_struct的，所以是不可能杯抢占的。</p>
+<p>也就是说，中断程序的伪优先级比任何进程要高，但是呢在实际中，某些实时进程会拥有比中断进程更高的优先级。所以在一些系统中，会给中断处理程序赋予task_struct以及优先级。但是会影响一些性能，但是却能保证实时。</p>
+<h4 id="调度程序的效率问题"><a href="#调度程序的效率问题" class="headerlink" title="调度程序的效率问题"></a>调度程序的效率问题</h4><p><code>优先级明确了哪个进程应该被调度执行，而调度程序还要关心效率问题，因为会被频繁的执行，所以效率很重要的。</code></p>
+<p>所以，调度程序，如何来获得应该被执行的程序，就是一个问题了。</p>
+<p>在Linux2.4，可执行状态的进程会被放在一个链表中，每次调度，扫描整个链表，以找出最优的那个进程来运行，复杂度为O(N)</p>
+<p>在Linux2.6早期，可执行状态的进车功能会被挂载N（N=140）个链表中，每一个链表代表一个优先级，系统支持多少个优先级就有多少个链表。每次调度，调度程序只需要从第一个不为空的链表中取出链表头的进程即可。复杂度为O(1).</p>
+<p>而在现在Linux2.6的版本中，可执行状态的进程会按照优先级顺序被挂载一个红黑树上，每次调度，找出树中优先级最高的那个进程。复杂度为O(LogN)</p>
+<p><strong>只是为了公平</strong></p>
+<p>第一种是基于空间换时间的策略，在一组数目不大的链表中来实现的，这样子优先级的取值范围很小（大了会浪费太多空间），区分度不大不能满足公平性的需求，而使用红黑树对优先级的取值没有限制，区分度可以更高。而且在同等情况下，140个优先级，O(LogN)的复杂度也不会太差。</p>
+<h4 id="处理机的三级调度"><a href="#处理机的三级调度" class="headerlink" title="处理机的三级调度"></a>处理机的三级调度</h4><p><img src="http://c.biancheng.net/cpp/uploads/allimg/140629/1-140629144600329.jpg" alt="三级调度"></p>
+<ul>
+<li>作业调度(高级调度)</li>
+<li>内存调度(中级调度)</li>
+<li>进程调度(低级调度)</li>
+</ul>
+<p>作业调度从外存的后备队列中选择一批作业进入内存，为它们建立进程，这些进程被送入就绪队列，进程调度从就绪队列中选出一个进程，并把其状态改为运行状态，把CPU分配给它。中级调度是为了提高内存的利用率，系统将那些暂时不能运行的进程挂起来。当内存空间宽松时，通过中级调度选择具备运行条件的进程，将其唤醒。</p>
+<ul>
+<li>作业调度为进程活动做准备，进程调度使进程正常活动起来，中级调度将暂时不能运行的进程挂起，中级调度处于作业调度和进程调度之间。</li>
+<li>作业调度次数少，中级调度次数略多，进程调度频率最高。</li>
+<li>进程调度是最基本的，不可或缺。</li>
+</ul>
+<p>推荐一篇<a href="https://blog.csdn.net/chengonghao/article/details/50981214" target="_blank" rel="noopener">文章</a># Linux进程</p>
+<p>[TOC]</p>
+<blockquote>
+<p>进程是执行中一段程序，即一旦程序被载入到内存中并准备执行，它就是一个进程。进程是表示资源分配的的基本概念，又是调度运行的基本单位，是系统中的并发执行的单位。<br>线程：单个进程中执行中每个任务就是一个线程。线程是进程中执行运算的最小单位。<br>换句话说，进程线程都是对CPU工作时间段的描述（通过task_struct)。</p>
+</blockquote>
+<h2 id="而在Linux系统运行中，程序对应的进程是怎么被创建，被管理，被切换，被调度的呢？-1"><a href="#而在Linux系统运行中，程序对应的进程是怎么被创建，被管理，被切换，被调度的呢？-1" class="headerlink" title="而在Linux系统运行中，程序对应的进程是怎么被创建，被管理，被切换，被调度的呢？"></a>而在Linux系统运行中，程序对应的进程是怎么被创建，被管理，被切换，被调度的呢？</h2><h3 id="进程的组成，创建，状态机-1"><a href="#进程的组成，创建，状态机-1" class="headerlink" title="进程的组成，创建，状态机"></a>进程的组成，创建，状态机</h3><h4 id="进程的组成，创建-1"><a href="#进程的组成，创建-1" class="headerlink" title="进程的组成，创建"></a>进程的组成，创建</h4><blockquote>
+<p>所有进程都会有一个共同的父进程，PID为1的init(systemd)进程，它是内核引导后启动的第一个进程，主要用来执行一些开机初始化脚本和监视进程，读取配置文件/etc/inittab，永远不会停止。必要的时候可以作为参照。如果某个进程突然成为游离进程(其父进程终止了)，此时，这个进程会将init进程作为参照，作为它们的父进程，然后gg。<code>父进程死了它的子进程也会死。</code>可以通过pstree查看系统内正在运行的各个进程的之间的继承关系。<br>inittab 是一个不可执行的文本文件，每行的基本格式为:<em>id:runlevels:action:process</em></p>
+<ul>
+<li>id: 1-2个字符，配置行的唯一标识，不能重复。</li>
+<li>runlevels: 配置行适用的运行级别，可以填入多个运行级别，如12345或者35。<ul>
+<li>0: 关机</li>
+<li>1: 单用户字符界面</li>
+<li>2: 不具备网络文件系统(NFS)功能的多用户文字界面</li>
+<li>3: 具备网络功能的多用户字符界面</li>
+<li>4: 保留</li>
+<li>5: 具有网络功能的图形用户界面</li>
+<li>6: 重新启动系统</li>
+</ul>
+</li>
+<li>action: 表示init的行为，行为表略。</li>
+<li>process: 为init执行的进程，这些进程都保存在/etc/rcX.d/中，其中X代表运行级别，rc程序接受参数X，然后执行/etc/rcX.d/下面的程序。<ul>
+<li>这些程序其实都是符号链接，以S打头的表示启动该程序，而以K打头的标识终止该程序，后面的数字标识执行顺序，越小越先执行，剩下的标识程序名。</li>
+<li>系统启动或者切换到该运行级别时会执行以S打头的程序，系统切换到其他运行级别是会终止以K打头的程序。</li>
+<li>可以通过chkconfig程序进行管理<br>init程序也是一个进程，和普通进程拥有一样的属性，比如修改了/etc/inittab，想要立即生效，可以通过运行kill -SIGHUP 1来实现，也可以通过init q来实现。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>kill命令的工作原理是：向Linux系统的内核发送一个系统操作信号和某个程序的进程标识号，然后系统内核就可以对进程标识号指定的进程进行操作。</p>
+</blockquote>
+<p><code>在Linux内核中，进程通过一个双向链表来进行管理，每一个进程包含一个进程描述符(task_struct)</code></p>
+<ul>
+<li><h5 id="进程描述符-1"><a href="#进程描述符-1" class="headerlink" title="进程描述符"></a>进程描述符</h5><ul>
+<li>​当把一个程序加载到内存当中，此时，这个时候就有了进程，关于进程，有一个相关的叫做进程控制块（PCB），这个是系统为了方便进行管理进程所设置的一个数据结构，通过PCB，就可以记录进程的特征以及一些信息。 内核当中使用进程描述符task_struct。 这个task_struct就是一个定义的一个结构体，通过这个结构体，可以对进程的所有的相关的信息进行维护，对进程进行管理。</li>
+<li>推荐一篇<a href="https://blog.csdn.net/qq_26768741/article/details/54348586" target="_blank" rel="noopener">文章</a></li>
+</ul>
+</li>
+<li><h5 id="进程的组成-1"><a href="#进程的组成-1" class="headerlink" title="进程的组成"></a>进程的组成</h5><ul>
+<li>程序读取的上下文，表示程序读取执行的状态</li>
+<li>程序当前执行的目录</li>
+<li>程序服务的文件与目录</li>
+<li>程序访问的权限</li>
+<li>内存和其他分配给进程的系统资源</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><h5 id="进程的创建-1"><a href="#进程的创建-1" class="headerlink" title="进程的创建"></a>进程的创建</h5><ul>
+<li><p>进程总是通过fork系列的系统调用来创建的，最终都是调用do_fork函数，只是参数上的不同而已</p>
+<ul>
+<li><p>fork(do_fork(CLONE_SIGCHLD, …))</p>
+<ul>
+<li>fork创建一个进程时，子进程只是完全复制父进程的资源，复制出来的子进程有自己的task_struct结构和pid,但却复制父进程其它资源（用户空间、文件描述符集）。</li>
+<li>采用cow(copy on write)写时复制来降低系统调用的开销。</li>
+<li>一次返回两个值，对于父进程，是子程序的pid，而对于子程序，成功状态下是0。</li>
+<li>在fork之后，子进程会获得父进程的数据段，堆栈段的副本，而代码段则是共享的。</li>
+</ul>
+</li>
+<li><p>clone(do_fork(CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGCHLD, …))</p>
+<ul>
+<li>fork()是全部复制，vfork()是共享内存，而clone()是则可以将父进程资源有选择地复制给子进程，前两者都是不带参数的，后者有参数clone_flags。</li>
+</ul>
+</li>
+<li><p>vfork(do_fork(CLONE_VFORK|CLONE_VM|CLONE_SIGCHLD, …))</p>
+<ul>
+<li><p>vfork系统调用不同于fork，用vfork创建的子进程与父进程共享地址空间，也就是说子进程完全运行在父进程的地址空间上，如果这时子进程修改了某个变量，这将影响到父进程。</p>
+</li>
+<li><p>vfork也是在父进程中返回子进程的进程号，在子进程中返回0。</p>
+</li>
+<li><p>用 vfork创建子进程后，父进程会被阻塞直到子进程调用exec(exec，将一个新的可执行文件载入到地址空间并执行之)或exit。</p>
+</li>
+<li><p>vfork的好处是在子进程被创建后往往仅仅是为了调用exec执行另一个程序，因为它就不会对父进程的地址空间有任何引用，所以对地址空间的复制是多余的 ，因此通过vfork共享内存可以减少不必要的开销。</p>
+</li>
+</ul>
+</li>
+<li><p>三者的区别</p>
+<ul>
+<li>拷贝内容</li>
+<li>访问次序控制<ul>
+<li>fork不对父子进程的执行次序进行任何限制，运行顺序由内核的调度算法决定。</li>
+<li>vfork调用后，子进程先运行，父进程挂起，直到子进程调用了exec或者exit后，父子进程的执行次序才不再有限制。</li>
+<li>clone中有标志CLONE_VFORK来决定子进程在运行是父进程是阻塞的还是运行的，如果没有设置，则同时进行，设置了，与fork一样。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><blockquote>
+<p>CLONE_VM标识：表示共享地址空间（变量等）</p>
+<p>CLONE_FILES标志：表示共享文件描述符表</p>
+<p>CLONE_VFORK标识：标识父进程会被阻塞，子进程会把父进程的地址空间锁住，直到子进程退出或执行exec时才释放该锁</p>
+<p>SIGCHLD标识：共享信号</p>
+</blockquote>
+</li>
+<li><p>内核也可以通过kernel_thread函数来创建内核进程</p>
+</li>
+</ul>
+<h4 id="Linux-进程状态机-1"><a href="#Linux-进程状态机-1" class="headerlink" title="Linux 进程状态机"></a>Linux 进程状态机</h4><p><img src="https://images0.cnblogs.com/i/401155/201404/201153238078305.jpg" alt="进程状态转换关系图"></p>
+<ul>
+<li>虽然进程的状态有好多种，但是进程状态的变迁只有两个方向，从TASK_RUNNING到非TASK_RUNNING，或者相反。总之，进程状态的转换必然会经过TASK_RUNNING，不可能在两个非RUN状态直接转换。</li>
+<li>进程从非TASK_RUNNING状态变为TASK_RUNNING状态，是由别的进程（也可能是中断处理程序）执行唤醒操作来实现的。执行唤醒的进程设置被唤醒进程的状态为TASK_RUNNING，然后将其task_struct结构加入到某个CPU的可执行队列中。于是被唤醒的进程将有机会被调度执行。</li>
+<li>进程从TASK_RUNNING状态变为非TASK_RUNNING状态，有两种途径。<ul>
+<li>响应信号而进入TASK_STOPED状态，或者TASK_DEAD状态</li>
+<li>执行程序主动进入TASK_INTERRUPTIBLE状态（如nanosleep调用)，或者是TASK_DEAD状态（如exit系统调用)，另一方面，也有可能是由于执行系统调用需要的资源得不到满足，而进入TASK_INTERRUPTIBLE状态或TASK_UNINTERRUPTIBLE状态（如select系统调用）。</li>
+</ul>
+</li>
+<li>可以通过ps命令来查看系统中存在的进程，以及它们的状态。</li>
+<li>系统中绝大部分进程都处于TASK_INTERRUPTIBLE状态，因为CPU也就那么几个，所以绝大部分进程都处于睡眠状态。</li>
+<li>TASK_UNINTERRUPTIBLE，不可中断的睡眠状态，指该进程不接受异步信号，如kill -9无法杀死该类进程，这种状态的意义在于，<strong>内核中的某些处理流程是不能被打断的，如果响应了异步信号，程序的执行流程中就会给插入了一段处理异步信号的流程（可能只存在于内核态，也可能会延伸到用户态）于是乎，原有的流程就给中断了。</strong> <em>而且，一般系统进程中存在于这个状态的进程是非常少，而且正常来说，都是非常短暂的，基本无法察觉得到的。</em>其实通过vfork调用后，父进程就是处于一种TASK_UNINTERRUPTIBLE的状态，知道子进程调用exec或者exit。</li>
+<li>TASK_STOPPED 或者 TASK_TRACED，暂停状态或跟踪状态。<ul>
+<li>向某个进程发送SIGSTOP信号或者SIGCONT信号可以进入TASK_STOPPED或者恢复到TASK_RUNNING。</li>
+<li>TASK_TRACED状态一般只发生在该进程被调试暂停的时候，该进程停下来，等待跟踪它的进程对其进行操作，TASK_TRACED状态下的进程不响应SIGCONT信号，只能是调试它的进程来恢复它，或者调试进程退出时也会恢复。</li>
+</ul>
+</li>
+<li>TASK_DEAD - EXIT_ZOMBIE，退出状态，进程成为僵尸进程。<ul>
+<li>进程在退出的过程中，处于TASK_DEAD状态，在退出过程中，进程所占有的资源将会被回收，除了task_struct结构(以及少数资源)，也就是说，进程表只存在这个进程对应的task_struct这个空壳，所以叫做僵尸，由父进程负责收集，收尸。从这个尸体(task_struct)中可以得到很多有用的信息，如子进程的退出码，一些统计信息（虽然内核也可以吧这些信息保存在其他的地方，但是不这么做）。父进程可以通过wait系列的系统调用来等待子进程的退出，然后获取退出信息，然后wait系列的系统调用会清理尸体(task_struct)。</li>
+<li>子进程在退出的时候，内核会给父进程发送一个信号(SIGCHLD)来通知父进程过来收尸。</li>
+<li>进程可以通过调用exit来进入该状态。</li>
+</ul>
+</li>
+<li>TASK_DEAD - EXIT_DEAD，退出状态，进程即将给销毁。<ul>
+<li>进程也有可能不会经历TASK_DEAD - EXIT_ZOMBIE状态而直接销毁。如detach过的进程，SIGCHLD信号的handle为SIG_IGN，忽略了SIGCHLD信号。</li>
+</ul>
+</li>
+</ul>
+<h3 id="进程的调度-1"><a href="#进程的调度-1" class="headerlink" title="进程的调度"></a>进程的调度</h3><blockquote>
+<p>无论是在<a href="https://baike.baidu.com/item/%E6%89%B9%E5%A4%84%E7%90%86%E7%B3%BB%E7%BB%9F" target="_blank" rel="noopener">批处理系统</a>还是<a href="https://baike.baidu.com/item/%E5%88%86%E6%97%B6%E7%B3%BB%E7%BB%9F" target="_blank" rel="noopener">分时系统</a>中，用户进程数一般都多于<a href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA" target="_blank" rel="noopener">处理机</a>数、这将导致它们互相争夺处理机。另外，系统进程也同样需要使用<a href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA" target="_blank" rel="noopener">处理机</a>。这就要求进程调度程序按一定的策略，动态地把<a href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA" target="_blank" rel="noopener">处理机</a>分配给处于就绪队列中的某一个<a href="https://baike.baidu.com/item/%E8%BF%9B%E7%A8%8B" target="_blank" rel="noopener">进程</a>，以使之执行。这就是进程调度。</p>
+</blockquote>
+<p>当cpu中正在执行的进程(process A)被移出(suspend),cpu中当前进程的相关信息写到需要移除的进程的进程描述符(task_strut)中,下一个进程(process B)被内核读取(该过程称为resume，恢复)到cpu中, 注意：进程的切换也是必须由内核来执行的。进程的切换就是通过<strong>用户空间和内核模式的不断切换</strong>来完成的。<strong>进程切换=CPU加载上下文+CPU执行+CPU保存上下文</strong></p>
+<h4 id="Linux-进程调度的目标-1"><a href="#Linux-进程调度的目标-1" class="headerlink" title="Linux 进程调度的目标"></a>Linux 进程调度的目标</h4><ul>
+<li>高效性: 高效性意味着在相同时间下要完成更多的任务。调度程序会被频繁的执行，所以调度程序要尽可能的高效。</li>
+<li>加强交互性能: 在系统相当的负载下，也要保证系统的响应时间。</li>
+<li>保证公平和避免饥渴</li>
+<li>SMP调度: 调度程序必须支持多处理系统。</li>
+<li>软实时调度: 系统必须有效的调用实时进程，但不保证一定满足其要求。</li>
+</ul>
+<h4 id="Linux-进程优先级-1"><a href="#Linux-进程优先级-1" class="headerlink" title="Linux 进程优先级"></a>Linux 进程优先级</h4><ol>
+<li><h5 id="普通进程的优先级-1"><a href="#普通进程的优先级-1" class="headerlink" title="普通进程的优先级"></a>普通进程的优先级</h5><ul>
+<li>使用SCHED_NORMAL调度策略</li>
+</ul>
+</li>
+<li><h5 id="实时进程的优先级-1"><a href="#实时进程的优先级-1" class="headerlink" title="实时进程的优先级"></a>实时进程的优先级</h5><ul>
+<li>使用SCHED_FIFO(一次机会做完) 或者 SCHED_RR(多次轮转) 调度策略</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>任何时候，实时进程的优先级都高于普通进程，实时进程只会被更高级的实时进程抢占</p>
+</blockquote>
+<h4 id="Linux-进程调度-1"><a href="#Linux-进程调度-1" class="headerlink" title="Linux 进程调度"></a>Linux 进程调度</h4><ul>
+<li><h5 id="实时进程调度-1"><a href="#实时进程调度-1" class="headerlink" title="实时进程调度"></a>实时进程调度</h5><ul>
+<li><p>实时进程，只有静态优先级，因为内核不会根据休眠等因素对其静态优先级做调整，范围是在0 - MAX_RT_PRIO - 1 之间。而nice值，影响的优先级在MAX_RT_PRIO - MAX_RT_PRIO + 40之间的进程。</p>
+</li>
+<li><p>MAX_RT_PRIO: 默认配置为100.</p>
+</li>
+<li><p>不同于普通进程，实时进程高的进程总是先于优先级低的进程执行，直到实时优先级高的实时进程无法执行，实时进程总是被认为处于活动状态。</p>
+</li>
+<li><p>如果有数个进程相同的实时进程，那么系统会按照进程在队列上的顺序选择进程。</p>
+</li>
+<li><p>例如CPU运行实时进程A的实时优先级为a，而此时有一个实时优先级为b的实时进程B进入可运行状态，那么只要b &gt; a，系统将会中断A的执行，而优先执行B，直到B无法执行。</p>
+</li>
+<li><h6 id="调度策略-1"><a href="#调度策略-1" class="headerlink" title="调度策略"></a>调度策略</h6><ul>
+<li>FIFO 的进程，意味着只有当前进程执行完毕才会轮到其他进程执行。</li>
+<li>RR 的进程，内核会为进程分配时间片，一旦时间片消耗完毕，内核会将该进程置于进程队列的末尾，然后运行其他相同优先级别的进程，如果没有其他相同优先级的进程，则该进程会继续执行。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>对于实时进程，高优先级别的进程执行到无法执行了，才会轮到低优先级别的进程执行。</p>
+</blockquote>
+<ul>
+<li><h5 id="非实时进程调度-1"><a href="#非实时进程调度-1" class="headerlink" title="非实时进程调度"></a>非实时进程调度</h5><ul>
+<li><p>Linux 对于普通进程，根据动态优先级进行调整，而动态优先级是由静态优先级(static_prio)调整而来的。 静态优先级是用户不可见的，隐藏在内核中，而内核会给用户一个可以影响静态优先级的接口，那就是nice值。</p>
+</li>
+<li><blockquote>
+<p>static_prio = MAX_RT_PRIO + nice + 20</p>
+</blockquote>
+</li>
+<li><p>nice 值与静态优先级的关系如上所示。nice值的范围是-20 - 19之间，所以静态优先级范围在100 - 139之间。</p>
+</li>
+<li><p>普通进程的动态优先级越低，优先越高，与实时进程相反，也就是说，nice的值越大，优先级越低。</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p> 进程时间片是完全依赖于static_prio 定制的，如下所示</p>
+<p> $$<br> base\ time\ quantum(ms) =<br> \begin{cases}<br> (140 - \text{static_prio})\times20, \text{static_prio &lt; 120}\<br> (140 - \text{static_prio})\times20, \text{static_prio } \ge \text{ 120}<br> \end{cases}<br> $$</p>
+</blockquote>
+<h4 id="进程调度的其他因素-1"><a href="#进程调度的其他因素-1" class="headerlink" title="进程调度的其他因素"></a>进程调度的其他因素</h4><blockquote>
+<p>系统在调度进程的时候，还会考虑其他因素，进而来计算出一个叫进程动态优先级的东西，基于这个来实施调度。</p>
+</blockquote>
+<ul>
+<li><h5 id="进程属性-1"><a href="#进程属性-1" class="headerlink" title="进程属性"></a>进程属性</h5><ul>
+<li>交互式进程(I/O密集型，等待IO，对cpu的需求量小)</li>
+<li>批处理进程(CPU密集型)</li>
+<li>实时进程</li>
+</ul>
+</li>
+<li><h5 id="分配策略-1"><a href="#分配策略-1" class="headerlink" title="分配策略"></a>分配策略</h5><ul>
+<li><p>不仅要考虑静态优先级，也要考虑进程的属性，如果进程是属于交互式进程，那么可以适当的调高它的优先级，使得界面反应更加迅速，从而提高用户体验。</p>
+</li>
+<li><p>交互式进程可以从一个平均睡眠时间来进行判断，如果进程过去睡眠的时间越多，则越有可能属于交互式进程。则系统在调度的时候，会给该进程更多的奖励(bonus)，以便该进程有更多的时间能够执行。奖励(bonus)的范围为0 - 10。</p>
+</li>
+<li><p>睡眠和CPU耗时反应了进程IO密集和CPU密集两大瞬时特点，不同时期，一个进程可能即是CPU密集型也是IO密集型进程。对于表现为IO密集的进程，应该经常运行，但每次时间片不要太长。对于表现为CPU密集的进程，CPU不应该让其经常运行，但每次运行时间片要长。交互进程为例，假如之前其其大部分时间在于等待CPU，这时为了调高相应速度，就需要增加奖励分。另一方面，如果此进程总是耗尽每次分配给它的时间片，为了对其他进程公平，就要增加这个进程的惩罚分数。</p>
+</li>
+<li><p>系统会严格按照动态优先级高低的顺序安排进程执行。动态优先级高的进程进入运行状态，或者时间片消耗完毕后才会轮到动态优先级低的进程执行。</p>
+</li>
+<li><p>动态优先级的计算主要考虑两个因素</p>
+<ul>
+<li>静态优先级(static_prio)</li>
+<li>平均睡眠时间(bonus)</li>
+</ul>
+</li>
+<li><blockquote>
+<p>计算公式如下<br>$$<br>\text{dynamic_prio} = max{100,\ min{static_prio- bonus+5,\ 139} }<br>$$</p>
+</blockquote>
+</li>
+<li><p>Linux2.6在计算的时候有空间换时间的策略，从而保证最优进程能够在O(1)的时间内完成。</p>
+</li>
+<li><p>CFS 的virtutime机制。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="进程切换-Context-switch-1"><a href="#进程切换-Context-switch-1" class="headerlink" title="进程切换 (Context switch)"></a>进程切换 (Context switch)</h4><p>当cpu中正在执行的进程(process A)被移出(suspend),cpu中当前进程的相关信息写到需要移除的进程的进程描述符(task_strut)中,下一个进程(process B)被内核读取(该过程称为resume，恢复)到cpu中, 注意：进程的切换也是必须由内核来执行的。进程的切换就是通过<strong>用户空间和内核模式的不断切换</strong>来完成的。<strong>进程切换=CPU加载上下文+CPU执行+CPU保存上下文</strong></p>
+<h4 id="调度触发的时机-1"><a href="#调度触发的时机-1" class="headerlink" title="调度触发的时机"></a>调度触发的时机</h4><ol>
+<li><p>当前进程进入非可执行状态</p>
+</li>
+<li><p>抢占</p>
+<ul>
+<li>进程用完了时间片</li>
+<li>出现优先级更高的进程，会被影响而唤醒。</li>
+</ul>
+<blockquote>
+<p>内核在响应时钟中断的过程中，发现当前进程的时间片已经用完</p>
+<p>内核在响应时钟中断的过程中，发现优先级更高的进程所等待的外部资源是可用的，于是唤醒它。</p>
+<p>​</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="其他相关-1"><a href="#其他相关-1" class="headerlink" title="其他相关"></a>其他相关</h3><h4 id="内核抢占-1"><a href="#内核抢占-1" class="headerlink" title="内核抢占"></a>内核抢占</h4><ul>
+<li>理想情况下，只要满足了出现优先级更高的进程这个条件，当前进程就应该被立刻抢占。但是就像多线程程序需要使用锁来保护临界区资源一样，内核中也有很多这样的临界区，来保证一些程序不给抢占。或者是处于效率考虑。</li>
+<li>Linux2.4不支持内核抢占，进程在内核态是不允许抢占的，只有返回用户态时会触发调整。</li>
+<li>Linux2.6支持内核抢占，但是很多地方为了保护临界区资源而临时性的禁用抢占。</li>
+</ul>
+<h4 id="SMP调度下的负载均衡问题-1"><a href="#SMP调度下的负载均衡问题-1" class="headerlink" title="SMP调度下的负载均衡问题"></a>SMP调度下的负载均衡问题</h4><p><code>多处理器下，每个CPU都有对应的可执行队列，但是一个可执行状态的进程同一时刻只能存在于一个可执行队列中。</code></p>
+<p>问题</p>
+<ul>
+<li>每个CPU可执行队列中进程数目不均衡的时候，要怎么调整，什么时候算作是不均衡，需要调整？</li>
+<li>CPU之间的关系，两个CPU之间，是不是相互独立的，cache可以共享吗？或者，是不是由同一个物理CPU通过超线程技术虚拟出来的</li>
+<li>反正就是乱七八糟的就是了。。。。。</li>
+</ul>
+<h4 id="优先级继承-1"><a href="#优先级继承-1" class="headerlink" title="优先级继承"></a>优先级继承</h4><p><code>假如有一个进程A，因为要进入临界区，但是临界区有了B，而在等待睡眠，直到B退出临界区后，进程A才会被唤醒。</code></p>
+<p>可能存在这么一种情况，A的优先级很高，而B的优先级很低，B进入了临界区，但是却给其他优先级高于B低于A的进程C抢占，A就等不到运行，此时叫做<strong>优先级反转</strong>。此时会通过以下方法解决:在A开始等待的时候，将A的优先级赋给B，直到B退出临界区后恢复其原本的优先级。</p>
+<p>这就是优先级继承。</p>
+<h4 id="中断处理程序的优化-1"><a href="#中断处理程序的优化-1" class="headerlink" title="中断处理程序的优化"></a>中断处理程序的优化</h4><p><code>正常来说，中断处理程序处于一个不可调度的上下文中，CPU响应硬件中断自动跳转到内核设定的中断处理程序去执行，再到处理程序执行完。这整个过程中是不能被抢占的。</code></p>
+<p>一个进程如果被抢占了，可以通过保存在它的进程控制块（task_struct）中的信息，在之后的某个时间恢复它的运行，而中断上下文是没有task_struct的，所以是不可能杯抢占的。</p>
+<p>也就是说，中断程序的伪优先级比任何进程要高，但是呢在实际中，某些实时进程会拥有比中断进程更高的优先级。所以在一些系统中，会给中断处理程序赋予task_struct以及优先级。但是会影响一些性能，但是却能保证实时。</p>
+<h4 id="调度程序的效率问题-1"><a href="#调度程序的效率问题-1" class="headerlink" title="调度程序的效率问题"></a>调度程序的效率问题</h4><p><code>优先级明确了哪个进程应该被调度执行，而调度程序还要关心效率问题，因为会被频繁的执行，所以效率很重要的。</code></p>
+<p>所以，调度程序，如何来获得应该被执行的程序，就是一个问题了。</p>
+<p>在Linux2.4，可执行状态的进程会被放在一个链表中，每次调度，扫描整个链表，以找出最优的那个进程来运行，复杂度为O(N)</p>
+<p>在Linux2.6早期，可执行状态的进车功能会被挂载N（N=140）个链表中，每一个链表代表一个优先级，系统支持多少个优先级就有多少个链表。每次调度，调度程序只需要从第一个不为空的链表中取出链表头的进程即可。复杂度为O(1).</p>
+<p>而在现在Linux2.6的版本中，可执行状态的进程会按照优先级顺序被挂载一个红黑树上，每次调度，找出树中优先级最高的那个进程。复杂度为O(LogN)</p>
+<p><strong>只是为了公平</strong></p>
+<p>第一种是基于空间换时间的策略，在一组数目不大的链表中来实现的，这样子优先级的取值范围很小（大了会浪费太多空间），区分度不大不能满足公平性的需求，而使用红黑树对优先级的取值没有限制，区分度可以更高。而且在同等情况下，140个优先级，O(LogN)的复杂度也不会太差。</p>
+<h4 id="处理机的三级调度-1"><a href="#处理机的三级调度-1" class="headerlink" title="处理机的三级调度"></a>处理机的三级调度</h4><p><img src="/images/linux进程管理/3.jpg" alt="三级调度"></p>
+<ul>
+<li>作业调度(高级调度)</li>
+<li>内存调度(中级调度)</li>
+<li>进程调度(低级调度)</li>
+</ul>
+<p>作业调度从外存的后备队列中选择一批作业进入内存，为它们建立进程，这些进程被送入就绪队列，进程调度从就绪队列中选出一个进程，并把其状态改为运行状态，把CPU分配给它。中级调度是为了提高内存的利用率，系统将那些暂时不能运行的进程挂起来。当内存空间宽松时，通过中级调度选择具备运行条件的进程，将其唤醒。</p>
+<ul>
+<li>作业调度为进程活动做准备，进程调度使进程正常活动起来，中级调度将暂时不能运行的进程挂起，中级调度处于作业调度和进程调度之间。</li>
+<li>作业调度次数少，中级调度次数略多，进程调度频率最高。</li>
+<li>进程调度是最基本的，不可或缺。</li>
+</ul>
+<p>推荐一篇<a href="https://blog.csdn.net/chengonghao/article/details/50981214" target="_blank" rel="noopener">文章</a></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://dcLunatic.github.io">dcLunatic</a>
+            <p>原文链接：<a href="http://dcLunatic.github.io/Linux进程管理.html">http://dcLunatic.github.io/Linux进程管理.html</a>
+            <p>发表日期：<a href="http://dcLunatic.github.io/Linux进程管理.html">September 30th 2018, 9:52:51 am</a>
+            <p>更新日期：<a href="http://dcLunatic.github.io/Linux进程管理.html">October 4th 2018, 1:32:08 am</a>
+            <p>版权声明：转载的时候,记得注明来处</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/Kali安装Virtualbox.html" title= "Kali安装Virtualbox">
+                    <div class="nextTitle">Kali安装Virtualbox</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/virtualbox添加虚拟磁盘.html" title= "virtualbox添加虚拟磁盘">
+                    <div class="prevTitle">virtualbox添加虚拟磁盘</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://file.awen.me/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: "Linux进程管理", // 可选。默认为 location.href
+        owner: 'dcLunatic',
+        repo: 'dcLunatic.github.io',
+        oauth: {
+            client_id: '6d779c8d68f7d8d8ec9f',
+            client_secret: 'dec76663990c692bc924eef2916aec1f195e4a6b',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:dcLunatic6@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/dcLunatic" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="//zhihu.com/people/dclunatic" class="iconfont-archer zhihu" target="_blank" title=zhihu></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+    <!--
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    -->
+        <span id="hexo-power">我自倾杯思卿妆，一杯凉，两杯霜。</span>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux进程"><span class="toc-number">1.</span> <span class="toc-text">Linux进程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#而在Linux系统运行中，程序对应的进程是怎么被创建，被管理，被切换，被调度的呢？"><span class="toc-number">1.1.</span> <span class="toc-text">而在Linux系统运行中，程序对应的进程是怎么被创建，被管理，被切换，被调度的呢？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程的组成，创建，状态机"><span class="toc-number">1.1.1.</span> <span class="toc-text">进程的组成，创建，状态机</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进程的组成，创建"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">进程的组成，创建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#进程描述符"><span class="toc-number">1.1.1.1.1.</span> <span class="toc-text">进程描述符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#进程的组成"><span class="toc-number">1.1.1.1.2.</span> <span class="toc-text">进程的组成</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#进程的创建"><span class="toc-number">1.1.1.1.3.</span> <span class="toc-text">进程的创建</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-进程状态机"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">Linux 进程状态机</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程的调度"><span class="toc-number">1.1.2.</span> <span class="toc-text">进程的调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-进程调度的目标"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">Linux 进程调度的目标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-进程优先级"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">Linux 进程优先级</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#普通进程的优先级"><span class="toc-number">1.1.2.2.1.</span> <span class="toc-text">普通进程的优先级</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#实时进程的优先级"><span class="toc-number">1.1.2.2.2.</span> <span class="toc-text">实时进程的优先级</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-进程调度"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">Linux 进程调度</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#实时进程调度"><span class="toc-number">1.1.2.3.1.</span> <span class="toc-text">实时进程调度</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#调度策略"><span class="toc-number">1.1.2.3.1.1.</span> <span class="toc-text">调度策略</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#非实时进程调度"><span class="toc-number">1.1.2.3.2.</span> <span class="toc-text">非实时进程调度</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进程调度的其他因素"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">进程调度的其他因素</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#进程属性"><span class="toc-number">1.1.2.4.1.</span> <span class="toc-text">进程属性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#分配策略"><span class="toc-number">1.1.2.4.2.</span> <span class="toc-text">分配策略</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进程切换-Context-switch"><span class="toc-number">1.1.2.5.</span> <span class="toc-text">进程切换 (Context switch)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#调度触发的时机"><span class="toc-number">1.1.2.6.</span> <span class="toc-text">调度触发的时机</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他相关"><span class="toc-number">1.1.3.</span> <span class="toc-text">其他相关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#内核抢占"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">内核抢占</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SMP调度下的负载均衡问题"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">SMP调度下的负载均衡问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优先级继承"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">优先级继承</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#中断处理程序的优化"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">中断处理程序的优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#调度程序的效率问题"><span class="toc-number">1.1.3.5.</span> <span class="toc-text">调度程序的效率问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#处理机的三级调度"><span class="toc-number">1.1.3.6.</span> <span class="toc-text">处理机的三级调度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#而在Linux系统运行中，程序对应的进程是怎么被创建，被管理，被切换，被调度的呢？-1"><span class="toc-number">1.2.</span> <span class="toc-text">而在Linux系统运行中，程序对应的进程是怎么被创建，被管理，被切换，被调度的呢？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程的组成，创建，状态机-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">进程的组成，创建，状态机</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进程的组成，创建-1"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">进程的组成，创建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#进程描述符-1"><span class="toc-number">1.2.1.1.1.</span> <span class="toc-text">进程描述符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#进程的组成-1"><span class="toc-number">1.2.1.1.2.</span> <span class="toc-text">进程的组成</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#进程的创建-1"><span class="toc-number">1.2.1.1.3.</span> <span class="toc-text">进程的创建</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-进程状态机-1"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">Linux 进程状态机</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程的调度-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">进程的调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-进程调度的目标-1"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">Linux 进程调度的目标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-进程优先级-1"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">Linux 进程优先级</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#普通进程的优先级-1"><span class="toc-number">1.2.2.2.1.</span> <span class="toc-text">普通进程的优先级</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#实时进程的优先级-1"><span class="toc-number">1.2.2.2.2.</span> <span class="toc-text">实时进程的优先级</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-进程调度-1"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">Linux 进程调度</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#实时进程调度-1"><span class="toc-number">1.2.2.3.1.</span> <span class="toc-text">实时进程调度</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#调度策略-1"><span class="toc-number">1.2.2.3.1.1.</span> <span class="toc-text">调度策略</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#非实时进程调度-1"><span class="toc-number">1.2.2.3.2.</span> <span class="toc-text">非实时进程调度</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进程调度的其他因素-1"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">进程调度的其他因素</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#进程属性-1"><span class="toc-number">1.2.2.4.1.</span> <span class="toc-text">进程属性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#分配策略-1"><span class="toc-number">1.2.2.4.2.</span> <span class="toc-text">分配策略</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进程切换-Context-switch-1"><span class="toc-number">1.2.2.5.</span> <span class="toc-text">进程切换 (Context switch)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#调度触发的时机-1"><span class="toc-number">1.2.2.6.</span> <span class="toc-text">调度触发的时机</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他相关-1"><span class="toc-number">1.2.3.</span> <span class="toc-text">其他相关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#内核抢占-1"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">内核抢占</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SMP调度下的负载均衡问题-1"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">SMP调度下的负载均衡问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优先级继承-1"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">优先级继承</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#中断处理程序的优化-1"><span class="toc-number">1.2.3.4.</span> <span class="toc-text">中断处理程序的优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#调度程序的效率问题-1"><span class="toc-number">1.2.3.5.</span> <span class="toc-text">调度程序的效率问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#处理机的三级调度-1"><span class="toc-number">1.2.3.6.</span> <span class="toc-text">处理机的三级调度</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 38
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/04</span><a class="archive-post-title" href= "/递归攻击——入门1.html" >递归攻击——入门1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/Kali安装Virtualbox.html" >Kali安装Virtualbox</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/Linux进程管理.html" >Linux进程管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/virtualbox添加虚拟磁盘.html" >virtualbox添加虚拟磁盘</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/kali安装steam.html" >kali安装steam</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-线程通信.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/volatile关键字.html" >volatile关键字</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java函数式接口.html" >Java函数式接口——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/内网穿透——转.html" >内网穿透——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java网络编程.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java字节和字符的区别.html" >Java字节和字符的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux中的命令链接操作符.html" >linux中的命令链接操作符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java中获得实例的方法.html" >Java中获得实例的方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok简单使用.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java多线程.html" >Java多线程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/vim中的编码.html" >vim中的编码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock包实现锁.html" >java Lock包实现锁</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java序列化.html" >Java序列化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-IO分析.html" >Java IO性能分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java克隆.html" >Java克隆</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized关键字.html" >synchronized关键字</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-IO.html" >Java IO</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-class文件解析.html" >Java class文件解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/vim使用系统粘贴板.html" >如何在vim中使用系统的粘贴板</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/独显.html" >arch如何使用独显</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/03</span><a class="archive-post-title" href= "/makefile总结——转.html" >(转)makefile总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/java类加载机制.html" >java类加载机制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/java-reflect.html" >java-reflect</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-df.html" >linux-df</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-od.html" >linux-od</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux目录-proc-详解.html" >linux目录'/proc'详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-bc.html" >linux-bc</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-top.html" >top命令</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
+        <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
+    
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
+        <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
+    
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="command"><span class="iconfont-archer">&#xe606;</span>command</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
+    
+        <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
+    
+        <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
+    
+        <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
+    
+        <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
+    
+        <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
+    
+        <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
+    
+        <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
+    
+        <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
+    
+        <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
+    
+        <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
+    
+        <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
+    
+        <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
+    
+        <span class="sidebar-tag-name" data-tags="arch"><span class="iconfont-archer">&#xe606;</span>arch</span>
+    
+        <span class="sidebar-tag-name" data-tags="独立显卡"><span class="iconfont-archer">&#xe606;</span>独立显卡</span>
+    
+        <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
+    
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
+    
+        <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "dcLunatic"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":75,"height":150},"mobile":{"show":false}});</script></body>
+</html>
+
+

@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="dcLunatic">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="dcLunatic">
+    <meta name="keywords" content="Hexo | dcLunatic">
+    <meta name="description" content="">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Java网络编程 · dcLunatic&#39;s blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >dcLunatic&#39;s blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Java网络编程</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>dcLunatic's blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Java网络编程
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java">Java</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "网络编程">网络编程</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">8,430</span>阅读时长: <span class="post-count reading-time">35 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/09/21</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h1><h2 id="InetAddress"><a href="#InetAddress" class="headerlink" title="InetAddress"></a>InetAddress</h2><h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>java中使用InetAddress类来表示ip地址，其两个子类Inet4Address和Inet6Address分别表示ipv4地址和ipv6地址。</p>
+<p><strong>没有明显的构造函数，通过静态方法获得实例</strong></p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ul>
+<li><p><strong>public static InetAddress getByName(String host) throws UnknownHostException</strong></p>
+<p>在给定的主机名的情况下确定主机的ip地址。当找不到host的ip地址或者scope_id为全局的ipv6地址指定的，则抛出异常。</p>
+<p>主机名可以是机器名（如 “<code>java.sun.com</code>“），也可以是其 IP 地址的文本表示形式。如果提供字面值 IP 地址，则仅检查地址格式的有效性。 </p>
+</li>
+<li><p><strong>public static InetAddress[] getAllByName(String host) throws UnknownHostException</strong></p>
+<p>在给定主机名的情况下，根据系统上配置的名称服务返回其ip地址所组成的数组。当找不到host的ip地址或者scope_id为全局的ipv6地址指定的，则抛出异常。</p>
+<p>主机名可以是机器名（如 “<code>java.sun.com</code>“），也可以是其 IP 地址的文本表示形式。如果提供字面值 IP 地址，则仅检查地址格式的有效性。 </p>
+</li>
+<li><p><strong>public static InetAddress getByAddress(byte[] addr) throws UnknownHostException</strong></p>
+<p>在给定原始ip地址的情况下，返回InetAddress对象。参照网络字节顺序，地址高位字节位于getAddress()[0]中。ipv4地址byte数组的长度必须为4个字节，ipv6的必须为16个字节。如果长度非法，则抛出异常。</p>
+</li>
+<li><p><strong>public static InetAddress getByAddress(String host, byte[] addr) throws UnknownHostException</strong></p>
+<p>根据提供的主机名和IP地址创建InetAddress。不检查名称服务的地址有效性。当ip地址长度非法时，抛出异常。</p>
+<p>主机名可以是机器名（如 “<code>java.sun.com</code>“），也可以是其 IP 地址的文本表示形式。</p>
+</li>
+<li><p><strong>public static InetAddress getLocalHost() throws UnknownHostException</strong></p>
+<p>返回本地主机的ip地址。如果找不到host的任何ip地址的时候，抛出异常。</p>
+</li>
+</ul>
+<p><strong>下面是一些常用的方法</strong></p>
+<ul>
+<li>public byte[] getAddress()                     //返回此对象的原始ip地址，结果按照网络字节顺序。</li>
+<li>public String getHostAddress()            //以字符串形式返回ip地址。</li>
+<li>public String getHostName()               //以字符串形式返回主机名。如果此 InetAddress 是用主机名创建的，则记忆并返回主机名；否则，将执行反向名称查找并基于系统配置的名称查找服务返回结果。</li>
+<li>public String toString()                          //将此ip地址转换为<code>主机名/字面值ip地址</code>形式的字符串。如果主机名未解析，则主机名为空。</li>
+<li>public boolean isReachable(int timeout) throws IOException    //测试是否可以达到该地址。超时值单位为毫秒。发生网络异常时，抛出IOException，timeout为负时抛出IllegalArgumentException。</li>
+<li>public boolean isReachable(NetworkInterface netif, int ttl, int timeout)    //测试是否可以到达该地址。允许指定网络接口和数据包的最大跳数，超时值单位为毫秒。发生网络异常时，抛出IOException，ttl或timeout为负时抛出IllegalArgumentException。</li>
+<li>public String getCanonicalHostName()    //获取此ip地址的完全限定域名。</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.net.InetAddress;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InetAddressTest</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String... args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        InetAddress addr = InetAddress.getByName(<span class="string">"183.232.231.172"</span>);</span><br><span class="line">        System.out.println(addr);</span><br><span class="line">        addr = InetAddress.getByName(<span class="string">"www.baidu.com"</span>);</span><br><span class="line">        System.out.println(addr);</span><br><span class="line">        System.out.println(<span class="string">"完全限定域名: "</span> + addr.getCanonicalHostName());</span><br><span class="line">        <span class="keyword">byte</span>[] ipaddr = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4</span>];</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i : <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">183</span>,<span class="number">232</span>,<span class="number">231</span>,<span class="number">172</span>&#125;)</span><br><span class="line">            ipaddr[index++] = (<span class="keyword">byte</span>)(i&amp;<span class="number">0xff</span>);</span><br><span class="line">        addr = InetAddress.getByAddress(ipaddr);</span><br><span class="line">        System.out.println(addr);</span><br><span class="line">        </span><br><span class="line">        System.out.println(<span class="string">"是否可达: "</span> + addr.isReachable(<span class="number">1000</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><p>URL对象代表统一资源定位符，是指向互联网资源的指针，它使用协议名、主机名、端口和资源组成，即满足如下格式：<code>protocol://host:port/resourceName</code>，可以通过URL对象来获取该URL对应的资源等信息。</p>
+<p>但URL 类自身并不根据 RFC2396 中定义的转义机制编码或解码任何 URL 部分。由调用方对任何需要在调用 URL 前进行转义的字段进行编码，并对从 URL 返回的任何经过转义的字段进行解码。比如对于这两个URL：<code>http://foo.com/hello world/</code>和<code>http://foo.com/hello%20world</code>将被视为互不相等。</p>
+<p> 注意，URI 类在某些特定情况下对其组成字段执行转义。建议使用 URI 管理 URL 的编码和解码，并使用 toURI() 和 URI.toURL() 实现这两个类之间的转换。</p>
+<p>也可以使用 URLEncoder 和 URLDecoder 类，但是只适用于 HTML 形式的编码，它与 RFC2396 中定义的编码机制不同。 </p>
+<h3 id="常用构造方法"><a href="#常用构造方法" class="headerlink" title="常用构造方法"></a>常用构造方法</h3><ul>
+<li><strong>public URL(String spec) throws MalformedURLException</strong>                             //根据String表示形式创建URL对象，当协议不存在或者未知时，抛出异常。</li>
+<li><strong>URL(String protocol, String host, int port, String file) throws MalformedURLException </strong>   //根据protocol、host、port、file创建URL对象，当port为-1时，使用协议的默认端口。当协议不存在或者未知时，抛出异常。</li>
+<li><strong>URL(String protocol, String host, String file) throws MalformedURLException</strong>    //根据protocol、host、file创建URL对象，这里使用的是协议的默认端口。当协议不存在或者未知时，抛出异常。</li>
+<li><strong>URL(URL context, String url) throws MalformedURLException</strong>          //使用基地址和相对位置创建URL对象。当协议不存在或者未知时，抛出异常。</li>
+</ul>
+<h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><ul>
+<li>public String getAuthority()                                                //获得此URL的授权部分。</li>
+<li>public Object getContent()                                                 //获得此URL的内容。</li>
+<li>public Object getContent(Class[] classes)                       //获得此URL的内容，相当于openConnection().getContent(Class[])。</li>
+<li>public int getDefaultPort()                                                 //返回此URL关联协议的默认端口号。</li>
+<li>public String getFile()                                                          //返回此URL的文件名</li>
+<li>public String getHost()                                                        //返回此URL的主机名</li>
+<li>public String getPath()                                                        //返回此URL的路径部分</li>
+<li>public int getPort()                                                               //返回此URL的端口号</li>
+<li>public String getProtocol()                                                  //返回此URL的协议名称</li>
+<li>public String getQuery()                                                      //返回此URL的查询部分</li>
+<li>public String getRef()                                                           //返回此URL的锚点（也称引用）</li>
+<li>public URLConnection openConnection()                        //返回一个URLConnection对象，表示URL所引用的远程对象的连接</li>
+<li>public URLConnection openConnection(Proxy proxy)   //与 openConnection() 类似，所不同是连接通过指定的代理建立；不支持代理方式的协议处理程序将忽略该代理参数并建立正常的连接。</li>
+<li>public InputStream openStream()                                      //打开到此URL的连接并返回一个用于从该连接接入的InputStream</li>
+<li>public boolean sameFile(URL other)                                  //比较两个URL，不包括片段部分</li>
+<li>public String toExternalForm()                                            //返回此URL的字符串形式，作用跟toString()一样</li>
+<li>public URI toURI()                                                                  //返回与此URL等效的URI。</li>
+</ul>
+<h3 id="使用例子"><a href="#使用例子" class="headerlink" title="使用例子"></a>使用例子</h3><p>下载一张图片</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">URLTest</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String... args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        URL imgurl = <span class="keyword">new</span> URL(<span class="string">"http://img5.duitang.com/uploads/item/201511/06/20151106190951_YXSZN.jpeg"</span>);</span><br><span class="line">        System.out.println(<span class="string">"路径部分:"</span> + imgurl.getPath());</span><br><span class="line">        System.out.println(<span class="string">"文件名:"</span> + imgurl.getFile());</span><br><span class="line">        InputStream is = imgurl.openStream();</span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"picture.jpg"</span>);</span><br><span class="line">        <span class="keyword">if</span>(!file.exists())</span><br><span class="line">            file.createNewFile();</span><br><span class="line">        FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(file);</span><br><span class="line">        <span class="keyword">int</span> ch;</span><br><span class="line">        <span class="keyword">while</span>((ch = is.read()) != -<span class="number">1</span>)</span><br><span class="line">            fos.write(ch);</span><br><span class="line">        fos.close();</span><br><span class="line">        is.close();</span><br><span class="line">        System.out.println(<span class="string">"Done."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外一个例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过命令行参数指定在斗图啦网站要搜索的图片的关键字，然后将搜索结果的前几张图片下载保存</span></span><br><span class="line"><span class="keyword">import</span> java.net.*;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.*;</span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyPictureTool</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DTL = <span class="string">"http://www.doutula.com"</span>;</span><br><span class="line">    <span class="comment">//给出目的地址，测试在指定时间内是否能到达地址所在的主机</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">testNetwork</span><span class="params">(String str, <span class="keyword">int</span> timeout)</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            URL url = <span class="keyword">new</span> URL(str);</span><br><span class="line">            InetAddress addr = InetAddress.getByName(url.getHost());</span><br><span class="line">            <span class="keyword">if</span>(addr.isReachable(timeout))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//获取斗图啦的搜索结果</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">search</span><span class="params">(String key)</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            String searchUrl = DTL + <span class="string">"/search?keyword="</span> + URLEncoder.encode(key, <span class="string">"UTF-8"</span>);</span><br><span class="line">            <span class="comment">//System.out.println(searchUrl);</span></span><br><span class="line">            URL url = <span class="keyword">new</span> URL(searchUrl);</span><br><span class="line">            InputStream is = url.openStream();</span><br><span class="line">            BufferedReader bf = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(is));</span><br><span class="line">            StringBuilder content = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">            String line;</span><br><span class="line">            <span class="keyword">while</span>((line = bf.readLine()) != <span class="keyword">null</span>)&#123;</span><br><span class="line">                content.append(line);</span><br><span class="line">                content.append(<span class="string">"\n"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            bf.close();</span><br><span class="line">            <span class="keyword">return</span> content.toString();</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//写入内容到指定文件</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">writeToFile</span><span class="params">(String data, String filename, <span class="keyword">boolean</span> flag)</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            File file = <span class="keyword">new</span> File(filename);</span><br><span class="line">            <span class="keyword">if</span>(!file.exists())</span><br><span class="line">                file.createNewFile();</span><br><span class="line">            FileWriter fw = <span class="keyword">new</span> FileWriter(file, flag);</span><br><span class="line">            fw.write(data);</span><br><span class="line">            fw.close();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//将链接对应的URL资源下载保存到指定的文件中</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">downloadUrl</span><span class="params">(String strUrl, String filename)</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            File file = <span class="keyword">new</span> File(filename);</span><br><span class="line">            <span class="keyword">if</span>(!file.exists())</span><br><span class="line">                file.createNewFile();</span><br><span class="line">            URL url = <span class="keyword">new</span> URL(strUrl);</span><br><span class="line">            InputStream is = url.openStream();</span><br><span class="line">            FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(file);</span><br><span class="line">            <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">            <span class="keyword">int</span> len = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span>((len = is.read(buf)) != -<span class="number">1</span>)&#123;</span><br><span class="line">                fos.write(buf, <span class="number">0</span>, len);</span><br><span class="line">            &#125;</span><br><span class="line">            fos.close();</span><br><span class="line">            is.close();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        </span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//匹配搜索结果中的图片链接，并保存在list参数中，可指定返回的链接数，返回实际返回的链接数</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getPictureUrl</span><span class="params">(String html, List&lt;String&gt; list, <span class="keyword">int</span> count)</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            Matcher matcher = Pattern.compile(<span class="string">"&lt;div class=\"random_picture\"&gt;[\\s\\S]*?(?&lt;!&lt;/script&gt;)\n&lt;/div&gt;"</span>).matcher(html);</span><br><span class="line">            <span class="keyword">if</span>(matcher.find())&#123;</span><br><span class="line">                String rs = matcher.group();</span><br><span class="line">                matcher = Pattern.compile(<span class="string">"&lt;img.*?data-backup=\"(.*?)\""</span>).matcher(rs);</span><br><span class="line">                <span class="keyword">int</span> i;</span><br><span class="line">                <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; count &amp;&amp; matcher.find(); i++)&#123;</span><br><span class="line">                    list.add(matcher.group(<span class="number">1</span>).replace(<span class="string">"thumb150"</span>, <span class="string">"large"</span>));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> i; </span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//获取pictureUrl的图片类型,如"jpg" "gif"等</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">getPictureType</span><span class="params">(String pictureUrl)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = pictureUrl.lastIndexOf(<span class="string">'.'</span>);</span><br><span class="line">        <span class="keyword">if</span>(pos == -<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">return</span> pictureUrl.substring(pos+<span class="number">1</span>, pictureUrl.length()); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(args.length != <span class="number">2</span> &amp;&amp; args.length != <span class="number">1</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">"从斗图啦网站搜索并下载指定数量的关键词相关图片"</span>);</span><br><span class="line">            System.out.println(<span class="string">"Usage: java MyPictureTool keyWord [downloadCount=6]"</span>);</span><br><span class="line">            System.exit(-<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(args.length == <span class="number">1</span>)</span><br><span class="line">            count = <span class="number">6</span>;</span><br><span class="line">        <span class="keyword">if</span>(args.length == <span class="number">2</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                count = Integer.parseInt(args[<span class="number">1</span>]);</span><br><span class="line">                <span class="keyword">if</span>(count &lt; <span class="number">1</span>)&#123;</span><br><span class="line">                    System.out.println(<span class="string">"请输入正确的downloadCount参数"</span>);</span><br><span class="line">                    System.out.println(<span class="string">"从斗图啦网站搜索并下载指定数量的关键词相关图片"</span>);</span><br><span class="line">                    System.out.println(<span class="string">"Usage: java MyPictureTool keyWord [downloadCount=6]"</span>);</span><br><span class="line">                    System.exit(-<span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">                System.out.println(<span class="string">"请输入正确的downloadCount参数"</span>);</span><br><span class="line">                System.out.println(<span class="string">"从斗图啦网站搜索并下载指定数量的关键词相关图片"</span>);</span><br><span class="line">                System.out.println(<span class="string">"Usage: java MyPictureTool keyWord [downloadCount=6]"</span>);</span><br><span class="line">                System.exit(-<span class="number">1</span>);                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"&gt;&gt; 搜索关键词为 "</span> + args[<span class="number">0</span>] + <span class="string">" 的图片，并下载搜索结果的前 "</span> + count + <span class="string">" 张\n"</span>);</span><br><span class="line">        String html = search(args[<span class="number">0</span>]);</span><br><span class="line">        List&lt;String&gt; pictureUrl = <span class="keyword">new</span> ArrayList&lt;String&gt;(count);</span><br><span class="line">        <span class="keyword">if</span>(getPictureUrl(html, pictureUrl, count) &lt; <span class="number">1</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">"搜索结果异常"</span>);</span><br><span class="line">            System.exit(-<span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//创建下载文件目录</span></span><br><span class="line">        File downloadDir = <span class="keyword">new</span> File(<span class="string">"."</span> + File.separator + args[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">if</span>(!downloadDir.exists())</span><br><span class="line">            downloadDir.mkdirs();</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> successDownload = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; pictureUrl.size(); i++)&#123;</span><br><span class="line">            System.out.println(<span class="string">"图片链接: "</span> + pictureUrl.get(i));</span><br><span class="line">            String type = getPictureType(pictureUrl.get(i));</span><br><span class="line">            <span class="keyword">if</span>(type == <span class="keyword">null</span>)&#123;</span><br><span class="line">                System.out.println(<span class="string">"链接异常，跳过"</span>);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            String pictureName = <span class="string">"."</span> + File.separator  + args[<span class="number">0</span>] + File.separator + (i+<span class="number">1</span>) + <span class="string">"."</span> + type;</span><br><span class="line">            System.out.println(<span class="string">"正在保存图片..."</span>);</span><br><span class="line">            <span class="keyword">if</span>(downloadUrl(pictureUrl.get(i), pictureName))&#123;</span><br><span class="line">                System.out.println(<span class="string">"保存成功，图片位置: "</span> + pictureName);</span><br><span class="line">                successDownload++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                System.out.println(<span class="string">"由于异常原因，保存失败"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"\n&gt;&gt; 下载完成，成功下载 "</span> + successDownload + <span class="string">" 张"</span>);</span><br><span class="line">        System.out.println(<span class="string">"Done."</span>);</span><br><span class="line">         </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="URI-此部分来自api文档"><a href="#URI-此部分来自api文档" class="headerlink" title="URI(此部分来自api文档)"></a>URI(此部分来自api文档)</h2><h3 id="URI-语法和组成部分"><a href="#URI-语法和组成部分" class="headerlink" title="URI 语法和组成部分"></a>URI 语法和组成部分</h3><p>在最高级别上，字符串形式的 URI 引用（以下简写为”URI”）语法如下</p>
+<p>[<em>scheme**</em>:<strong>]<em>scheme-specific-part</em>[</strong>#<em>**fragment</em>]</p>
+<p>其中，方括号 […] 用于描述可选组成部分，字符 <strong>:</strong>和 <strong>#</strong>代表它们自身。</p>
+<p><em>绝对</em> URI 指定了方案(scheme)；非绝对的 URI 称为<em>相对</em>URI。URI 还可以根据其是否为<em>不透明的</em> 或<em>分层的</em> 进行分类。</p>
+<p><em>不透明</em> URI 为绝对 URI，其特定于方案的部分不是以斜线字符 (‘/‘) 开始。不透明 URI 无法进行进一步解析。下面是不透明 URI 的一些示例：</p>
+<table>
+<thead>
+<tr>
+<th>mailto:<a href="mailto:java-net@java.sun.com" target="_blank" rel="noopener">java-net@java.sun.com</a></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>news:comp.lang.java</td>
+<td></td>
+</tr>
+<tr>
+<td>urn:isbn:096139210x</td>
+</tr>
+</tbody>
+</table>
+<p><em>分层</em> URI 或者为绝对 URI（其特定于方案的部分以斜线字符开始），或者为相对 URI，即不指定方案的 URI。下面是分层 URI 的一些示例：</p>
+<p><a href="http://java.sun.com/j2se/1.3/" target="_blank" rel="noopener">http://java.sun.com/j2se/1.3/</a><br>docs/guide/collections/designfaq.html#28<br><a href="http://www.cnblogs.com/../demo/jfc/SwingSet2/src/SwingSet2.java" target="_blank" rel="noopener">http://www.cnblogs.com/../demo/jfc/SwingSet2/src/SwingSet2.java</a><br>file:///~/calendar </p>
+<p>分层 URI 还要按照下面的语法进行进一步的解析</p>
+<p>[<em>scheme**</em>:<strong>][</strong>//<strong><em>authority</em>][<em>path</em>][</strong>?<strong><em>query</em>][</strong>#<em>**fragment</em>]</p>
+<p>其中，<strong>:</strong>、<strong>/</strong>、<strong>?</strong>和 <strong>#</strong>代表它们自身。分层 URI 的特定于方案的部分包含方案和片段部分之间的字符。</p>
+<p>分层 URI 的授权组成部分（如果指定）为<em>基于服务器的</em> 或<em>基于注册表的</em>。基于服务器的授权按照如下众所周知的语法进行解析：</p>
+<p>[<em>user-info**</em>@<strong>]<em>host</em>[</strong>:<em>**port</em>]</p>
+<p>其中，字符 <strong>@</strong>和 <strong>:</strong>代表它们自身。几乎当前使用的所有 URI 方案都是基于服务器的。不能采用这种方式解析的授权组成部分被视为基于注册表的。</p>
+<p>如果分层 URI 的路径组成部分以斜线字符 (‘/‘) 开始，则称此 URI 本身为绝对的；否则它为相对的。分层 URI 或者为绝对的，或者指定了授权的路径，它始终为绝对的。</p>
+<p>如上所述，URI 实例具有以下九个组成部分：</p>
+<table>
+<thead>
+<tr>
+<th><strong>组成部分</strong></th>
+<th><strong>类型</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>方案</td>
+<td>String</td>
+</tr>
+<tr>
+<td>特定于方案的部分</td>
+<td>String</td>
+</tr>
+<tr>
+<td>授权</td>
+<td>String</td>
+</tr>
+<tr>
+<td>用户信息</td>
+<td>String</td>
+</tr>
+<tr>
+<td>主机</td>
+<td>String</td>
+</tr>
+<tr>
+<td>端口</td>
+<td>int</td>
+</tr>
+<tr>
+<td>路径</td>
+<td>String</td>
+</tr>
+<tr>
+<td>查询</td>
+<td>String</td>
+</tr>
+<tr>
+<td>片段</td>
+<td>String</td>
+</tr>
+</tbody>
+</table>
+<p>在给定实例中，任何特殊组成部分都或者为<em>未定义的</em>，或者为<em>已定义的</em>，并且有不同的值。未定义的字符串组成部分由 null 表示，未定义的整数组成部分由 -1 表示。已定义的字符串组成部分的值可以为空字符串；这与未定义的组成部分不等效。</p>
+<p>实例中特定的组成部分是已定义的还是未定义的取决于所代表的 URI 类型。绝对 URI 具有方案组成部分。不透明的 URI 具有一个方案、一个特定于方案的部分，以及可能会有一个片段，但是没有其他组成部分。分层 URI 总是有一个路径（尽管可能为空）和一个特定于方案的部分（它至少包含一个路径），还可以包含任何其他组成部分。如果有授权组成部分且它又是基于服务器的，则主机组成部分将被定义，也有可能定义用户信息和端口组成部分。</p>
+<h3 id="URI分类"><a href="#URI分类" class="headerlink" title="URI分类"></a>URI分类</h3><h4 id="绝对URI和相对URI"><a href="#绝对URI和相对URI" class="headerlink" title="绝对URI和相对URI"></a>绝对URI和相对URI</h4><p><strong>绝对URI：</strong>以scheme组件起始的完整格式，如<a href="http://fsjohnhuang.cnblogs.com。表示以对标识出现的环境无依赖的方式引用资源。" target="_blank" rel="noopener">http://fsjohnhuang.cnblogs.com。表示以对标识出现的环境无依赖的方式引用资源。</a><br><strong>相对URI：</strong>不以scheme组件起始的非完整格式，如fsjohnhuang.cnblogs.com。表示以对依赖标识出现的环境有依赖的方式引用资源。 </p>
+<h4 id="不透明URI和分层URI"><a href="#不透明URI和分层URI" class="headerlink" title="不透明URI和分层URI"></a>不透明URI和分层URI</h4><p><strong>不透明URI：</strong>scheme-specific-part组件不是以正斜杠(/)起始的，如mailto:<a href="mailto:fsjohnhuang@xxx.com" target="_blank" rel="noopener">fsjohnhuang@xxx.com</a>。由于不透明URI无需进行分解操作，因此不会对scheme-specific-part组件进行有效性验证。 </p>
+<p><strong>分层URI：</strong>scheme-specific-part组件是以正斜杠(/)起始的，如<a href="http://fsjohnhuang.com。" target="_blank" rel="noopener">http://fsjohnhuang.com。</a></p>
+<h3 id="针对-URI-实例的运算"><a href="#针对-URI-实例的运算" class="headerlink" title="针对 URI 实例的运算"></a>针对 URI 实例的运算</h3><p>此类支持的主要运算有<em>规范化</em>、<em>解析</em> 和<em>相对化</em> 运算。</p>
+<p><em>规范化</em> 是将分层 URI 的路径组成部分中的不必要的”.” 和 “..” 部分移除的过程。每个 “.” 部分都将被移除。”..” 部分也被移除，除非它前面有一个非 “..” 部分。规范化对不透明 URI 不产生任何效果。 </p>
+<p><em>解析</em> 是根据另一个<em>基本</em> URI 解析某个 URI 的过程。得到的 URI 由两个 URI 组成部分构造，构造方式由 RFC 2396 指定，从基本 URI 取出原始 URI 中未指定的组成部分。对于分层 URI，原始的路径根据基本路径进行解析，然后进行规范化。例如，解析以下 URI </p>
+<p>docs/guide/collections/designfaq.html#28 (1) </p>
+<p>根据基本 URI <a href="http://java.sun.com/j2se/1.3/" target="_blank" rel="noopener">http://java.sun.com/j2se/1.3/</a> 解析，结果为 URI </p>
+<p><a href="http://java.sun.com/j2se/1.3/docs/guide/collections/designfaq.html#28" target="_blank" rel="noopener">http://java.sun.com/j2se/1.3/docs/guide/collections/designfaq.html#28</a></p>
+<p>解析相对 URI </p>
+<p><a href="http://www.cnblogs.com/../demo/jfc/SwingSet2/src/SwingSet2.java" target="_blank" rel="noopener">http://www.cnblogs.com/../demo/jfc/SwingSet2/src/SwingSet2.java</a> (2) </p>
+<p>根据此结果应生成</p>
+<p><a href="http://java.sun.com/j2se/1.3/demo/jfc/SwingSet2/src/SwingSet2.java" target="_blank" rel="noopener">http://java.sun.com/j2se/1.3/demo/jfc/SwingSet2/src/SwingSet2.java</a></p>
+<p>支持对绝对和相对 URI，以及分层 URI 的绝对和相对路径的解析。根据任何其他 URI 对 URI file:///~calendar 进行解析只能生成原始的 URI，因为它是绝对路径。根据相对基础 URI (1) 解析相对 URI (2) 将生成规范的但依然是相对的 URI </p>
+<p>demo/jfc/SwingSet2/src/SwingSet2.java </p>
+<p>最后，<em>相对化</em> 是解析的逆过程：对于任何两个规范的 URI <em>u</em> 和 <em>v</em>， </p>
+<p><em>u</em>.relativize(<em>u</em>.resolve(<em>v</em>)).equals(<em>v</em>)和<br><em>u</em>.resolve(<em>u</em>.relativize(<em>v</em>)).equals(<em>v</em>)。</p>
+<p>此运算在下面的场合非常有用：构造一个包含 URI 的文档，该URI 必须尽可能是根据文档的基本 URI 建立的相对 URI。例如，相对化 URI </p>
+<p><a href="http://java.sun.com/j2se/1.3/docs/guide/index.html" target="_blank" rel="noopener">http://java.sun.com/j2se/1.3/docs/guide/index.html</a> </p>
+<p>根据基本 URI </p>
+<p><a href="http://java.sun.com/j2se/1.3" target="_blank" rel="noopener">http://java.sun.com/j2se/1.3</a> </p>
+<p>生成了相对 URI docs/guide/index.html。</p>
+<h3 id="字符分类"><a href="#字符分类" class="headerlink" title="字符分类"></a>字符分类</h3><p>RFC 2396 精确指出 URI 引用中的各个不同组成部分允许使用的字符。以下分类大部分取自该规范，这些约束的用法描述如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>alpha</strong></th>
+<th>US-ASCII 字母字符，’A’ 到 ‘Z’ 以及 ‘a’ 到 ‘z’</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>digit</strong></td>
+<td>US-ASCII 十进制数字符，’0’ 到 ‘9’</td>
+</tr>
+<tr>
+<td><strong>alphanum</strong></td>
+<td>所有 <em>alpha</em>和 <em>digit</em>字符</td>
+</tr>
+<tr>
+<td><strong>unreserved</strong></td>
+<td>所有 <em>alphanum</em>字符及字符串 “_-!.~’()*” 中包含的字符</td>
+</tr>
+<tr>
+<td><strong>punct</strong></td>
+<td>字符串 “,;:$&amp;+=” 中包含的字符</td>
+</tr>
+<tr>
+<td><strong>reserved</strong></td>
+<td>所有 <em>punct</em>字符及字符串 “?/[]@” 中包含的字符</td>
+</tr>
+<tr>
+<td><strong>escaped</strong></td>
+<td>转义八位组，即三部分组合：百分号 (‘%’) 后跟两个十六进制数（’0’-‘9’、’A’-‘F’ 和 ‘a’-‘f’）</td>
+</tr>
+<tr>
+<td><strong>other</strong></td>
+<td>未包含在 US-ASCII 字符集中的 Unicode 字符不是控制字符（根据 <a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">Character.isISOControl</a> 方法），并且不是空格字符（根据 <a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">Character.isSpaceChar</a> 方法）<em>（**与 RFC 2396 有些出入**，RFC 2396 限制为 US-ASCII）</em></td>
+</tr>
+</tbody>
+</table>
+<p>全部合法 URI 字符集包含 <em>unreserved</em>、<em>reserved</em>、<em>escaped</em>和 <em>other</em>字符。</p>
+<h3 id="转义八位组、引用、编码和解码"><a href="#转义八位组、引用、编码和解码" class="headerlink" title="转义八位组、引用、编码和解码"></a>转义八位组、引用、编码和解码</h3><p>RFC 2396 允许用户信息、路径、查询和片段组成部分中包含转义八位组。转义在 URI 中实现两个目的：</p>
+<ul>
+<li>当要求 URI 不能包含任何 <em>other</em> 字符以严格遵守 RFC 2396 时，需要对非 US-ASCII 字符进行<em>编码</em>。</li>
+<li>要<em>引用</em> 组成部分中的非法字符。用户信息、路径、查询和片段组成部分在判断哪些字符合法哪些字符非法上稍有不同。</li>
+</ul>
+<p>在此类中由三个相关的运算实现了这两个目的：</p>
+<ul>
+<li>字符的<em>编码</em> 方式是，用代表该字符在 UTF-8 字符集中的字符的转义八位组序列取代该字符。例如，欧元符号 (‘\u20AC’) 编码后为 “%E2%82%AC”。<em>（**与 RFC 2396 有些出入**，RFC 2396 未指定任何特殊字符集）</em>。</li>
+<li>非法字符通过简单地对它进行编码来<em>引用</em>。例如，空格字符，用 “%20” 取代它来进行引用。UTF-8 包含 US-ASCII，因此对于 US-ASCII 字符，此转换具有的效果与 RFC 2396 的要求相同。 </li>
+<li>对转义八位组序列进行<em>解码</em> 的方法是，用它所代表的 UTF-8 字符集中的字符的序列将它取代。UTF-8 包含 US-ASCII，因此解码具有对引用的任何 US-ASCII 字符取消引用的效果，以及对任何编码的非 US-ASCII 字符进行解码的效果。如果在对转义八位组进行解码时出现<a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">解码错误</a>，则出错的八位组用 Unicode 替换字符 ‘\uFFFD’ 取代。</li>
+</ul>
+<p>这些运算在此类的构造方法和方法中公开，如下所示：</p>
+<ul>
+<li><a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">单参数构造方法</a>要求对参数中的任何非法字符都必须引用，并保留出现的任何转义八位组和 <em>other</em>字符。</li>
+<li><a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">多参数构造方法</a>根据其中出现的组成部分的需要对非法字符进行引用。百分号字符 (‘%’) 始终通过这些构造方法引用。任何 <em>other</em>字符都将被保留。</li>
+<li><a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">getRawUserInfo</a>、<a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">getRawPath</a>、<a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">getRawQuery</a>、<a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">getRawFragment</a>、<a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">getRawAuthority</a> 和 <a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">getRawSchemeSpecificPart</a> 方法以原始形式返回它们的相应组成部分的值，不解释任何转义八位组。由这些方法返回的字符串有可能包含转义八位组和 <em>other</em>字符，但不包含任何非法字符。</li>
+<li><a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">getUserInfo</a>、<a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">getPath</a>、<a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">getQuery</a>、<a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">getFragment</a>、<a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">getAuthority</a> 和 <a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">getSchemeSpecificPart</a> 方法解码相应的组成部分中的任何转义八位组。由这些方法返回的字符串有可能包含 <em>other</em>字符和非法字符，但不包含任何转义八位组。</li>
+<li><a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">toString</a> 返回带所有必要引用的 URI 字符串，但它可能包含 <em>other</em> 字符。</li>
+<li><a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">toASCIIString</a> 方法返回不包含任何 <em>other</em>字符的、完全引用的和经过编码的 URI 字符串。 </li>
+</ul>
+<h3 id="标识"><a href="#标识" class="headerlink" title="标识"></a>标识</h3><p>对于任何 URI <em>u</em>，下面的标识有效</p>
+<p>new URI(<em>u</em>.toString()).equals(<em>u</em>) . </p>
+<p>对于不包含冗余语法的任何 URI <em>u</em>，比如在一个空授权前面有两根斜线（如 file:///tmp/）和主机名后面跟一个冒号但没有端口（如<a href="http://java.sun.com:），以及除必须引用的字符之外不对字符编码的情况，下面的标识也有效：" target="_blank" rel="noopener">http://java.sun.com:），以及除必须引用的字符之外不对字符编码的情况，下面的标识也有效：</a></p>
+<p>new URI(<em>u</em>.getScheme()、<br><em>u</em>.getSchemeSpecificPart()、<br><em>u</em>.getFragment())<br>.equals(<em>u</em>) </p>
+<p>在所有情况下，以下标识有效</p>
+<p>new URI(<em>u</em>.getScheme()、<br><em>u</em>.getUserInfo()、 <em>u</em>.getAuthority()、<br><em>u</em>.getPath()、 <em>u</em>.getQuery()、<br><em>u</em>.getFragment())<br>.equals(<em>u</em>) </p>
+<p>如果 <em>u</em>为分层的，则以下标识有效</p>
+<p>new URI(<em>u</em>.getScheme()、<br><em>u</em>.getUserInfo()、 <em>u</em>.getHost()、 <em>u</em>.getPort()、<br><em>u</em>.getPath()、 <em>u</em>.getQuery()、<br><em>u</em>.getFragment())<br>.equals(<em>u</em>) </p>
+<p>如果 <em>u</em>为分层的并且没有授权或没有基于服务器的授权。</p>
+<h3 id="URI、URL和-URN"><a href="#URI、URL和-URN" class="headerlink" title="URI、URL和 URN"></a>URI、URL和 URN</h3><p>URI 是统一资源<em>标识符</em>，而 URL 是统一资源<em>定位符</em>。因此，笼统地说，每个 URL 都是 URI，但不一定每个 URI 都是URL。这是因为 URI 还包括一个子类，即统一资源<em>名称</em> (URN)，它命名资源但不指定如何定位资源。上面的 mailto、news 和 isbn URI 都是URN 的示例。</p>
+<p>URI 和 URL 概念上的不同反映在此类和 <a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">URL</a> 类的不同中。</p>
+<p>此类的实例代表由 RFC 2396 定义的语法意义上的一个 URI 引用。URI 可以是绝对的，也可以是相对的。对 URI 字符串按照一般语法进行解析，不考虑它所指定的方案（如果有）不对主机（如果有）执行查找，也不构造依赖于方案的流处理程序。相等性、哈希计算以及比较都严格地根据实例的字符内容进行定义。换句话说，一个 URI 实例和一个支持语法意义上的、依赖于方案的比较、规范化、解析和相对化计算的结构化字符串差不多。</p>
+<p>作为对照，<a href="http://www.cnblogs.com/springside5/admin/" target="_blank" rel="noopener">URL</a> 类的实例代表了 URL 的语法组成部分以及访问它描述的资源所需的信息。URL 必须是绝对的，即它必须始终指定一个方案。URL 字符串按照其方案进行解析。通常会为 URL 建立一个流处理程序，实际上无法为未提供处理程序的方案创建一个 URL 实例。相等性和哈希计算依赖于方案和主机的 Internet 地址（如果有）；没有定义比较。换句话说，URL 是一个结构化字符串，它支持解析的语法运算以及查找主机和打开到指定资源的连接之类的网络 I/O 操作。</p>
+<h3 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h3><ul>
+<li><p><strong>public URI(String str) throws URISynataxException</strong>             //通过给定的字符串构造一个URI</p>
+<p>如果给定字符串违背 RFC 2396，抛出异常。</p>
+</li>
+<li><p><strong>public URI(String scheme, String ssp, String fragment) throws URISynataxException</strong>    //根据给定的组成部分构造一个URI</p>
+<p>如果给定字符串违背 RFC 2396，抛出异常。</p>
+</li>
+<li><p><strong>public URI(String scheme, String userInfo, String host, int port, String path, String query, String fragment) throws URISynataxException</strong>    //通过给定组成部分构造一个分层URI</p>
+<p>如果方案和路径都已给出但路径为相对的，如果从给定组成部分构造的 URI 字符串违背 RFC 2396，或者如果字符串的授权组成部分存在但无法解析为基于服务器的授权，抛出异常</p>
+</li>
+<li><p><strong>public URI(String scheme, String host, String path, String fragment) throws URISynataxException</strong>    //给据给定组成部分构造一个分层URI</p>
+<p>如果给定字符串违背 RFC 2396，抛出异常。</p>
+</li>
+<li><p><strong>public URI(String scheme, String authority, String path, String query, String fragment) throws URISynataxException</strong>    //根据给定组成部分构造一个分层URI</p>
+<p>如果方案和路径都已给出但路径为相对的，如果从给定组成部分构造的 URI 字符串违背 RFC 2396，或者如果字符串的授权组成部分存在但无法解析为基于服务器的授权，抛出异常</p>
+</li>
+</ul>
+<h3 id="常用方法-1"><a href="#常用方法-1" class="headerlink" title="常用方法"></a>常用方法</h3><ul>
+<li><p>public int compareTo(URI uri)             //将此URI和uri进行比较</p>
+</li>
+<li><p><strong>public static URI create(String str)</strong>     //通过给定的字符串构建一个URI</p>
+</li>
+<li><p>public String getAutority()</p>
+</li>
+<li><p>public Sring getFragment()</p>
+</li>
+<li><p>public String getHost()</p>
+</li>
+<li><p>public String getPath()</p>
+</li>
+<li><p>public String getPort()</p>
+</li>
+<li><p>public String getQuery()</p>
+</li>
+<li><p>public String getUserInfo()</p>
+</li>
+<li><p>public String getScheme()</p>
+<p>返回此URI的组成部分</p>
+</li>
+<li><p>public boolean isAbsolute()           //此URI是否为绝对的</p>
+</li>
+<li><p>public boolean isOpaque()            //此URI是否为<strong>不透明的</strong></p>
+</li>
+<li><p>public URI normalize()                    //规范化此URI的路径</p>
+</li>
+<li><p>public URI relativize(URI uri)          //根据此URI将给定URI规范化</p>
+</li>
+<li><p>public URI resolve(String str)          //解析给定的字符串，然后在此URI的基础上构造一个新的URI</p>
+</li>
+<li><p>public URI resolve(URI uri)              //根据此URL解析给定的uri</p>
+</li>
+<li><p>public String toASCIIString()            //以US-ASCII字符串形式返回此URI的内容</p>
+</li>
+<li><p>public URL toURL()                           //根据此URI构造一个URL，如果该URI不是绝对的</p>
+</li>
+</ul>
+<h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><ol>
+<li>输出URI的组成部分信息</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.net.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">URITest1</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(string[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(args.length != <span class="number">1</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">"Usage: java URITest1 uri"</span>);</span><br><span class="line">            System.exit(-<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        URI uri = <span class="keyword">new</span> URI(args[<span class="number">0</span>]);</span><br><span class="line">        System.out.println (<span class="string">"Authority = "</span> +uri.getAuthority ());</span><br><span class="line">        System.out.println (<span class="string">"Fragment = "</span> +uri.getFragment ());</span><br><span class="line">        System.out.println (<span class="string">"Host = "</span> +uri.getHost ());</span><br><span class="line">        System.out.println (<span class="string">"Path = "</span> +uri.getPath ());</span><br><span class="line">        System.out.println (<span class="string">"Port = "</span> +uri.getPort ());</span><br><span class="line">        System.out.println (<span class="string">"Query = "</span> +uri.getQuery ());</span><br><span class="line">        System.out.println (<span class="string">"Scheme = "</span> +uri.getScheme ());</span><br><span class="line">        System.out.println (<span class="string">"Scheme-specific part = "</span> + uri.getSchemeSpecificPart ());</span><br><span class="line">        System.out.println (<span class="string">"User Info = "</span> +uri.getUserInfo ());</span><br><span class="line">        System.out.println (<span class="string">"URI is absolute: "</span> +uri.isAbsolute ());</span><br><span class="line">        System.out.println (<span class="string">"URI is opaque: "</span> +uri.isOpaque ());</span><br><span class="line">        System.out.println (<span class="string">"Normalized URI = "</span> + uri.normalize());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~/Desktop/JavaTest/net# java URITest1 http://www.baidu.com/index.php#banner</span><br><span class="line">Authority = www.baidu.com</span><br><span class="line">Fragment = banner</span><br><span class="line">Host = www.baidu.com</span><br><span class="line">Path = /index.php</span><br><span class="line">Port = -1</span><br><span class="line">Query = null</span><br><span class="line">Scheme = http</span><br><span class="line">Scheme-specific part = //www.baidu.com/index.php</span><br><span class="line">User Info = null</span><br><span class="line">URI is absolute: true</span><br><span class="line">URI is opaque: false</span><br><span class="line">Normalized URI = http://www.baidu.com/index.php#banner</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>规范化解析</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.net.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">URITest2</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(string[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(args.length != <span class="number">2</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">"Usage: java URITest2 uriBase uriRelative"</span>);</span><br><span class="line">            System.exit(-<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        URI uriBase = <span class="keyword">new</span> URI (args [<span class="number">0</span>]);</span><br><span class="line">        System.out.println (<span class="string">"Base URI = "</span> +uriBase);</span><br><span class="line"></span><br><span class="line">        URI uriRelative = <span class="keyword">new</span> URI (args [<span class="number">1</span>]);</span><br><span class="line">        System.out.println (<span class="string">"Relative URI = "</span> +uriRelative);</span><br><span class="line"></span><br><span class="line">        URI uriResolved = uriBase.resolve (uriRelative);</span><br><span class="line">        System.out.println (<span class="string">"Resolved URI = "</span> +uriResolved);</span><br><span class="line"></span><br><span class="line">        URI uriRelativized = uriBase.relativize (uriResolved);</span><br><span class="line">        System.out.println (<span class="string">"Relativized URI = "</span> +uriRelativized);         </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~/Desktop/JavaTest/net# java URITest2 http://www.baidu.com/index.php index.php/../login.php</span><br><span class="line">Base URI = http://www.baidu.com/index.php</span><br><span class="line">Relative URI = index.php/../login.php</span><br><span class="line">Resolved URI = http://www.baidu.com/login.php</span><br><span class="line">Relativized URI = http://www.baidu.com/login.php</span><br></pre></td></tr></table></figure>
+<h2 id="URLDecoder"><a href="#URLDecoder" class="headerlink" title="URLDecoder"></a>URLDecoder</h2><h3 id="简述-1"><a href="#简述-1" class="headerlink" title="简述"></a>简述</h3><p>HTML 格式解码的实用工具类。该类包含了将 String 从 <code>application/x-www-form-urlencoded</code> MIME 格式解码的静态方法。 </p>
+<p>该转换过程正好与 URLEncoder 类使用的过程相反。假定已编码的字符串中的所有字符为下列之一：”a” 到 “z”、”A” 到 “Z”、”0” 到 “9” 和 “-“、”_”、”.” 以及 “*”。允许有 “%” 字符，但是将它解释为特殊转义序列的开始。 </p>
+<p> 转换中使用以下规则：</p>
+<pre><code>字母数字字符 &quot;a&quot; 到 &quot;z&quot;、&quot;A&quot; 到 &quot;Z&quot; 和 &quot;0&quot; 到 &quot;9&quot; 保持不变。
+特殊字符 &quot;.&quot;、&quot;-&quot;、&quot;*&quot; 和 &quot;_&quot; 保持不变。
+加号 &quot;+&quot; 转换为空格字符 &quot; &quot;。
+将把 &quot;%xy&quot; 格式序列视为一个字节，其中 xy 为 8 位的两位十六进制表示形式。然后，所有连续包含一个或多个这些字节序列的子字符串，将被其编码可生成这些连续字节的字符所代替。可以指定对这些字符进行解码的编码机制，或者如果未指定的话，则使用平台的默认编码机制。
+</code></pre><p>该解码器处理非法字符串有两种可能的方法。一种方法是不管该非法字符，另一种方法是抛出 IllegalArgumentException 异常。解码器具体采用哪种方法取决于实现。 </p>
+<h3 id="构造方法-1"><a href="#构造方法-1" class="headerlink" title="构造方法"></a>构造方法</h3><ul>
+<li>public URLDecoder()                           //创建一个URLDecoder</li>
+</ul>
+<h3 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h3><ul>
+<li><p>public static String decode(String s)             //已过时，将字符串s解码，但是结果会因为平台的默认编码不同而产生不同的结果</p>
+</li>
+<li><p>public static String decode(String s, String enc) throws UnsupportedEncodingException     //使用指定的编码机制对<code>application/x-www-form-urlencoded</code> 字符串进行解码。一般都是使用UTF-8，如果使用其他编码，可能会造成不兼容性。</p>
+<p>当指定的字符编码不被支持时，抛出异常。</p>
+</li>
+</ul>
+<h2 id="URLEncoder"><a href="#URLEncoder" class="headerlink" title="URLEncoder"></a>URLEncoder</h2><h3 id="简述-2"><a href="#简述-2" class="headerlink" title="简述"></a>简述</h3><p>该类作用与URLDecoder相反。不解释</p>
+<h3 id="构造方法-2"><a href="#构造方法-2" class="headerlink" title="构造方法"></a>构造方法</h3><ul>
+<li>public URLEncoder()                       //创建一个URLEncoder</li>
+</ul>
+<h3 id="方法-2"><a href="#方法-2" class="headerlink" title="方法"></a>方法</h3><ul>
+<li>public static String encode(String s)          //已过时，将字符串s编码，但是结果会因为平台的默认编码不同而产生不同的结果</li>
+<li>public static String encode(String s, String enc) throws UnsupportedEncodingException    //使用指定的编码机制将字符串编码成<code>application/x-www-form-urlencoded</code> 格式。一般应使用 UTF-8。如果不使用该编码，可能造成不兼容性。</li>
+</ul>
+<h2 id="URLConnection"><a href="#URLConnection" class="headerlink" title="URLConnection"></a>URLConnection</h2><h3 id="简述-3"><a href="#简述-3" class="headerlink" title="简述"></a>简述</h3><p>首先，这是一个抽象类，是所有URL连接类的超类，它代表应用程序和URL之间的通信连接。此类实例可用于读取和写入此URL引用的资源。</p>
+<p>通常，创建一个到URL的连接需要以下的步骤：</p>
+<ol>
+<li>通过在URL上调用openConnnection方法创建连接对象</li>
+<li>处理设置参数和一般请求属性</li>
+<li>使用connect方法建立到远程对象的连接</li>
+<li>远程对象变为可用。远程对象的头字段和内容变为可访问。</li>
+</ol>
+<p>一般情况下，所有的预连接参数和一般请求属性都可忽略，这些一般都默认为敏感值，比较常用的两个方法getInputStream和getContent。</p>
+<h3 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h3><ul>
+<li>protected boolean allowUserInteraction                     //如果为 true，则在允许用户交互（例如弹出一个验证对话框）的上下文中对此 URL 进行检查。</li>
+<li>protected boolean connnected                                    //如果为 false，则此连接对象尚未创建到指定 URL 的通信链接。</li>
+<li>protected boolean doInput                                           //此变量由setDoInput方法设置</li>
+<li>protected boolean doOutput                                        //此变量由setDoOutput方法设置</li>
+<li>protected long ifModifiedSince                                    //有些协议支持跳过对象获取，除非该对象在某个特定时间点之后又进行了修改。</li>
+<li>protected URL url                                                           //URL 表示此连接要在互联网上打开的远程对象。</li>
+<li>protected boolean useCaches                                     //如果为true，则只要有条件就允许协议使用缓存。</li>
+</ul>
+<h3 id="构造方法-3"><a href="#构造方法-3" class="headerlink" title="构造方法"></a>构造方法</h3><ul>
+<li><strong>protected</strong> URLConnnection(URL url)                   //创建一个到指定URL的URL连接</li>
+</ul>
+<h3 id="常用方法-2"><a href="#常用方法-2" class="headerlink" title="常用方法"></a>常用方法</h3><ol>
+<li><strong>与字段相关的方法</strong></li>
+</ol>
+<ul>
+<li><p>public static boolean getDefaultAllowUserInteraction()                 //返回URLConnection对象默认的allowUserInteraction字段的值</p>
+</li>
+<li><p>public static void setDefaultAllowUserInteraction(boolean defaultallowuserinteraction)</p>
+<pre><code>//将未来的所有 URLConnection 对象的 allowUserInteraction 字段的默认值设置为指定的值
+</code></pre></li>
+<li><p>public boolean getAllowUserInteraction()                                       //返回此对象的allowUserInteraction字段的值</p>
+</li>
+<li><p>public void setAllowUserInteraction(boolean allowuserinteraction)</p>
+<p>   ​                                                                                                                //设置此 URLConnection 的 allowUserInteraction 字段的值</p>
+</li>
+<li><p>public boolean getDefaultUseCaches()                                           //返回此对象默认的useCaches字段的值</p>
+</li>
+<li><p>public void setDefaultUseCaches(boolean defaultusecaches)//将 useCaches 字段的默认值设置为指定的值</p>
+</li>
+<li><p>public boolean getUseCaches()                                                        //返回此对象的useCaches字段的值</p>
+</li>
+<li><p>public void setUseCaches(boolean usecaches)                             //将此 URLConnection 的 useCaches 字段的值设置为指定的值</p>
+</li>
+<li><p>public boolean getDoInput()                                                            //返回此对象的doInput字段的值</p>
+</li>
+<li><p>public void setDoInput(boolean doinput)                                     //将此 URLConnection 的 doInput 字段的值设置为指定的值</p>
+</li>
+<li><p>public boolean getDoOutput()                                                        //返回此对象的doOutput字段的值</p>
+</li>
+<li><p>public void setDoOutput(boolean dooutput)                              //将此 URLConnection 的 doOutput 字段的值设置为指定的值</p>
+</li>
+<li><p>public long getIfModifiedSince()                                                    //返回此对象的ifModifiedSince字段的值</p>
+</li>
+<li><p>public void setIfModifiedSince(long ifmodifiedsince)                //将此对象的 ifModifiedSince 字段的值设置为指定的值</p>
+</li>
+<li><p>public URL getURL()                                                                        //返回此对象的url字段的值</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>与响应头字段相关的方法</strong></li>
+</ol>
+<ul>
+<li>public String getContentEncoding()                                                  //返回content-encoding头字段的值</li>
+<li>public int getContentLength()                                                            //返回content-length头字段的值</li>
+<li>public String getContentType()                                                         //返回content-type头字段的值</li>
+<li>public long getExpiration()                                                                //返回expires头字段的值</li>
+<li>public long getDate()                                                                           //返回date头字段的值</li>
+<li>public String getHeaderField(int n)                                                  //返回第n个头字段的值</li>
+<li>public String getHeaderField(String name)                                    //返回指定的头字段的值</li>
+<li>public String getHeaderFieldKey(String key)                                  //返回第n个头字段的键</li>
+<li>public Map&lt;String, List<string>&gt; getHeaderFields()                     //返回头字段的map(不可修改)</string></li>
+<li>public long getLastModified()                                                           //返回last-modified头字段的值</li>
+</ul>
+<ol start="3">
+<li><strong>与请求属性相关的方法</strong></li>
+</ol>
+<ul>
+<li>public void addRequestProperty(String key, String value)             //添加由键值对指定的一般请求属性</li>
+<li>public String getRequestProperty(String key)                                 //返回此连接指定的一般请求属性值</li>
+<li>public void setRequestProperty(String key, String value)            //设置一般请求属性</li>
+<li>public Map&lt;String, List<string>&gt; getRequestProperties()           //返回此连接的一般请求属性的map(不可修改)</string></li>
+</ul>
+<ol start="4">
+<li><strong>与连接设置有关的方法</strong></li>
+</ol>
+<ul>
+<li>public abstract void connect()                                                            //打开到此URL引用的资源的通信链接，如果尚未连接的话</li>
+<li>public int getConnectTimerout()                                                       //返回此连接超时设置</li>
+<li>public void setConnectTimeout(int timeout)                                  //将一个指定的超时值（以毫秒为单位），该值将在打开到此 URLConnection 引用的资源的通信链接时使用</li>
+<li>public int getReadTimeout()                                                              //返回读入超时设置</li>
+<li>public void setReadTimeout(int timeout)                                       //将读超时设置为指定的超时值，以毫秒为单位</li>
+</ul>
+<ol start="5">
+<li><strong>在连接后读写内容相关的方法</strong></li>
+</ol>
+<ul>
+<li>public Object getContent()                                                                 //获取此URL连接的内容</li>
+<li>public Object getContent(Class[] classes)                                        //获取此URL连接的内容</li>
+<li>public InputStream getInputStream()                                             //返回从此打开的连接读取的输入流</li>
+<li>public OutputStream getOutputStream()                                       //返回到此连接的输出流</li>
+</ul>
+<ol start="6">
+<li><strong>其他方法</strong></li>
+</ol>
+<ul>
+<li>public static String guessContentTypeFromName(String fname)//根据url的指定的file部分尝试确定对象的内容类型</li>
+<li>public static String guessContentTypeFromStream(InputStream is)//根据输入流的开始字符尝试确定输入流的类型</li>
+<li>public String toString()                                                                     //返回此 URL 连接的 String 表示形式</li>
+</ul>
+<h3 id="例子-2"><a href="#例子-2" class="headerlink" title="例子"></a>例子</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://dcLunatic.github.io">dcLunatic</a>
+            <p>原文链接：<a href="http://dcLunatic.github.io/Java网络编程.html">http://dcLunatic.github.io/Java网络编程.html</a>
+            <p>发表日期：<a href="http://dcLunatic.github.io/Java网络编程.html">September 21st 2018, 1:50:54 pm</a>
+            <p>更新日期：<a href="http://dcLunatic.github.io/Java网络编程.html">September 21st 2018, 1:51:37 pm</a>
+            <p>版权声明：转载的时候,记得注明来处</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/Java中获得实例的方法.html" title= "Java中获得实例的方法">
+                    <div class="nextTitle">Java中获得实例的方法</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/Java序列化.html" title= "Java序列化">
+                    <div class="prevTitle">Java序列化</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://file.awen.me/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: "Java网络编程", // 可选。默认为 location.href
+        owner: 'dcLunatic',
+        repo: 'dcLunatic.github.io',
+        oauth: {
+            client_id: '6d779c8d68f7d8d8ec9f',
+            client_secret: 'dec76663990c692bc924eef2916aec1f195e4a6b',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:dcLunatic6@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/dcLunatic" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="//zhihu.com/people/dclunatic" class="iconfont-archer zhihu" target="_blank" title=zhihu></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+    <!--
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    -->
+        <span id="hexo-power">我自倾杯思卿妆，一杯凉，两杯霜。</span>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络编程"><span class="toc-number">1.</span> <span class="toc-text">网络编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#InetAddress"><span class="toc-number">1.1.</span> <span class="toc-text">InetAddress</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简述"><span class="toc-number">1.1.1.</span> <span class="toc-text">简述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法"><span class="toc-number">1.1.2.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子"><span class="toc-number">1.1.3.</span> <span class="toc-text">例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL"><span class="toc-number">1.2.</span> <span class="toc-text">URL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用构造方法"><span class="toc-number">1.2.1.</span> <span class="toc-text">常用构造方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用方法"><span class="toc-number">1.2.2.</span> <span class="toc-text">常用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用例子"><span class="toc-number">1.2.3.</span> <span class="toc-text">使用例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URI-此部分来自api文档"><span class="toc-number">1.3.</span> <span class="toc-text">URI(此部分来自api文档)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#URI-语法和组成部分"><span class="toc-number">1.3.1.</span> <span class="toc-text">URI 语法和组成部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URI分类"><span class="toc-number">1.3.2.</span> <span class="toc-text">URI分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#绝对URI和相对URI"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">绝对URI和相对URI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#不透明URI和分层URI"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">不透明URI和分层URI</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#针对-URI-实例的运算"><span class="toc-number">1.3.3.</span> <span class="toc-text">针对 URI 实例的运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符分类"><span class="toc-number">1.3.4.</span> <span class="toc-text">字符分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转义八位组、引用、编码和解码"><span class="toc-number">1.3.5.</span> <span class="toc-text">转义八位组、引用、编码和解码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标识"><span class="toc-number">1.3.6.</span> <span class="toc-text">标识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URI、URL和-URN"><span class="toc-number">1.3.7.</span> <span class="toc-text">URI、URL和 URN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造方法"><span class="toc-number">1.3.8.</span> <span class="toc-text">构造方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用方法-1"><span class="toc-number">1.3.9.</span> <span class="toc-text">常用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子-1"><span class="toc-number">1.3.10.</span> <span class="toc-text">例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URLDecoder"><span class="toc-number">1.4.</span> <span class="toc-text">URLDecoder</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简述-1"><span class="toc-number">1.4.1.</span> <span class="toc-text">简述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造方法-1"><span class="toc-number">1.4.2.</span> <span class="toc-text">构造方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法-1"><span class="toc-number">1.4.3.</span> <span class="toc-text">方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URLEncoder"><span class="toc-number">1.5.</span> <span class="toc-text">URLEncoder</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简述-2"><span class="toc-number">1.5.1.</span> <span class="toc-text">简述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造方法-2"><span class="toc-number">1.5.2.</span> <span class="toc-text">构造方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法-2"><span class="toc-number">1.5.3.</span> <span class="toc-text">方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URLConnection"><span class="toc-number">1.6.</span> <span class="toc-text">URLConnection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简述-3"><span class="toc-number">1.6.1.</span> <span class="toc-text">简述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字段"><span class="toc-number">1.6.2.</span> <span class="toc-text">字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造方法-3"><span class="toc-number">1.6.3.</span> <span class="toc-text">构造方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用方法-2"><span class="toc-number">1.6.4.</span> <span class="toc-text">常用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子-2"><span class="toc-number">1.6.5.</span> <span class="toc-text">例子</span></a></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 38
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/04</span><a class="archive-post-title" href= "/递归攻击——入门1.html" >递归攻击——入门1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/Kali安装Virtualbox.html" >Kali安装Virtualbox</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/Linux进程管理.html" >Linux进程管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/virtualbox添加虚拟磁盘.html" >virtualbox添加虚拟磁盘</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/kali安装steam.html" >kali安装steam</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-线程通信.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/volatile关键字.html" >volatile关键字</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java函数式接口.html" >Java函数式接口——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/内网穿透——转.html" >内网穿透——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java网络编程.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java字节和字符的区别.html" >Java字节和字符的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux中的命令链接操作符.html" >linux中的命令链接操作符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java中获得实例的方法.html" >Java中获得实例的方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok简单使用.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java多线程.html" >Java多线程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/vim中的编码.html" >vim中的编码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock包实现锁.html" >java Lock包实现锁</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java序列化.html" >Java序列化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-IO分析.html" >Java IO性能分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java克隆.html" >Java克隆</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized关键字.html" >synchronized关键字</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-IO.html" >Java IO</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-class文件解析.html" >Java class文件解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/vim使用系统粘贴板.html" >如何在vim中使用系统的粘贴板</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/独显.html" >arch如何使用独显</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/03</span><a class="archive-post-title" href= "/makefile总结——转.html" >(转)makefile总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/java类加载机制.html" >java类加载机制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/java-reflect.html" >java-reflect</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-df.html" >linux-df</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-od.html" >linux-od</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux目录-proc-详解.html" >linux目录'/proc'详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-bc.html" >linux-bc</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-top.html" >top命令</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
+        <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
+    
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
+        <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
+    
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="command"><span class="iconfont-archer">&#xe606;</span>command</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
+    
+        <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
+    
+        <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
+    
+        <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
+    
+        <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
+    
+        <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
+    
+        <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
+    
+        <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
+    
+        <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
+    
+        <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
+    
+        <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
+    
+        <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
+    
+        <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
+    
+        <span class="sidebar-tag-name" data-tags="arch"><span class="iconfont-archer">&#xe606;</span>arch</span>
+    
+        <span class="sidebar-tag-name" data-tags="独立显卡"><span class="iconfont-archer">&#xe606;</span>独立显卡</span>
+    
+        <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
+    
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
+    
+        <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "dcLunatic"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":75,"height":150},"mobile":{"show":false}});</script></body>
+</html>
+
+

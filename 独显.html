@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="dcLunatic">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="dcLunatic">
+    <meta name="keywords" content="Hexo | dcLunatic">
+    <meta name="description" content="">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>arch如何使用独显 · dcLunatic&#39;s blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >dcLunatic&#39;s blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">arch如何使用独显</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>dcLunatic's blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            arch如何使用独显
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "arch">arch</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "独立显卡">独立显卡</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1,779</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/09/10</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Arch双显卡问题——如何使用独显"><a href="#Arch双显卡问题——如何使用独显" class="headerlink" title="Arch双显卡问题——如何使用独显"></a>Arch双显卡问题——如何使用独显</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>NVIDIA独立显卡，可以代替普通的集成显卡做显示，也可以独立于CPU之外来处理一些图形数据。<strong>性能优于集成显卡</strong>。所以玩游戏的时候，使用独立显卡会优于默认的集成显卡，会给我们带来给更好的游戏体验，比如在帧频方面上，独立显卡要远高于集成显卡。<br>总而言之，显卡越高端，玩游戏(特别是大型游戏)的游戏<strong>体验越好</strong>。</p>
+<p>当然，如果没有什么特殊要求的话，只安装集成显卡对应的驱动就可以了，一般都是<strong>Intel</strong>的，我的是<strong>Intel+NVIDIA</strong>的，（近日听说<strong>steam</strong>上又多了好多款可以在linux上运行的游戏了^_^），所以就得要考虑下这个问题了。</p>
+<p>Windows下，这些都不需要我们所操心了，但在Linux下，默认的独立显卡驱动是<strong>开源的nouveau</strong>，但是使用这个驱动会导致无法正常进入我们的桌面系统，而且，虽然nouveau是开源的，但是，它在<strong>显卡切换上性能比较差，不能与闭源的NVIDIA驱动相比，同时也不支持任何的省电功能（使用NVIDIA独立显卡会更耗电）</strong>。</p>
+<blockquote>
+<p>如果说电脑是<strong>独显+集显</strong>的，然后<strong>只安装</strong>了独显驱动，不装集显驱动的话，会导致屏幕黑屏的，因为NVIDIA的optimus功能会将独显的绘制结果交由集成显卡来显示。<br>当然，黑屏的原因不只只有这个，比如下面会遇到的装了集显独显驱动后，开机还是黑屏的情况。</p>
+</blockquote>
+<p>所以考虑采取使用<strong>闭源的NVIDIA驱动</strong>，符合以下条件的，出门左拐，走好不送哈：</p>
+<ol>
+<li>没有独立显卡的</li>
+<li>BIOS不支持的（这个请自行查询）</li>
+<li>不能接受闭源软件的</li>
+</ol>
+<h2 id="安装NVIDIA驱动和Bumblebee"><a href="#安装NVIDIA驱动和Bumblebee" class="headerlink" title="安装NVIDIA驱动和Bumblebee"></a>安装NVIDIA驱动和Bumblebee</h2><p>默认情况下，如果使用安装系统提供的独立显卡驱动nouveau会导致无法正常进入桌面，一般情况下，都是把这个驱动给禁用掉<code>nouveau.modeset=0</code>，也就是说不然独显工作，就可以正常使用了。</p>
+<p><strong>首先查看下自己电脑的显卡情况</strong>,使用命令<code>lspci | grep -i vga</code>，可以看到如下的结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                    [17:30:23] </span><br><span class="line">&gt; $ lspci | grep -i vga                                                                            </span><br><span class="line">00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)</span><br><span class="line">01:00.0 VGA compatible controller: NVIDIA Corporation GM107M [GeForce GTX 960M] (rev ff)</span><br></pre></td></tr></table></figure></p>
+<p>可以看到<strong>Intel的集成显卡</strong>和<strong>NVIDIA的独立显卡</strong><br><strong>安装对应的显卡驱动</strong>，具体的可参照下图安装<br><img src="/images/display/vga.png" alt="vga"><br>这里我选用的是<strong>xf86-video-intel</strong>和<strong>nvidia</strong>，使用命令<code>pacman -S xf86-video-intel nvida</code>安装。<br><strong>闭源NVIDIA驱动</strong>支持官方的<strong>Optimus</strong>功能，它能够<strong>最大程序</strong>的发挥出<strong>NVIDIA显卡</strong>的性能，但是却<strong>不支持切换显卡</strong>，意味着你就只能使用独立显卡，再也不能使用集成显卡了，据说也会有更多的bug。</p>
+<blockquote>
+<p>这里说下Optimus技术，它是一种不依赖于硬件的独立显卡实现。独立显卡按需渲染，继而交由集显显示。当笔记本通过电池供电时，独显关闭;使用电源供电时，打开独显，通过这样，来增强笔记本的续航能力。</p>
+</blockquote>
+<p>这里使用第三方程序<strong>Bumblebee</strong>来实现类似于Optimus的功能，它是Linux上<strong>Optimus</strong>的替代品之一。它通过<strong>virtualGL</strong>或者<strong>primus</strong>来实现<strong>独显渲染，集显显示</strong>的功能。独立显卡在<strong>空闲</strong>的时候会被禁用掉。</p>
+<p>接下来就开始对应的程序包了，<code>pacman -S bumblebee mesa bbswitch</code>，<strong>bumblebee</strong>提供是主要程序实现的包，<strong>mesa</strong>提供开源的OpenGL实现，而<strong>bbswtich</strong>负责切换显卡。还可以安装<strong>nvidia-utils</strong>来提供更多的支持。</p>
+<blockquote>
+<p>如果你的系统是32位的，那么你需要启用<strong>Multilib</strong>，要安装<strong>lib32-virtualgl</strong>和<strong>lib32-nvidia-utils</strong>或<strong>lib32-nvidia-340xx-utils</strong>来和64位的对应。参见上图。</p>
+</blockquote>
+<p>修改<strong>配置文件/etc/bumblebee/bumblebee.conf</strong>，将<code>Driver</code>的值设置为<code>nvidia</code>，来让其使用<strong>nvidia</strong>驱动，其次将<code>PMMethod</code>的值设置为<code>bbswitch</code>，让它使用刚刚安装的<strong>bbswitch</strong>来进行显卡的切换。修改<strong>配置文件/etc/modprobe.d/bbswitch.conf</strong>，添加<code>options bbswitch load_state=0 unload_state=0</code>来设置<strong>bbswitch的状态</strong>。使用命令<code>modprobe bbswitch</code>来<strong>加载这个模块</strong>。</p>
+<p>将要使用Bumblebee的用户添加到bumblebee组中，<code>gpasswd -a username bumblebee</code>，并将<strong>bumblebeed服务</strong>设为<strong>开机启动</strong>，<code>systemctl enable bumblebeed</code>，启用它<code>systemctl start bumblebeed</code>。</p>
+<h2 id="黑屏问题"><a href="#黑屏问题" class="headerlink" title="黑屏问题"></a>黑屏问题</h2><ol>
+<li>刚刚上面说的，<strong>只装了独显驱动，没有装集显驱动</strong>。</li>
+<li><p><strong>NVIDIA对Linux不友好</strong><br> 针对这种情况，我们只需要在内核启动时加入如下参数即可<code>acpi_osi=! acpi_osi=&#39;Windows 2009&#39;</code>，告诉它我是Windows，赶紧工作吧。</p>
+<blockquote>
+<p>此处参考<a href="https://github.com/rovo98" target="_blank" rel="noopener">rovo98</a>的某篇<a href="https://rovo98.github.io/posts/a1898ce2/" target="_blank" rel="noopener">博客</a></p>
+</blockquote>
+</li>
+</ol>
+<h2 id="简单用法"><a href="#简单用法" class="headerlink" title="简单用法"></a>简单用法</h2><p>到了这里后，基本上就装好了，以下附上日常的使用方法。</p>
+<ol>
+<li><p>使用<strong>glxgears</strong>可以进行<strong>帧频测试</strong>，检测Bumblebee是否工作，它包含在刚刚安装的<strong>mesa-demos</strong>包中，正常来说在刚刚安装<strong>mesa</strong>就会安装了。使用命令<code>optirun glxgears -info</code>可以进行帧频测试，并且会打印出一些必要的信息，如果去掉参数<code>-info</code>，则不输出这些信息，仅进行帧频测试。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                                                                                    [18:47:10] </span><br><span class="line">&gt; $ optirun glxgears                                                                                                                                               </span><br><span class="line">4929 frames in 5.0 seconds = 985.449 FPS</span><br><span class="line">4955 frames in 5.0 seconds = 990.948 FPS</span><br><span class="line">4968 frames in 5.0 seconds = 993.534 FPS</span><br><span class="line">4843 frames in 5.0 seconds = 968.508 FPS</span><br><span class="line">4806 frames in 5.0 seconds = 961.181 FPS</span><br><span class="line">5712 frames in 5.0 seconds = 1142.322 FPS</span><br><span class="line">5218 frames in 5.0 seconds = 1043.451 FPS</span><br></pre></td></tr></table></figure>
+<p> <em>同时你可以在屏幕上看到一个有三个齿轮转动的窗口。</em><br> <img src="/images/display/frametest.png" alt="frametest"></p>
+</li>
+<li><strong>打开NVIDIA的设置面板</strong>可以使用命令<code>opirun -b none nvidia-settings -c :8</code><br> <img src="/images/display/nvidia-settings.png" alt="nvidia-setting"></li>
+<li><p>可以查看<strong>/proc/acpi/bbswitch</strong>文件的内容来<strong>确定独立显卡是否又启用</strong>。当然也可以<strong>查看已加载的pci模块</strong>来查看。使用命令<code>lspci | grep -i vga</code>。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                    [18:42:01] </span><br><span class="line">&gt; $ lspci | grep -i vga                                                                            </span><br><span class="line">00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)</span><br><span class="line">01:00.0 VGA compatible controller: NVIDIA Corporation GM107M [GeForce GTX 960M] (rev ff)</span><br></pre></td></tr></table></figure>
+<p> <em>最后的ff代表是关闭着的。</em></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                    [18:42:23] </span><br><span class="line">&gt; $ lspci | grep -i vga                                                                            </span><br><span class="line">00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)</span><br><span class="line">01:00.0 VGA compatible controller: NVIDIA Corporation GM107M [GeForce GTX 960M] (rev a2)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><em>这样则是开着的。</em></p>
+<ol start="4">
+<li>可以使用命令<code>tee /proc/acpi/bbswitch &lt;&lt;&lt; &quot;ON&quot;</code>或者<code>tee /proc/acpi/bbswitch &lt;&lt;&lt; &quot;OFF&quot;</code>来<strong>开启和关闭NVIDIA独立显卡</strong>。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                    [18:44:40] </span><br><span class="line">&gt; $ cat /proc/acpi/bbswitch                                                                        </span><br><span class="line">0000:01:00.0 OFF</span><br><span class="line"></span><br><span class="line">dclunatic@dcLunatic ~                                                                    [18:44:45] </span><br><span class="line">&gt; $ sudo tee /proc/acpi/bbswitch &lt;&lt;&lt; &quot;ON&quot;                                                          </span><br><span class="line">ON</span><br><span class="line"></span><br><span class="line">dclunatic@dcLunatic ~                                                                    [18:44:52] </span><br><span class="line">&gt; $ cat /proc/acpi/bbswitch                                                                        </span><br><span class="line">0000:01:00.0 ON</span><br><span class="line"></span><br><span class="line">dclunatic@dcLunatic ~                                                                    [18:44:57] </span><br><span class="line">&gt; $ sudo tee /proc/acpi/bbswitch &lt;&lt;&lt; &quot;OFF&quot;                                                         </span><br><span class="line">OFF</span><br><span class="line"></span><br><span class="line">dclunatic@dcLunatic ~                                                                    [18:45:06] </span><br><span class="line">&gt; $ cat /proc/acpi/bbswitch                                                                        </span><br><span class="line">0000:01:00.0 OFF</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><p>参见<code>https://wiki.archlinux.org/index.php/NVIDIA_Optimus</code>，里面有使用<strong>nouveau</strong>的，还有<strong>nvidia-xrun</strong>的。</p>
+<blockquote>
+<p>参考:<br><a href="https://wiki.archlinux.org/index.php/NVIDIA_Optimus" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/NVIDIA_Optimus</a><br><a href="https://wiki.archlinux.org/index.php/Bumblebee" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/Bumblebee</a></p>
+</blockquote>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://dcLunatic.github.io">dcLunatic</a>
+            <p>原文链接：<a href="http://dcLunatic.github.io/独显.html">http://dcLunatic.github.io/独显.html</a>
+            <p>发表日期：<a href="http://dcLunatic.github.io/独显.html">September 10th 2018, 2:21:32 am</a>
+            <p>更新日期：<a href="http://dcLunatic.github.io/独显.html">September 21st 2018, 12:48:07 pm</a>
+            <p>版权声明：转载的时候,记得注明来处</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/vim使用系统粘贴板.html" title= "如何在vim中使用系统的粘贴板">
+                    <div class="nextTitle">如何在vim中使用系统的粘贴板</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/makefile总结——转.html" title= "(转)makefile总结">
+                    <div class="prevTitle">(转)makefile总结</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://file.awen.me/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: "arch如何使用独显", // 可选。默认为 location.href
+        owner: 'dcLunatic',
+        repo: 'dcLunatic.github.io',
+        oauth: {
+            client_id: '6d779c8d68f7d8d8ec9f',
+            client_secret: 'dec76663990c692bc924eef2916aec1f195e4a6b',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:dcLunatic6@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/dcLunatic" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="//zhihu.com/people/dclunatic" class="iconfont-archer zhihu" target="_blank" title=zhihu></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+    <!--
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    -->
+        <span id="hexo-power">我自倾杯思卿妆，一杯凉，两杯霜。</span>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Arch双显卡问题——如何使用独显"><span class="toc-number">1.</span> <span class="toc-text">Arch双显卡问题——如何使用独显</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装NVIDIA驱动和Bumblebee"><span class="toc-number">1.2.</span> <span class="toc-text">安装NVIDIA驱动和Bumblebee</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#黑屏问题"><span class="toc-number">1.3.</span> <span class="toc-text">黑屏问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单用法"><span class="toc-number">1.4.</span> <span class="toc-text">简单用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他方法"><span class="toc-number">1.5.</span> <span class="toc-text">其他方法</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 38
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/04</span><a class="archive-post-title" href= "/递归攻击——入门1.html" >递归攻击——入门1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/Kali安装Virtualbox.html" >Kali安装Virtualbox</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/Linux进程管理.html" >Linux进程管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/virtualbox添加虚拟磁盘.html" >virtualbox添加虚拟磁盘</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/kali安装steam.html" >kali安装steam</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-线程通信.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/volatile关键字.html" >volatile关键字</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java函数式接口.html" >Java函数式接口——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/内网穿透——转.html" >内网穿透——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java网络编程.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java字节和字符的区别.html" >Java字节和字符的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux中的命令链接操作符.html" >linux中的命令链接操作符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java中获得实例的方法.html" >Java中获得实例的方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok简单使用.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java多线程.html" >Java多线程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/vim中的编码.html" >vim中的编码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock包实现锁.html" >java Lock包实现锁</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java序列化.html" >Java序列化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-IO分析.html" >Java IO性能分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java克隆.html" >Java克隆</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized关键字.html" >synchronized关键字</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-IO.html" >Java IO</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-class文件解析.html" >Java class文件解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/vim使用系统粘贴板.html" >如何在vim中使用系统的粘贴板</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/独显.html" >arch如何使用独显</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/03</span><a class="archive-post-title" href= "/makefile总结——转.html" >(转)makefile总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/java类加载机制.html" >java类加载机制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/java-reflect.html" >java-reflect</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-df.html" >linux-df</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-od.html" >linux-od</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux目录-proc-详解.html" >linux目录'/proc'详解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-bc.html" >linux-bc</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-top.html" >top命令</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
+        <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
+    
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
+        <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
+    
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="command"><span class="iconfont-archer">&#xe606;</span>command</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
+    
+        <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
+    
+        <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
+    
+        <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
+    
+        <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
+    
+        <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
+    
+        <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
+    
+        <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
+    
+        <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
+    
+        <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
+    
+        <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
+    
+        <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
+    
+        <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
+    
+        <span class="sidebar-tag-name" data-tags="arch"><span class="iconfont-archer">&#xe606;</span>arch</span>
+    
+        <span class="sidebar-tag-name" data-tags="独立显卡"><span class="iconfont-archer">&#xe606;</span>独立显卡</span>
+    
+        <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
+    
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
+    
+        <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "dcLunatic"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":75,"height":150},"mobile":{"show":false}});</script></body>
+</html>
+
+
