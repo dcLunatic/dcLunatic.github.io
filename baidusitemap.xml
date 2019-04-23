@@ -82,13 +82,7 @@
     <loc>http://dcLunatic.github.io/linux-od.html</loc>
     <lastmod>2018-09-03</lastmod>
   </url>  <url>
-    <loc>http://dcLunatic.github.io/linux-dd.html</loc>
-    <lastmod>2018-09-03</lastmod>
-  </url>  <url>
     <loc>http://dcLunatic.github.io/linux-top.html</loc>
-    <lastmod>2018-09-03</lastmod>
-  </url>  <url>
-    <loc>http://dcLunatic.github.io/linux-ln.html</loc>
     <lastmod>2018-09-03</lastmod>
   </url>  <url>
     <loc>http://dcLunatic.github.io/linux-bc.html</loc>
@@ -97,13 +91,10 @@
     <loc>http://dcLunatic.github.io/linux-iconv.html</loc>
     <lastmod>2018-09-03</lastmod>
   </url>  <url>
-    <loc>http://dcLunatic.github.io/java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6.html</loc>
-    <lastmod>2018-09-03</lastmod>
-  </url>  <url>
     <loc>http://dcLunatic.github.io/linux-du.html</loc>
     <lastmod>2018-09-03</lastmod>
   </url>  <url>
-    <loc>http://dcLunatic.github.io/java-reflect.html</loc>
+    <loc>http://dcLunatic.github.io/linux-ln.html</loc>
     <lastmod>2018-09-03</lastmod>
   </url>  <url>
     <loc>http://dcLunatic.github.io/linux-df.html</loc>
@@ -112,7 +103,16 @@
     <loc>http://dcLunatic.github.io/linux%E7%9B%AE%E5%BD%95-proc-%E8%AF%A6%E8%A7%A3.html</loc>
     <lastmod>2018-09-03</lastmod>
   </url>  <url>
+    <loc>http://dcLunatic.github.io/java-reflect.html</loc>
+    <lastmod>2018-09-03</lastmod>
+  </url>  <url>
     <loc>http://dcLunatic.github.io/linux-free.html</loc>
+    <lastmod>2018-09-03</lastmod>
+  </url>  <url>
+    <loc>http://dcLunatic.github.io/linux-dd.html</loc>
+    <lastmod>2018-09-03</lastmod>
+  </url>  <url>
+    <loc>http://dcLunatic.github.io/java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6.html</loc>
     <lastmod>2018-09-03</lastmod>
   </url>
 </urlset>
