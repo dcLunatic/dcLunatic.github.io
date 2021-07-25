@@ -282,7 +282,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">322</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">332</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -418,13 +418,14 @@ height:50vh;
 <p><strong>结果：</strong><br>?<br>1<br>-1<br>127<br>-128</p>
 </li>
 <li><p>char可以表示中文字符，而byte不可以</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> e1 = <span class="string">'中'</span>, e2 = <span class="string">'国'</span>;  </span><br><span class="line"><span class="keyword">byte</span> f= (<span class="keyword">byte</span>) <span class="string">'中'</span>; <span class="comment">//必须强制转换否则报错  </span></span><br><span class="line">System.out.println(e1);  </span><br><span class="line">System.out.println(e2);  </span><br><span class="line">System.out.println(f);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> e1 = <span class="string">&#x27;中&#x27;</span>, e2 = <span class="string">&#x27;国&#x27;</span>;  </span><br><span class="line"><span class="keyword">byte</span> f= (<span class="keyword">byte</span>) <span class="string">&#x27;中&#x27;</span>; <span class="comment">//必须强制转换否则报错  </span></span><br><span class="line">System.out.println(e1);  </span><br><span class="line">System.out.println(e2);  </span><br><span class="line">System.out.println(f);  </span><br></pre></td></tr></table></figure>
 <p><strong>结果：</strong><br>中<br>国<br>45</p>
 </li>
 </ul>
 <ul>
 <li><p>当char和byte都是英文字符时，可以相互转换。（对应的int类型也可以与之互相转换）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span> g = <span class="string">'b'</span>;   <span class="comment">//b对应ASCII是98  </span></span><br><span class="line"><span class="keyword">char</span> h = (<span class="keyword">char</span>) g;  </span><br><span class="line"><span class="keyword">char</span> i = <span class="number">85</span>;    <span class="comment">//U对应ASCII是85  </span></span><br><span class="line"><span class="keyword">int</span> j = <span class="string">'h'</span>;    <span class="comment">//h对应ASCII是104  </span></span><br><span class="line">System.out.println(g);  </span><br><span class="line">System.out.println(h);  </span><br><span class="line">System.out.println(i);  </span><br><span class="line">System.out.println(j);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span> g = <span class="string">&#x27;b&#x27;</span>;   <span class="comment">//b对应ASCII是98  </span></span><br><span class="line"><span class="keyword">char</span> h = (<span class="keyword">char</span>) g;  </span><br><span class="line"><span class="keyword">char</span> i = <span class="number">85</span>;    <span class="comment">//U对应ASCII是85  </span></span><br><span class="line"><span class="keyword">int</span> j = <span class="string">&#x27;h&#x27;</span>;    <span class="comment">//h对应ASCII是104  </span></span><br><span class="line">System.out.println(g);  </span><br><span class="line">System.out.println(h);  </span><br><span class="line">System.out.println(i);  </span><br><span class="line">System.out.println(j); </span><br></pre></td></tr></table></figure>
+
 <p><strong>结果：</strong></p>
 <p>98</p>
 <p>b</p>
@@ -1101,6 +1102,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 38
@@ -1148,17 +1151,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E4%B8%AD%E8%8E%B7%E5%BE%97%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95.html" >Java中获得实例的方法</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E5%85%8B%E9%9A%86.html" >Java克隆</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
         </li>
     
     
@@ -1183,6 +1186,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock%E5%8C%85%E5%AE%9E%E7%8E%B0%E9%94%81.html" >java Lock包实现锁</a>
         </li>
     
@@ -1193,17 +1201,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
         </li>
     
     
@@ -1219,11 +1227,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E2%80%94%E2%80%94%E8%BD%AC.html" >内网穿透——转</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
@@ -1268,11 +1271,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
         </li>
     
@@ -1283,17 +1281,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
         </li>
     
     
@@ -1320,39 +1323,43 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
     
-        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
-    
         <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
     
-        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
     
         <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
     
         <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
     
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
         <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
     
         <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
-    
-        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
-    
-        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
     
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
     
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
         <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
     
         <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
     
-        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
-    
-        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
     
         <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
     
@@ -1362,25 +1369,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
     
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
-    
         <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
     
         <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
     
-        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
-    
         <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
     
         <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
     
         <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
     
         <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
     
         <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
         <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
     
@@ -1391,12 +1400,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
-    
-        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
-    
-        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

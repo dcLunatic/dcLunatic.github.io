@@ -411,11 +411,14 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="递归攻击——入门1"><a href="#递归攻击——入门1" class="headerlink" title="递归攻击——入门1"></a>递归攻击——入门1</h1><h2 id="递归概要"><a href="#递归概要" class="headerlink" title="递归概要"></a>递归概要</h2><p>递归可以分为两类，直接递归和间接递归。直接递归出现在程序调用自身的时候。直接递归的例子很多，比如数学算法，列表排序和二叉搜索树。<br>直接递归的例子如下所示，这个例子返回某个整数的阶乘（一系列递减整数的乘积）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">uint32_t factorial(uint32_t number)</span><br><span class="line">&#123;</span><br><span class="line">    if (number &lt;= 1)</span><br><span class="line">    &#123;</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    return number * factorial(number -1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>间接递归是提程序调用另一个程序，并最终调用原始程序。<br>间接递归最实际的使用是在目录遍历程序中， 在这样的程序里，程序在树中导航，另一个程序处理文件。<br>如果这个文件是目录，就调用原始程序。<br>另一个例子是，判断某个数是偶数还是奇数，如下所示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int is_odd(int number)</span><br><span class="line">&#123;</span><br><span class="line">    return number == 0 ? 0 : is_even(abs(number) - 1);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int is_even(int number)</span><br><span class="line">&#123;</span><br><span class="line">    return number == 0 ? 1 : is_odd(abs(number) - 1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <h1 id="递归攻击——入门1"><a href="#递归攻击——入门1" class="headerlink" title="递归攻击——入门1"></a>递归攻击——入门1</h1><h2 id="递归概要"><a href="#递归概要" class="headerlink" title="递归概要"></a>递归概要</h2><p>递归可以分为两类，直接递归和间接递归。直接递归出现在程序调用自身的时候。直接递归的例子很多，比如数学算法，列表排序和二叉搜索树。<br>直接递归的例子如下所示，这个例子返回某个整数的阶乘（一系列递减整数的乘积）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">uint32_t factorial(uint32_t number)</span><br><span class="line">&#123;</span><br><span class="line">    if (number &lt;= 1)</span><br><span class="line">    &#123;</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    return number * factorial(number -1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>间接递归是提程序调用另一个程序，并最终调用原始程序。<br>间接递归最实际的使用是在目录遍历程序中， 在这样的程序里，程序在树中导航，另一个程序处理文件。<br>如果这个文件是目录，就调用原始程序。<br>另一个例子是，判断某个数是偶数还是奇数，如下所示。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int is_odd(int number)</span><br><span class="line">&#123;</span><br><span class="line">    return number == 0 ? 0 : is_even(abs(number) - 1);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int is_even(int number)</span><br><span class="line">&#123;</span><br><span class="line">    return number == 0 ? 1 : is_odd(abs(number) - 1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="栈溢出导致拒绝服务"><a href="#栈溢出导致拒绝服务" class="headerlink" title="栈溢出导致拒绝服务"></a>栈溢出导致拒绝服务</h3><p> 递归的问题通常出现在没有合理的估计递归调用的次数时。<br> 当函数由 x86 处理器执行时，返回地址和函数参数被压入栈中。<br> 在递归调用中，栈以指数级增长。如果递归层数太深，就会在分配的栈大小超出时发生栈溢出。<br> 递归引发的栈溢出非常难以利用，通常会导致拒绝服务。<br> 这是因为，随着递归调用的进行，栈持续增长，使得栈溢出超出了栈顶。<br> 在栈上面（大多数时候）有一个防护页，用于预防栈破坏其他内存区域。<br> 当然也有技术能够跳过这个防护页，溢出到堆中。<br> 这一实现要求递归函数申请足够大的栈变量以及堆内存靠近防护页的另一端。</p>
 <h3 id="使用递归攻击未初始化的栈变量"><a href="#使用递归攻击未初始化的栈变量" class="headerlink" title="使用递归攻击未初始化的栈变量"></a>使用递归攻击未初始化的栈变量</h3><p>递归在漏洞利用中的另一个作用是攻击未初始化的栈变量。<br>正如前面提到的，x86 调用约定中规定函数参数由调用者压入栈中。<br>如果攻击者能够控制递归中函数参数的值，他们就能通过初始化未初始化的栈变量来控制栈。<br>编译器假设当你申明一个变量时，你会初始化它（在使用之前）。</p>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *使用递归攻击未初始化的栈变量--污染栈</span></span><br><span class="line"><span class="comment"> *编译器会在栈中会为栈变量分配一个虚拟地址，即使是未初始化的栈变量。</span></span><br><span class="line"><span class="comment"> *而由于函数调用的栈帧会重叠（因为重用），所以一个未初始化的栈变量通常会包含上次使用过的遗留数据，直到它被初始化。</span></span><br><span class="line"><span class="comment"> *而基于这个，我们就可以来尝试写一段程序了。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">takeInt</span><span class="params">(<span class="keyword">int</span> integer)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (integer == <span class="number">1337</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"How could this be? Integer was never initialized!\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recursiveFunc</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    i++;</span><br><span class="line">    <span class="keyword">if</span> (i == <span class="number">10</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        recursiveFunc(n);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line">    takeInt(j);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = atoi(argv[<span class="number">1</span>]);</span><br><span class="line">    recursiveFunc(n);</span><br><span class="line">    function();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**************************************************************************************************</span></span><br><span class="line"><span class="comment">* We can use it in console as follow:</span></span><br><span class="line"><span class="comment">*  $ gcc dirtyStack.c -o dirtyStack</span></span><br><span class="line"><span class="comment">*  $ ./dirtyStack 1337</span></span><br><span class="line"><span class="comment">* And the result is:</span></span><br><span class="line"><span class="comment">*  How could this be? Integer was never initialized!</span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">* 很明显，integer并没有给初始化，但是为什么条件判断会是真呢？</span></span><br><span class="line"><span class="comment">* 其实在递归调用的时候，栈指针会被不断修改成更低的内存地址，</span></span><br><span class="line"><span class="comment">* 而n和返回地址一起给压入栈中。而这样子，每当函数调用一次，我们便会有更大的机率访问到我们的未初始化变量。</span></span><br><span class="line"><span class="comment">* 但是，在返回地址和函数参数之外，栈中也会有其他的数据生成，这就使得在攻击未初始化变量增加了难度。</span></span><br><span class="line"><span class="comment">* 而且，要使用你自己的数据覆盖到未初始化的变量的偏移地址也是十分困难的，即使在没有其他指令清楚它的值的时候，</span></span><br><span class="line"><span class="comment">* 你的变量要给引用也很困难。</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* 注：编译运行结果与gcc版本也有一定的关系，有些版本的gcc指令生成的时候会有所不同。</span></span><br><span class="line"><span class="comment">* 可能高版本的gcc编译生成的指令有其他的优化，使得运行结果不一样。</span></span><br><span class="line"><span class="comment">* 后面我会附上二进制文件。</span></span><br><span class="line"><span class="comment">* 有兴趣的也可以自己使用调试工具如OD等动态跟踪一下整个运行的过程，</span></span><br><span class="line"><span class="comment">* 也可以利用这个自行解决问题。</span></span><br><span class="line"><span class="comment">**************************************************************************************************/</span></span><br></pre></td></tr></table></figure>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *使用递归攻击未初始化的栈变量--污染栈</span></span><br><span class="line"><span class="comment"> *编译器会在栈中会为栈变量分配一个虚拟地址，即使是未初始化的栈变量。</span></span><br><span class="line"><span class="comment"> *而由于函数调用的栈帧会重叠（因为重用），所以一个未初始化的栈变量通常会包含上次使用过的遗留数据，直到它被初始化。</span></span><br><span class="line"><span class="comment"> *而基于这个，我们就可以来尝试写一段程序了。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">takeInt</span><span class="params">(<span class="keyword">int</span> integer)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (integer == <span class="number">1337</span>)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;How could this be? Integer was never initialized!\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recursiveFunc</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    i++;</span><br><span class="line">    <span class="keyword">if</span> (i == <span class="number">10</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        recursiveFunc(n);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line">    takeInt(j);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = atoi(argv[<span class="number">1</span>]);</span><br><span class="line">    recursiveFunc(n);</span><br><span class="line">    function();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**************************************************************************************************</span></span><br><span class="line"><span class="comment">* We can use it in console as follow:</span></span><br><span class="line"><span class="comment">*  $ gcc dirtyStack.c -o dirtyStack</span></span><br><span class="line"><span class="comment">*  $ ./dirtyStack 1337</span></span><br><span class="line"><span class="comment">* And the result is:</span></span><br><span class="line"><span class="comment">*  How could this be? Integer was never initialized!</span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">* 很明显，integer并没有给初始化，但是为什么条件判断会是真呢？</span></span><br><span class="line"><span class="comment">* 其实在递归调用的时候，栈指针会被不断修改成更低的内存地址，</span></span><br><span class="line"><span class="comment">* 而n和返回地址一起给压入栈中。而这样子，每当函数调用一次，我们便会有更大的机率访问到我们的未初始化变量。</span></span><br><span class="line"><span class="comment">* 但是，在返回地址和函数参数之外，栈中也会有其他的数据生成，这就使得在攻击未初始化变量增加了难度。</span></span><br><span class="line"><span class="comment">* 而且，要使用你自己的数据覆盖到未初始化的变量的偏移地址也是十分困难的，即使在没有其他指令清楚它的值的时候，</span></span><br><span class="line"><span class="comment">* 你的变量要给引用也很困难。</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* 注：编译运行结果与gcc版本也有一定的关系，有些版本的gcc指令生成的时候会有所不同。</span></span><br><span class="line"><span class="comment">* 可能高版本的gcc编译生成的指令有其他的优化，使得运行结果不一样。</span></span><br><span class="line"><span class="comment">* 后面我会附上二进制文件。</span></span><br><span class="line"><span class="comment">* 有兴趣的也可以自己使用调试工具如OD等动态跟踪一下整个运行的过程，</span></span><br><span class="line"><span class="comment">* 也可以利用这个自行解决问题。</span></span><br><span class="line"><span class="comment">**************************************************************************************************/</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>复杂的递归程序通常难以理解，因此会导致一些程序错误。<br>无限的递归调用可以用于破坏栈，在某些条件下，递归能被用于影响栈的布局以攻击未初始化的变量。<br>如果你对例子中的递归漏洞感兴趣，我推荐这个项目。</p>
 <blockquote>
 <p>Project Zero: Exploiting Recursion in the Linux Kernel </p>
@@ -1084,6 +1087,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 38
@@ -1131,17 +1136,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E4%B8%AD%E8%8E%B7%E5%BE%97%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95.html" >Java中获得实例的方法</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E5%85%8B%E9%9A%86.html" >Java克隆</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
         </li>
     
     
@@ -1166,6 +1171,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock%E5%8C%85%E5%AE%9E%E7%8E%B0%E9%94%81.html" >java Lock包实现锁</a>
         </li>
     
@@ -1176,17 +1186,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
         </li>
     
     
@@ -1202,11 +1212,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E2%80%94%E2%80%94%E8%BD%AC.html" >内网穿透——转</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
@@ -1251,11 +1256,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
         </li>
     
@@ -1266,17 +1266,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
         </li>
     
     
@@ -1303,39 +1308,43 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
     
-        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
-    
         <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
     
-        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
     
         <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
     
         <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
     
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
         <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
     
         <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
-    
-        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
-    
-        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
     
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
     
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
         <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
     
         <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
     
-        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
-    
-        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
     
         <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
     
@@ -1345,25 +1354,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
     
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
-    
         <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
     
         <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
     
-        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
-    
         <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
     
         <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
     
         <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
     
         <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
     
         <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
         <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
     
@@ -1374,12 +1385,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
-    
-        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
-    
-        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

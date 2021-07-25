@@ -411,11 +411,12 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="如何在vim中使用系统的粘贴板"><a href="#如何在vim中使用系统的粘贴板" class="headerlink" title="如何在vim中使用系统的粘贴板"></a>如何在vim中使用系统的粘贴板</h1><p>一般默认情况下，在vim中的<strong>所有复制粘贴</strong>操作都是保存再vim的某个缓冲区中的，与系统的剪切板并不通用。所以当我们要使用到系统的粘贴板时会变得很不方便。<br><strong>可以使用命令<code>vim --verion | grep clipboard</code>来查看自己的vim是否支持系统粘贴板。</strong><br>比如我自己的，是这样的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                                                                                                                                      [17:36:36] </span><br><span class="line">&gt; $ vim --version | grep clipboard                                                                                                                                                                                   </span><br><span class="line">+clipboard         +jumplist          +persistent_undo   +vertsplit</span><br><span class="line">+emacs_tags        +mouse_dec         -sun_workshop      +xterm_clipboard</span><br></pre></td></tr></table></figure></p>
+        <h1 id="如何在vim中使用系统的粘贴板"><a href="#如何在vim中使用系统的粘贴板" class="headerlink" title="如何在vim中使用系统的粘贴板"></a>如何在vim中使用系统的粘贴板</h1><p>一般默认情况下，在vim中的<strong>所有复制粘贴</strong>操作都是保存再vim的某个缓冲区中的，与系统的剪切板并不通用。所以当我们要使用到系统的粘贴板时会变得很不方便。<br><strong>可以使用命令<code>vim --verion | grep clipboard</code>来查看自己的vim是否支持系统粘贴板。</strong><br>比如我自己的，是这样的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                                                                                                                                      [17:36:36] </span><br><span class="line">&gt; $ vim --version | grep clipboard                                                                                                                                                                                   </span><br><span class="line">+clipboard         +jumplist          +persistent_undo   +vertsplit</span><br><span class="line">+emacs_tags        +mouse_dec         -sun_workshop      +xterm_clipboard</span><br></pre></td></tr></table></figure>
 <p><strong>能够在clipboard前看到+号就是支持的，如果是-号的话，就是不支持的，这种情况，请看下边</strong>，<br>一般有以下的几种<strong>解决方法</strong>：</p>
 <ol>
 <li><strong>使用gvim代替vim</strong><br> gvim一般都是支持系统粘贴板的，所以我们可以使用gvim的命令行版本，就是直接在终端编辑文件，跟vim一样。<strong>只需要加上-v参数即可</strong>。</li>
-<li><strong>自己编译vim</strong><br> 关于自己编译vim，这里推荐一篇<a href="https://rovo98.github.io/posts/97c4fd12/" target="_blank" rel="noopener">博客</a>，里面说得挺详细的了。</li>
+<li><strong>自己编译vim</strong><br> 关于自己编译vim，这里推荐一篇<a target="_blank" rel="noopener" href="https://rovo98.github.io/posts/97c4fd12/">博客</a>，里面说得挺详细的了。</li>
 </ol>
 <p><strong>解决了vim支持系统粘贴板的问题</strong>，我们如果需要将结果复制粘贴到vim中的话，都需要使用像`”+y”这样操作，很是麻烦。所以需要配置一下，让这些操作默认的使用系统的粘贴板。</p>
 <blockquote>
@@ -423,7 +424,7 @@ height:50vh;
 </blockquote>
 <p>一般跟系统粘贴板相关联的寄存器有两个，一个是*，一个是+，*代表的是选中的内容，而+代表的是系统粘贴板的内容。之所以放在一起说呢，是因为在window中，这两个是通用的，作用是一样的。但是在linux中，却是不相同的了。<br>我们可以使用<code>: set clipboard=unnamed</code>来指定vim中默认的剪切板是*寄存器，使用<code>: set clipboard=unnamedplus</code>是+寄存器。<br>将这句直接写在vim的配置文件<strong>vimrc中即可</strong>。</p>
 <blockquote>
-<p><strong>参考官方的文章<a href="http://vim.wikia.com/wiki/Accessing_the_system_clipboard" target="_blank" rel="noopener">http://vim.wikia.com/wiki/Accessing_the_system_clipboard</a></strong></p>
+<p><strong>参考官方的文章<a target="_blank" rel="noopener" href="http://vim.wikia.com/wiki/Accessing_the_system_clipboard">http://vim.wikia.com/wiki/Accessing_the_system_clipboard</a></strong></p>
 </blockquote>
 
     </article>
@@ -1094,6 +1095,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 38
@@ -1141,17 +1144,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E4%B8%AD%E8%8E%B7%E5%BE%97%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95.html" >Java中获得实例的方法</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E5%85%8B%E9%9A%86.html" >Java克隆</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
         </li>
     
     
@@ -1176,6 +1179,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock%E5%8C%85%E5%AE%9E%E7%8E%B0%E9%94%81.html" >java Lock包实现锁</a>
         </li>
     
@@ -1186,17 +1194,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
         </li>
     
     
@@ -1212,11 +1220,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E2%80%94%E2%80%94%E8%BD%AC.html" >内网穿透——转</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
@@ -1261,11 +1264,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
         </li>
     
@@ -1276,17 +1274,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
         </li>
     
     
@@ -1313,39 +1316,43 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
     
-        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
-    
         <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
     
-        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
     
         <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
     
         <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
     
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
         <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
     
         <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
-    
-        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
-    
-        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
     
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
     
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
         <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
     
         <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
     
-        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
-    
-        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
     
         <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
     
@@ -1355,25 +1362,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
     
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
-    
         <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
     
         <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
     
-        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
-    
         <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
     
         <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
     
         <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
     
         <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
     
         <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
         <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
     
@@ -1384,12 +1393,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
-    
-        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
-    
-        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

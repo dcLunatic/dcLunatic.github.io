@@ -412,7 +412,7 @@ height:50vh;
         <h1 id="转-一分钟实现内网穿透（ngrok服务器搭建）"><a href="#转-一分钟实现内网穿透（ngrok服务器搭建）" class="headerlink" title="(转)一分钟实现内网穿透（ngrok服务器搭建）"></a>(转)一分钟实现内网穿透（ngrok服务器搭建）</h1><blockquote>
 <p>忘记了这篇文章是从哪儿转载的了，如果作者有看到，请下方联系留言谢谢。</p>
 </blockquote>
-<p><strong>简单来说内网穿透的目的是：让外网能访问你本地的应用，例如在外网打开你本地<a href="http://127.0.0.1指向的Web站点。" target="_blank" rel="noopener">http://127.0.0.1指向的Web站点。</a></strong></p>
+<p><strong>简单来说内网穿透的目的是：让外网能访问你本地的应用，例如在外网打开你本地<a target="_blank" rel="noopener" href="http://127.0.0.1指向的web站点./">http://127.0.0.1指向的Web站点。</a></strong></p>
 <p>最近公司的花生壳到期了，要续费，发现价格一直在涨，都是5年以上的老用户，旗舰版都没有实现内网完全穿透，打算自己动手替换这个服务，中间走了不少的弯路，这里记录一些文字为大家提供参考。</p>
 <p>随着开发与运行移动互联网的应用越来越多对打通内外网的需要也更加迫切，如微信开发、IOS与Android开发等。</p>
 <p>虽然租用VPS、ECS等服务器可以解决很多问题但高性能的外网服务器价格非常贵还有数据安全问题，我选择的是公网服务器仅做代理与轻量应用，复杂的应用部署到内网服务器再穿透访问。</p>
@@ -423,11 +423,12 @@ height:50vh;
 <p>其中119.75.213.61就是一个公网的IP地址，他最终指向了一台服务器。</p>
 <p>IP地址是IP协议提供的一种统一的地址格式，它为互联网上的每一个网络和每一台主机分配一个逻辑地址，以此来屏蔽物理地址的差异。</p>
 <p>内网IP可以同时出现在多个不同的局域网络中，如A公司的U1用户获得了192.168.0.5，B公司的U3用户也可以获得192.168.0.5；但公网IP是唯一的，因为我们只有一个Internet。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//局域网可使用的网段（私网地址段）有三大段：</span><br><span class="line">10.0.0.0~10.255.255.255（A类）</span><br><span class="line">172.16.0.0~172.31.255.255（B类）</span><br><span class="line">192.168.0.0~192.168.255.255（C类）</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//局域网可使用的网段（私网地址段）有三大段：</span><br><span class="line">10.0.0.0~10.255.255.255（A类）</span><br><span class="line">172.16.0.0~172.31.255.255（B类）</span><br><span class="line">192.168.0.0~192.168.255.255（C类）</span><br></pre></td></tr></table></figure>
+
 <h2 id="1-2、域名"><a href="#1-2、域名" class="headerlink" title="1.2、域名"></a>1.2、域名</h2><p>域名是IP的别名，便于记忆，域名最终通过DNS解析成IP地址。</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170903220051733-158569545.png" alt="img"></p>
 <p>IP V4是一个32位的数字，IP V6有128位，要记住一串毫无意义的数字非常困难，域名解决了这个问题。</p>
-<p>如<a href="http://www.zhangguo.com.cn就是一个域名，cn表示地区，com表示商业机构，zhangguo是公司名称，www是主机名" target="_blank" rel="noopener">www.zhangguo.com.cn就是一个域名，cn表示地区，com表示商业机构，zhangguo是公司名称，www是主机名</a></p>
+<p>如<a target="_blank" rel="noopener" href="http://www.zhangguo.com.cn就是一个域名,cn表示地区,com表示商业机构,zhangguo是公司名称,www是主机名/">www.zhangguo.com.cn就是一个域名，cn表示地区，com表示商业机构，zhangguo是公司名称，www是主机名</a></p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170903172918812-661389359.png" alt="img"></p>
 <p>DNS查询过程如下，最终将域名变成IP地址</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170903172617749-201355603.png" alt="img"></p>
@@ -445,7 +446,7 @@ height:50vh;
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170903180820046-1185506268.png" alt="img"></p>
 <h2 id="1-4、Proxy"><a href="#1-4、Proxy" class="headerlink" title="1.4、Proxy"></a>1.4、Proxy</h2><p>Proxy即代理，被广泛应用于计算机领域，主要分为正向代理与反向代理：</p>
 <h3 id="1-4-1、正向代理"><a href="#1-4-1、正向代理" class="headerlink" title="1.4.1、正向代理"></a>1.4.1、正向代理</h3><p>比如X花店代A,B,C,D,E五位男生向Candy女生送匿名的生日鲜花，这里的X花店就是5位顾客的代理，花店代理的是客户，隐藏的是客户。这就是我们常说的代理。</p>
-<p>正向代理隐藏了真实的请求客户端。服务端不知道真实的客户端是谁，客户端请求的服务都被代理服务器代替来请求，某些科学上网工具扮演的就是典型的正向代理角色。用浏览器访问<a href="http://www.google.com时被墙了，于是你可以在国外搭建一台代理服务器，让代理帮我去请求google.com，代理把请求返回的相应结构再返回给我。" target="_blank" rel="noopener">http://www.google.com时被墙了，于是你可以在国外搭建一台代理服务器，让代理帮我去请求google.com，代理把请求返回的相应结构再返回给我。</a></p>
+<p>正向代理隐藏了真实的请求客户端。服务端不知道真实的客户端是谁，客户端请求的服务都被代理服务器代替来请求，某些科学上网工具扮演的就是典型的正向代理角色。用浏览器访问<a target="_blank" rel="noopener" href="http://www.google.com时被墙了,于是你可以在国外搭建一台代理服务器,让代理帮我去请求google.com,代理把请求返回的相应结构再返回给我./">http://www.google.com时被墙了，于是你可以在国外搭建一台代理服务器，让代理帮我去请求google.com，代理把请求返回的相应结构再返回给我。</a></p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170903203834015-540568079.png" alt="img"></p>
 <p>当多个客户端访问服务器时服务器不知道真正访问自己的客户端是那一台。正向代理中,proxy和client同属一个LAN,对server透明;</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170903203855702-1545660519.png" alt="img"></p>
@@ -454,7 +455,7 @@ height:50vh;
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170903215407530-525466235.png" alt="img"></p>
 <p>反向代理中,proxy和server同属一个LAN,对client透明。</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170903215437624-924164745.png" alt="img"></p>
-<p><a href="https://www.zhihu.com/question/24723688" target="_blank" rel="noopener">了解更多关于代理内容请点击这里</a>。</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/24723688">了解更多关于代理内容请点击这里</a>。</p>
 <h2 id="1-5、DDNS"><a href="#1-5、DDNS" class="headerlink" title="1.5、DDNS"></a>1.5、DDNS</h2><p>DDNS即动态域名解析，是将用户的动态IP地址映射到一个固定的域名解析服务上，用户每次连接网络的时候，客户端程序就会通过信息传递把该主机的动态IP地址传送给位于服务商主机上的服务器程序，服务程序负责提供DNS服务并实现动态域名解析。就是说DDNS捕获用户每次变化的IP地址，然后将其与域名相对应，这样域名就可以始终解析到非固定IP的服务器上，互联网用户通过本地的域名服务器获得网站域名的IP地址，从而可以访问网站的服务。</p>
 <h2 id="1-6、为什么需要内网穿透"><a href="#1-6、为什么需要内网穿透" class="headerlink" title="1.6、为什么需要内网穿透"></a>1.6、为什么需要内网穿透</h2><p>当内网中的主机没有静态IP地址要被外网稳定访问时可以使用内网穿透</p>
 <p>在互联网中唯一定位一台主机的方法是通过公网的IP地址，但固定IP是一种非常稀缺的资源，不可能给每个公司都分配一个，且许多中小公司不愿意为高昂的费用买单，多数公司直接或间接的拨号上网，电信部门会给接入网络的用户分配IP地址，以前上网用户少的时候基本分配的都是临时的静态IP地址，租约过了之后可能会更换成另一个IP地址，这样外网访问就不稳定，因为内网的静态IP地址一直变化，为了解决这个问题可以使用动态域名解析的办法变换域名指向的静态IP地址。但是现在越来越多的上网用户使得临时分配的静态IP地址也不够用了，电信部门开始分配一些虚拟的静态IP地址，这些IP是公网不能直接访问的，如以125开头的一些IP地址，以前单纯的动态域名解析就不好用了。</p>
@@ -467,35 +468,35 @@ height:50vh;
 <p>解决办法：要想解决以上两大障碍，我们需要借助一台具有公网 IP 的服务器进行桥接。</p>
 <h1 id="二、常见的内网穿透产品"><a href="#二、常见的内网穿透产品" class="headerlink" title="二、常见的内网穿透产品"></a>二、常见的内网穿透产品</h1><h2 id="2-1、花生壳"><a href="#2-1、花生壳" class="headerlink" title="2.1、花生壳"></a>2.1、花生壳</h2><p>花生壳既是内网穿透软件、内网映射软件,也是端口映射软件。规模最大，较正规，完善。</p>
 <p>收费高，使用简单</p>
-<p>官网：<a href="http://www.oray.com/" target="_blank" rel="noopener">http://www.oray.com/</a></p>
+<p>官网：<a target="_blank" rel="noopener" href="http://www.oray.com/">http://www.oray.com/</a></p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170903223553296-127372763.png" alt="img"></p>
 <h2 id="2-2、Nat123"><a href="#2-2、Nat123" class="headerlink" title="2.2、Nat123"></a>2.2、Nat123</h2><p>nat123是内网端口映射与动态域名解析软件，在内网启动映射后，可在外网访问连接内网网站等应用。整个网站我都没有找到客服电话，网友发了一些反面的评价</p>
 <p>收费，使用简单</p>
-<p>官网：<a href="http://www.nat123.com/" target="_blank" rel="noopener">http://www.nat123.com</a></p>
+<p>官网：<a target="_blank" rel="noopener" href="http://www.nat123.com/">http://www.nat123.com</a></p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170903224544358-530495055.png" alt="img"></p>
 <h2 id="2-3、NATAPP"><a href="#2-3、NATAPP" class="headerlink" title="2.3、NATAPP"></a>2.3、NATAPP</h2><p>NATAPP基于ngrok的国内内网穿透服务，免费版会强制更换域名，临时用一下可以</p>
 <p>收费，使用简单</p>
-<p>官网：<a href="https://natapp.cn/" target="_blank" rel="noopener">https://natapp.cn/</a></p>
+<p>官网：<a target="_blank" rel="noopener" href="https://natapp.cn/">https://natapp.cn/</a></p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170903230700515-51395586.png" alt="img"></p>
 <h2 id="2-4、frp与其它"><a href="#2-4、frp与其它" class="headerlink" title="2.4、frp与其它"></a>2.4、frp与其它</h2><p>frp 是一个高性能的反向代理应用，可以帮助您轻松地进行内网穿透，对外网提供服务，支持 tcp, http, https 等协议类型，并且 web 服务支持根据域名进行路由转发。</p>
 <p>开源免费</p>
 <p>使用相对复杂，需要代理服务器支持</p>
-<p>官网：<a href="https://github.com/fatedier/frp" target="_blank" rel="noopener">https://github.com/fatedier/frp</a></p>
-<p>文档：<a href="http://www.cnblogs.com/%E6%9F%A5%E7%9C%8B%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3" target="_blank" rel="noopener">查看帮助文档</a>，<a href="http://www.jianshu.com/p/e8e26bcc6fe6" target="_blank" rel="noopener">简书示例</a></p>
+<p>官网：<a target="_blank" rel="noopener" href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p>
+<p>文档：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/%E6%9F%A5%E7%9C%8B%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3">查看帮助文档</a>，<a target="_blank" rel="noopener" href="http://www.jianshu.com/p/e8e26bcc6fe6">简书示例</a></p>
 <p>利用处于内网或防火墙后的机器，对外网环境提供 http 或 https 服务。</p>
 <p>对于 http, https 服务支持基于域名的虚拟主机，支持自定义域名绑定，使多个域名可以共用一个80端口。</p>
 <p>利用处于内网或防火墙后的机器，对外网环境提供 tcp 和 udp 服务，例如在家里通过 ssh 访问处于公司内网环境内的主机。</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170903230243390-1884154202.png" alt="img"></p>
 <p>因为frp 仍然处于前期开发阶段，未经充分测试与验证，不推荐用于生产环境，所有我选择了ngrok，资料比较多。</p>
-<p>还有如圣剑内网通、ngrok（开源免费）、<a href="https://post.smzdm.com/p/564494/" target="_blank" rel="noopener">更多办法</a></p>
+<p>还有如圣剑内网通、ngrok（开源免费）、<a target="_blank" rel="noopener" href="https://post.smzdm.com/p/564494/">更多办法</a></p>
 <h1 id="三、ngrok"><a href="#三、ngrok" class="headerlink" title="三、ngrok"></a>三、ngrok</h1><p>ngrok是一个反向代理，通过在公共的端点和本地运行的Web服务器之间建立一个安全的通道。ngrok可捕获和分析所有通道上的流量，便于后期分析与响应。</p>
 <p>开源免费</p>
-<p>官网：<a href="https://ngrok.com/" target="_blank" rel="noopener">https://ngrok.com/</a></p>
-<p>源码：<a href="https://github.com/inconshreveable/ngrok" target="_blank" rel="noopener">https://github.com/inconshreveable/ngrok</a></p>
+<p>官网：<a target="_blank" rel="noopener" href="https://ngrok.com/">https://ngrok.com/</a></p>
+<p>源码：<a target="_blank" rel="noopener" href="https://github.com/inconshreveable/ngrok">https://github.com/inconshreveable/ngrok</a></p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170903231759108-1604638644.png" alt="img"></p>
 <p>ngrok1.x开源，ngrok2.x不开源</p>
 <p>ngrok使用go语言开发，源代码分为客户端与服务器端。</p>
-<p>国内免费服务器：<a href="http://ngrok.ciqiuwl.cn/" target="_blank" rel="noopener">http://ngrok.ciqiuwl.cn/</a>，更多免费服务器请大家挖掘，资源共享，我随时更新：）</p>
+<p>国内免费服务器：<a target="_blank" rel="noopener" href="http://ngrok.ciqiuwl.cn/">http://ngrok.ciqiuwl.cn/</a>，更多免费服务器请大家挖掘，资源共享，我随时更新：）</p>
 <p>如果有服务器，仅客户端的使用是不复杂的，以上面的免费服务器为示例完成内网穿透</p>
 <p>现在假定我的本地已成功部署了一个网站，访问地址为127.0.0.1，想内网穿透后被公网上的用户访问，一般步骤如下：</p>
 <p><strong>步骤1、下载windows版本的客户端，解压。一般在为你提供代理服务器的网站上找你要下载的客户端：</strong></p>
@@ -525,7 +526,7 @@ height:50vh;
 <p>综合考虑我选择了在虚拟机中安装ubuntu操作系统</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170901231607218-263480294.png" alt="img"></p>
 <h3 id="4-2-1、安装VMware虚拟机"><a href="#4-2-1、安装VMware虚拟机" class="headerlink" title="4.2.1、安装VMware虚拟机"></a>4.2.1、安装VMware虚拟机</h3><p>VMware Workstation是一款功能强大的虚拟机软件，在不影响本机操作系统的情况下，用户可以在虚拟机中同时运行不同版本的操作系统，用于开发、测试以及部署工作。</p>
-<p>VMware Workstation 12 pro下载：<a href="https://download3.vmware.com/software/wkst/file/VMware-workstation-full-12.1.0-3272444.exe" target="_blank" rel="noopener">VMware-workstation-full-12.1.0-3272444.exe</a></p>
+<p>VMware Workstation 12 pro下载：<a target="_blank" rel="noopener" href="https://download3.vmware.com/software/wkst/file/VMware-workstation-full-12.1.0-3272444.exe">VMware-workstation-full-12.1.0-3272444.exe</a></p>
 <p>序列号：5A02H-AU243-TZJ49-GTC7K-3C61N（商业应用请购买正式版权，这里仅为学习使用）</p>
 <p>1）、双击VMware Workstation 12安装文件，或者右键管理员身份打开，提示是否允许更改，点击是；</p>
 <p>2）、打开VMware安装向导，点击下一步；</p>
@@ -534,9 +535,9 @@ height:50vh;
 <p>　　方法一、首次开启直接输入上文密钥，即可激活；<br>　　方法二、首次开启选择试用，进入试用后按一下步骤激活：</p>
 <p>　　a、打开虚拟机主界面，点击“帮助”—“输入许可证密钥”；</p>
 <p>　　<img src="http://images2015.cnblogs.com/blog/665662/201609/665662-20160901095741496-122939039.png" alt="技术分享"></p>
-<p>　　b、在密钥输入框输入永久许可证密钥5A02H-AU243-TZJ49-GTC7K-3C61N，确定；<a href="http://www.mamicode.com/info-detail-1509515.html" target="_blank" rel="noopener">更多</a></p>
+<p>　　b、在密钥输入框输入永久许可证密钥5A02H-AU243-TZJ49-GTC7K-3C61N，确定；<a target="_blank" rel="noopener" href="http://www.mamicode.com/info-detail-1509515.html">更多</a></p>
 <h3 id="4-2-2、安装ubuntu到虚拟机"><a href="#4-2-2、安装ubuntu到虚拟机" class="headerlink" title="4.2.2、安装ubuntu到虚拟机"></a>4.2.2、安装ubuntu到虚拟机</h3><p><strong>1)、下载ubuntu操作系统镜像</strong></p>
-<p>下载地址：<a href="https://www.ubuntu.com/download/desktop" target="_blank" rel="noopener">https://www.ubuntu.com/download/desktop</a></p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://www.ubuntu.com/download/desktop">https://www.ubuntu.com/download/desktop</a></p>
 <p>这里我下载的是ubuntu-16.04.3-desktop-amd64.iso</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904095831304-2034050308.png" alt="img"></p>
 <p><strong>2)、在VMware中安装ubuntu</strong></p>
@@ -549,7 +550,7 @@ height:50vh;
 <p>后面设置处理器和内存的，电脑配置好的可以试试，否则采用默认的，博主这里是采用默认的，然后下一，直到这里，选择将虚拟机存储为单个磁盘：</p>
 <p><img src="https://img-blog.csdn.net/20160116170122312" alt="这里写图片描述"></p>
 <p>个人建议至少20G硬盘空间，内存建议给1.5G，当然也要看电脑本身的配置，1G的内存跑起来比较卡。</p>
-<p>其它的步骤比较简单，更多细节可以参考这里，<a href="http://blog.csdn.net/u013142781/article/details/50529030" target="_blank" rel="noopener">《VMware Ubuntu安装详细过程》</a>。</p>
+<p>其它的步骤比较简单，更多细节可以参考这里，<a target="_blank" rel="noopener" href="http://blog.csdn.net/u013142781/article/details/50529030">《VMware Ubuntu安装详细过程》</a>。</p>
 <h3 id="4-2-3、配置ubuntu系统"><a href="#4-2-3、配置ubuntu系统" class="headerlink" title="4.2.3、配置ubuntu系统"></a>4.2.3、配置ubuntu系统</h3><p>当ubuntu系统安装成功后，在虚拟机中可以启动ubuntu系统，启动后的系统如下：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904101154476-1764294876.png" alt="img"></p>
 <p>ubuntu系统的使用还是有许多内容的，这里需要设置的内容如下：</p>
@@ -576,32 +577,38 @@ height:50vh;
 <p>启动ubuntu，开打命令行（终端），如下所示：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904104218679-1537052551.png" alt="img"></p>
 <p>以root身份执行如下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mkdir ngrok #创建名称为ngrok的目录</span><br><span class="line"></span><br><span class="line">apt-get update #更新包管理器</span><br><span class="line"></span><br><span class="line">apt-get install git  #安装git</span><br><span class="line"></span><br><span class="line">git clone https://github.com/inconshreveable/ngrok.git ngrok2 #将ngrok源代码克隆回本地</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mkdir ngrok #创建名称为ngrok的目录</span><br><span class="line"></span><br><span class="line">apt-get update #更新包管理器</span><br><span class="line"></span><br><span class="line">apt-get install git  #安装git</span><br><span class="line"></span><br><span class="line">git clone https://github.com/inconshreveable/ngrok.git ngrok2 #将ngrok源代码克隆回本地</span><br></pre></td></tr></table></figure>
+
 <p>成功执行后如下所示：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904105615835-1335450212.png" alt="img"></p>
 <p>导出成功后的源代码：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904105847351-1780908089.png" alt="img"></p>
 <p>PS. 直接在服务器上下载的话实在太慢，可以先在本地下载好，然后用ftp放到服务器上去直接用，如果安装了VMware tools直接拖进去就可以了。</p>
 <h3 id="4-3-2-安装Go语言开发环境"><a href="#4-3-2-安装Go语言开发环境" class="headerlink" title="4.3.2. 安装Go语言开发环境"></a>4.3.2. 安装Go语言开发环境</h3><p>直接在命令模式下执行如下指令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install golang #安装go语言</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install golang #安装go语言</span><br></pre></td></tr></table></figure>
+
 <p>执行结果如下：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904110813679-2025712360.png" alt="img"></p>
 <h3 id="4-3-3-更改ngrok域名"><a href="#4-3-3-更改ngrok域名" class="headerlink" title="4.3.3. 更改ngrok域名"></a>4.3.3. 更改ngrok域名</h3><p>在自己的域名管理中添加解析A记录，如下所示：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904112044444-141101928.png" alt="img"></p>
 <p>将*.ngrok与ngrok都指向您的主机IP。</p>
 <p>默认的域名是ngrok自己的，要替换成您自己的域名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export GOPATH=/usr/local/ngrok/  #设置环境变量，Go语言的安装位置</span><br><span class="line">export NGROK_DOMAIN=&quot;ngrok.yourdomain.com&quot;  #设置环境变量，ngrok域名</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export GOPATH=/usr/local/ngrok/  #设置环境变量，Go语言的安装位置</span><br><span class="line">export NGROK_DOMAIN=&quot;ngrok.yourdomain.com&quot;  #设置环境变量，ngrok域名</span><br></pre></td></tr></table></figure>
+
 <p>PS. ngrok名称可以任意，推荐名称为ngrok或者tunnel </p>
-<h3 id="4-3-4-为域名生成证书"><a href="#4-3-4-为域名生成证书" class="headerlink" title="4.3.4. 为域名生成证书"></a>4.3.4. 为域名生成证书</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out rootCA.key 2048</span><br><span class="line">openssl req -x509 -new -nodes -key rootCA.key -subj &quot;/CN=$NGROK_DOMAIN&quot; -days 5000 -out rootCA.pem</span><br><span class="line">openssl genrsa -out server.key 2048</span><br><span class="line">openssl req -new -key server.key -subj &quot;/CN=$NGROK_DOMAIN&quot; -out server.csr</span><br><span class="line">openssl x509 -req -in server.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out server.crt -days 5000</span><br></pre></td></tr></table></figure>
+<h3 id="4-3-4-为域名生成证书"><a href="#4-3-4-为域名生成证书" class="headerlink" title="4.3.4. 为域名生成证书"></a>4.3.4. 为域名生成证书</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out rootCA.key 2048</span><br><span class="line">openssl req -x509 -new -nodes -key rootCA.key -subj &quot;/CN=$NGROK_DOMAIN&quot; -days 5000 -out rootCA.pem</span><br><span class="line">openssl genrsa -out server.key 2048</span><br><span class="line">openssl req -new -key server.key -subj &quot;/CN=$NGROK_DOMAIN&quot; -out server.csr</span><br><span class="line">openssl x509 -req -in server.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out server.crt -days 5000</span><br></pre></td></tr></table></figure>
+
 <p>生成后的结果如下：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904112706007-1362500678.png" alt="img"></p>
 <p>证书如下：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904112841616-675146273.png" alt="img"></p>
-<h3 id="4-3-5-拷贝证书到指定位置"><a href="#4-3-5-拷贝证书到指定位置" class="headerlink" title="4.3.5. 拷贝证书到指定位置"></a>4.3.5. 拷贝证书到指定位置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp rootCA.pem assets/client/tls/ngrokroot.crt  #复制rootCA.pem到assets/client/tls/并更名为ngrokroot.crt</span><br><span class="line">cp server.crt assets/server/tls/snakeoil.crt #复制server.crt到assets/server/tls/并更名为snakeoil.crt</span><br><span class="line">cp server.key assets/server/tls/snakeoil.key #复制server.key到assets/server/tls/并更名为snakeoil.key</span><br></pre></td></tr></table></figure>
+<h3 id="4-3-5-拷贝证书到指定位置"><a href="#4-3-5-拷贝证书到指定位置" class="headerlink" title="4.3.5. 拷贝证书到指定位置"></a>4.3.5. 拷贝证书到指定位置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp rootCA.pem assets/client/tls/ngrokroot.crt  #复制rootCA.pem到assets/client/tls/并更名为ngrokroot.crt</span><br><span class="line">cp server.crt assets/server/tls/snakeoil.crt #复制server.crt到assets/server/tls/并更名为snakeoil.crt</span><br><span class="line">cp server.key assets/server/tls/snakeoil.key #复制server.key到assets/server/tls/并更名为snakeoil.key</span><br></pre></td></tr></table></figure>
+
 <p>运行结果：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904113404319-181716920.png" alt="img"></p>
 <h3 id="4-3-6-编译"><a href="#4-3-6-编译" class="headerlink" title="4.3.6. 编译"></a>4.3.6. 编译</h3><p> 由于go语言的特性，在编译时直接生成机器码，所以在运行过程中并不需要go的环境（非托管应用）。在ngrok目录下，运行一下命令分别生成对应的客户端与服务端。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#win服务端</span><br><span class="line">GOOS=windows GOARCH=386 make release-server </span><br><span class="line">#win客户端</span><br><span class="line">GOOS=windows GOARCH=386 make release-client</span><br><span class="line">#linux服务端</span><br><span class="line">GOOS=linux GOARCH=386 make release-server</span><br><span class="line">#linux客户端</span><br><span class="line">GOOS=linux GOARCH=386 make release-client</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#win服务端</span><br><span class="line">GOOS=windows GOARCH=386 make release-server </span><br><span class="line">#win客户端</span><br><span class="line">GOOS=windows GOARCH=386 make release-client</span><br><span class="line">#linux服务端</span><br><span class="line">GOOS=linux GOARCH=386 make release-server</span><br><span class="line">#linux客户端</span><br><span class="line">GOOS=linux GOARCH=386 make release-client</span><br></pre></td></tr></table></figure>
+
 <p>生成完成后，在工作目录的bin文件夹下，产生对应的文件。以编译windows平台为例，会产生“ngrok.exe”与“ngrokd.exe”这两个文件，前者客户端，后者需要运行在公网服务器上。</p>
 <p>因为项目中引用了一些外部资源，生成会耗费一些时间，对网络也有一定的要求，太慢会中短，命令执行下如：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904121943022-153887904.png" alt="img"></p>
@@ -616,20 +623,23 @@ height:50vh;
 <p>这里我将ngrokd.exe放在c:\grokeServer目录下：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904122657647-1349116821.png" alt="img"></p>
 <p>为了方便，我编写了一个批处理文件：ngrokserver2.bat</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrokd.exe -tlsKey=&quot;snakeoil.key&quot; -tlsCrt=&quot;snakeoil.crt&quot; -domain=&quot;ngrok.你的域名.com&quot; -httpAddr=&quot;:801&quot; -httpsAddr=&quot;:802&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrokd.exe -tlsKey=&quot;snakeoil.key&quot; -tlsCrt=&quot;snakeoil.crt&quot; -domain=&quot;ngrok.你的域名.com&quot; -httpAddr=&quot;:801&quot; -httpsAddr=&quot;:802&quot;</span><br></pre></td></tr></table></figure>
+
 <p>点击批处理运行结果如下：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904123813882-909153274.png" alt="img"></p>
 <p>绑定的域名换成自己的域名，http使用801端口，https使用802端口，供客户端连接的管道端口设置为4443端口，必须前面的域名相同。</p>
 <p>为了安全许多服务器会将端口屏蔽，我使用的是ECS服务器，默认801，802都是关闭的，需要手动开启，在阿里云的后台添加开放的端口就可了：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170901232916530-1378823649.png" alt="img"></p>
 <h2 id="5-2、一键部署ngrok服务器（CentOS、Debian、Ubuntu）"><a href="#5-2、一键部署ngrok服务器（CentOS、Debian、Ubuntu）" class="headerlink" title="5.2、一键部署ngrok服务器（CentOS、Debian、Ubuntu）"></a>5.2、一键部署ngrok服务器（CentOS、Debian、Ubuntu）</h2><p>如果编译生成ngrok的源代码生成应用太麻烦，你可以选择网友写的工具，支持一键部署到安装平台：CentOS、Debian、Ubuntu。</p>
-<p><a href="https://github.com/clangcn/ngrok-one-key-install" target="_blank" rel="noopener">https://github.com/clangcn/ngrok-one-key-install</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/clangcn/ngrok-one-key-install">https://github.com/clangcn/ngrok-one-key-install</a></p>
 <h1 id="六、部署ngrok客户端"><a href="#六、部署ngrok客户端" class="headerlink" title="六、部署ngrok客户端"></a>六、部署ngrok客户端</h1><p>这里的客户端就是您的web应用程序所运行的主机，将ubuntu生成的ngrok.exe客户端应用复制到您的系统中：</p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170904124357101-756344082.png" alt="img"></p>
 <p>添加配置文件ngrok.cfg:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server_addr: &quot;ngrok.你的域名.com:4443&quot;</span><br><span class="line">trust_host_root_certs: false</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server_addr: &quot;ngrok.你的域名.com:4443&quot;</span><br><span class="line">trust_host_root_certs: false</span><br></pre></td></tr></table></figure>
+
 <p> 添加批处理start.bat，如果只运行一次直接在命令行下输入命令也是一样的效果，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrok.exe -subdomain kyt -config=ngrok.cfg 8987</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrok.exe -subdomain kyt -config=ngrok.cfg 8987</span><br></pre></td></tr></table></figure>
+
 <p>其中8987为端口号，运行成功的结果如下所示： </p>
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170901232646890-104118921.png" alt="img"></p>
 <p>看到这个界面时说明已成功了。</p>
@@ -637,7 +647,7 @@ height:50vh;
 <p><img src="http://images2017.cnblogs.com/blog/63651/201709/63651-20170901233244765-547813455.png" alt="img"></p>
 <h1 id="八、总结"><a href="#八、总结" class="headerlink" title="八、总结"></a>八、总结</h1><p>一开始选择错了平台，在windows花了不少时间，在ubuntu下顺利完成。</p>
 <p>无论是客户端还是服务器端最好都做成服务，更方便与稳定。</p>
-<p>由于服务器上同时运行着IIS，故服务端Ngrok启动时无法使用80端口，所以在上面，我使用了801作为Ngrok服务器的http端口，使用IIS的代理功能可以解决这个问题，<a href="http://www.it165.net/admin/html/201604/7486.html" target="_blank" rel="noopener">点击这里</a>。当然也可以使用nginx将80转换成其它端口。</p>
+<p>由于服务器上同时运行着IIS，故服务端Ngrok启动时无法使用80端口，所以在上面，我使用了801作为Ngrok服务器的http端口，使用IIS的代理功能可以解决这个问题，<a target="_blank" rel="noopener" href="http://www.it165.net/admin/html/201604/7486.html">点击这里</a>。当然也可以使用nginx将80转换成其它端口。</p>
 <p>许多内容都参考了网友的文章。</p>
 <p><strong>如果服务器搭建好了，只运行客户端穿透内网一分钟够了：）。</strong></p>
 
@@ -1309,6 +1319,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 38
@@ -1356,17 +1368,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E4%B8%AD%E8%8E%B7%E5%BE%97%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95.html" >Java中获得实例的方法</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E5%85%8B%E9%9A%86.html" >Java克隆</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
         </li>
     
     
@@ -1391,6 +1403,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock%E5%8C%85%E5%AE%9E%E7%8E%B0%E9%94%81.html" >java Lock包实现锁</a>
         </li>
     
@@ -1401,17 +1418,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
         </li>
     
     
@@ -1427,11 +1444,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E2%80%94%E2%80%94%E8%BD%AC.html" >内网穿透——转</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
@@ -1476,11 +1488,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
         </li>
     
@@ -1491,17 +1498,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
         </li>
     
     
@@ -1528,39 +1540,43 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
     
-        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
-    
         <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
     
-        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
     
         <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
     
         <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
     
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
         <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
     
         <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
-    
-        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
-    
-        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
     
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
     
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
         <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
     
         <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
     
-        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
-    
-        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
     
         <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
     
@@ -1570,25 +1586,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
     
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
-    
         <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
     
         <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
     
-        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
-    
         <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
     
         <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
     
         <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
     
         <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
     
         <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
         <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
     
@@ -1599,12 +1617,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
-    
-        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
-    
-        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

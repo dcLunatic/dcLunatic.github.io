@@ -284,7 +284,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">546</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">558</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -426,14 +426,27 @@ height:50vh;
 <blockquote>
 <p>ibase 和 obase的数值进制也是ibase中设置的，默认是十进制，下面有举了个栗子。</p>
 </blockquote>
-<h3 id="交互式使用"><a href="#交互式使用" class="headerlink" title="交互式使用"></a>交互式使用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# bc</span><br><span class="line">bc 1.07.1</span><br><span class="line">Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2017 Free Software Foundation, Inc.</span><br><span class="line">This is free software with ABSOLUTELY NO WARRANTY.</span><br><span class="line">For details type `warranty'. </span><br><span class="line">3+2</span><br><span class="line">5</span><br><span class="line">5*2</span><br><span class="line">10</span><br><span class="line">98/12</span><br><span class="line">8</span><br><span class="line">34 % 3</span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">scale=3</span><br><span class="line">5/3</span><br><span class="line">1.666</span><br><span class="line">ibase=10</span><br><span class="line">obase=16</span><br><span class="line">256</span><br><span class="line">100</span><br><span class="line">234</span><br><span class="line">EA</span><br><span class="line">ibase=16</span><br><span class="line">obase=10</span><br><span class="line">EADB</span><br><span class="line">EADB</span><br><span class="line">obase=A</span><br><span class="line">EADB</span><br><span class="line">60123</span><br></pre></td></tr></table></figure>
+<h3 id="交互式使用"><a href="#交互式使用" class="headerlink" title="交互式使用"></a>交互式使用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# bc</span><br><span class="line">bc 1.07.1</span><br><span class="line">Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2017 Free Software Foundation, Inc.</span><br><span class="line">This is free software with ABSOLUTELY NO WARRANTY.</span><br><span class="line">For details type `warranty&#x27;. </span><br><span class="line">3+2</span><br><span class="line">5</span><br><span class="line">5*2</span><br><span class="line">10</span><br><span class="line">98/12</span><br><span class="line">8</span><br><span class="line">34 % 3</span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">scale=3</span><br><span class="line">5/3</span><br><span class="line">1.666</span><br><span class="line">ibase=10</span><br><span class="line">obase=16</span><br><span class="line">256</span><br><span class="line">100</span><br><span class="line">234</span><br><span class="line">EA</span><br><span class="line">ibase=16</span><br><span class="line">obase=10</span><br><span class="line">EADB</span><br><span class="line">EADB</span><br><span class="line">obase=A</span><br><span class="line">EADB</span><br><span class="line">60123</span><br></pre></td></tr></table></figure>
+
 <p>在bc命令后面也可以接文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# bc calc.txt</span><br><span class="line">bc 1.07.1</span><br><span class="line">Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2017 Free Software Foundation, Inc.</span><br><span class="line">This is free software with ABSOLUTELY NO WARRANTY.</span><br><span class="line">For details type `warranty'. </span><br><span class="line">6</span><br><span class="line">223</span><br><span class="line">41</span><br><span class="line">112</span><br><span class="line">0</span><br><span class="line">1.10000000</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# bc calc.txt</span><br><span class="line">bc 1.07.1</span><br><span class="line">Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2017 Free Software Foundation, Inc.</span><br><span class="line">This is free software with ABSOLUTELY NO WARRANTY.</span><br><span class="line">For details type `warranty&#x27;. </span><br><span class="line">6</span><br><span class="line">223</span><br><span class="line">41</span><br><span class="line">112</span><br><span class="line">0</span><br><span class="line">1.10000000</span><br></pre></td></tr></table></figure>
+
 <p>注: 使用quit或Ctrl+D或者直接Ctrl+C都可以退出bc命令。</p>
-<h3 id="管道使用bc"><a href="#管道使用bc" class="headerlink" title="管道使用bc"></a>管道使用bc</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# echo "1+2" | bc</span><br><span class="line">3</span><br><span class="line">root@dcLunatic:~# echo "(3*7)*3.2;23*23" | bc</span><br><span class="line">67.2</span><br><span class="line">529</span><br><span class="line">root@dcLunatic:~# echo "obase=16;34"|bc</span><br><span class="line">22</span><br><span class="line">root@dcLunatic:~# echo "sqrt(7)" | bc</span><br><span class="line">2</span><br><span class="line">root@dcLunatic:~# echo "scale=4;sqrt(8)" | bc</span><br><span class="line">2.8284</span><br></pre></td></tr></table></figure>
+<h3 id="管道使用bc"><a href="#管道使用bc" class="headerlink" title="管道使用bc"></a>管道使用bc</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# echo &quot;1+2&quot; | bc</span><br><span class="line">3</span><br><span class="line">root@dcLunatic:~# echo &quot;(3*7)*3.2;23*23&quot; | bc</span><br><span class="line">67.2</span><br><span class="line">529</span><br><span class="line">root@dcLunatic:~# echo &quot;obase=16;34&quot;|bc</span><br><span class="line">22</span><br><span class="line">root@dcLunatic:~# echo &quot;sqrt(7)&quot; | bc</span><br><span class="line">2</span><br><span class="line">root@dcLunatic:~# echo &quot;scale=4;sqrt(8)&quot; | bc</span><br><span class="line">2.8284</span><br></pre></td></tr></table></figure>
+
 <p>也可以这样</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# cat calc.txt</span><br><span class="line">2+4</span><br><span class="line">ibase=2;obase=5;9*7</span><br><span class="line">3*7</span><br><span class="line">4*8</span><br><span class="line">5/9</span><br><span class="line">scale=5;6/5</span><br><span class="line">root@dcLunatic:~# cat calc.txt | bc</span><br><span class="line">6</span><br><span class="line">223</span><br><span class="line">41</span><br><span class="line">112</span><br><span class="line">0</span><br><span class="line">1.10000000</span><br></pre></td></tr></table></figure>
-<h3 id="高级用法，bc命令的脚本片段结合bash"><a href="#高级用法，bc命令的脚本片段结合bash" class="headerlink" title="高级用法，bc命令的脚本片段结合bash"></a>高级用法，bc命令的脚本片段结合bash</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# calc_sum()</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> &#123;</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> bc -q &lt;&lt; EOF</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> 0.05*<span class="variable">$1</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> EOF</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> &#125;</span></span><br><span class="line">root@dcLunatic:~# </span><br><span class="line">root@dcLunatic:~# calc_sum 3</span><br><span class="line">.15</span><br><span class="line">root@dcLunatic:~# calc_sum 89</span><br><span class="line">4.45</span><br></pre></td></tr></table></figure>
+
+<h3 id="高级用法，bc命令的脚本片段结合bash"><a href="#高级用法，bc命令的脚本片段结合bash" class="headerlink" title="高级用法，bc命令的脚本片段结合bash"></a>高级用法，bc命令的脚本片段结合bash</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# calc_sum()</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> &#123;</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> bc -q &lt;&lt; <span class="string">EOF</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"><span class="string"> 0.05*$1</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"><span class="string"> EOF</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> &#125;</span></span><br><span class="line">root@dcLunatic:~# </span><br><span class="line">root@dcLunatic:~# calc_sum 3</span><br><span class="line">.15</span><br><span class="line">root@dcLunatic:~# calc_sum 89</span><br><span class="line">4.45</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
 
     </article>
     <!-- license  -->
@@ -1103,6 +1116,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 38
@@ -1150,17 +1165,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E4%B8%AD%E8%8E%B7%E5%BE%97%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95.html" >Java中获得实例的方法</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E5%85%8B%E9%9A%86.html" >Java克隆</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
         </li>
     
     
@@ -1185,6 +1200,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock%E5%8C%85%E5%AE%9E%E7%8E%B0%E9%94%81.html" >java Lock包实现锁</a>
         </li>
     
@@ -1195,17 +1215,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
         </li>
     
     
@@ -1221,11 +1241,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E2%80%94%E2%80%94%E8%BD%AC.html" >内网穿透——转</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
@@ -1270,11 +1285,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
         </li>
     
@@ -1285,17 +1295,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
         </li>
     
     
@@ -1322,39 +1337,43 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
     
-        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
-    
         <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
     
-        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
     
         <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
     
         <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
     
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
         <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
     
         <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
-    
-        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
-    
-        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
     
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
     
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
         <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
     
         <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
     
-        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
-    
-        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
     
         <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
     
@@ -1364,25 +1383,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
     
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
-    
         <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
     
         <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
     
-        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
-    
         <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
     
         <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
     
         <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
     
         <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
     
         <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
         <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
     
@@ -1393,12 +1414,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
-    
-        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
-    
-        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

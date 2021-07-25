@@ -412,34 +412,32 @@ height:50vh;
             <main class="main post-page">
     <article class="article-entry">
         <h1 id="关于Kali-Linux安装Virtualbox出现需要重新安装头文件的问题"><a href="#关于Kali-Linux安装Virtualbox出现需要重新安装头文件的问题" class="headerlink" title="关于Kali Linux安装Virtualbox出现需要重新安装头文件的问题"></a>关于Kali Linux安装Virtualbox出现需要重新安装头文件的问题</h1><blockquote>
-<p> 一般的问题可以参考一下这篇<a href="https://www.cnblogs.com/lfoder/p/5777899.html" target="_blank" rel="noopener">文章</a>,基本可以解决大部分问题了。</p>
+<p> 一般的问题可以参考一下这篇<a target="_blank" rel="noopener" href="https://www.cnblogs.com/lfoder/p/5777899.html">文章</a>,基本可以解决大部分问题了。</p>
 </blockquote>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>但是呢，笔者在解决virtualbox编译进内核的时候，遇到了问题。</p>
 <p><img src="1.png" alt="img"></p>
-<p>一般的来说，这个问题只需要一句<code>apt-get install linux-headers-$(uname -r)</code>就可以解决了，但是由于kali 官网上已经不提供一些比较旧的头文件了，所以安装会出现无法定位什么的问题。</p>
+<p>一般的来说，这个问题只需要一句<code>apt-get install linux-headers-$(uname -r)</code>就可以解决了，但是由于kali 官网上已经不提供一些比较旧的头文件了，所以安装会出现无法定位什么的问题。</p>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>所以这个时候我们需要重新编译内核，使用更高版本的内核。</p>
 <p>笔者原先的是linux-4.12.0-kali1-amd64,但是无法找到对应的linux-headers-4.12.0-kali1-amd64，所以最后使用了4.15.0的。</p>
 <blockquote>
-<p>kail对应的资源文件可以在<a href="http://http.kali.org/kali/pool/main/l/linux/" target="_blank" rel="noopener">这里</a>下载</p>
+<p>kail对应的资源文件可以在<a target="_blank" rel="noopener" href="http://http.kali.org/kali/pool/main/l/linux/">这里</a>下载</p>
 </blockquote>
 <p>下载对应的内核文件自己编译，具体方法如下:</p>
 <ol>
-<li><p>下载inux-kbuild<br>这里我下载的是<a href="http://http.kali.org/kali/pool/main/l/linux/linux-kbuild-4.15_4.15.11-1kali1_amd64.deb" target="_blank" rel="noopener">linux-kbuild-4.15_4.15.11-1kali1_amd64.deb</a> </p>
+<li><p>下载inux-kbuild<br>这里我下载的是<a target="_blank" rel="noopener" href="http://http.kali.org/kali/pool/main/l/linux/linux-kbuild-4.15_4.15.11-1kali1_amd64.deb">linux-kbuild-4.15_4.15.11-1kali1_amd64.deb</a> </p>
 </li>
 <li><p>编译linux-kbuild</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dkpg -i linux-kbuild-4.15_4.15.11-1kali1_amd64.deb</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>下载linux-header-common和linux-header<br>这里我下载的是<a href="http://http.kali.org/kali/pool/main/l/linux/linux-headers-4.15.0-kali2-common_4.15.11-1kali1_all.deb" target="_blank" rel="noopener">linux-headers-4.15.0-kali2-common_4.15.11-1kali1_all.deb</a> 和<a href="http://http.kali.org/kali/pool/main/l/linux/linux-headers-4.15.0-kali2-amd64_4.15.11-1kali1_amd64.deb" target="_blank" rel="noopener">linux-headers-4.15.0-kali2-amd64_4.15.11-1kali1_amd64.deb</a> </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dkpg -i linux-kbuild-4.15_4.15.11-1kali1_amd64.deb</span><br></pre></td></tr></table></figure></li>
+<li><p>下载linux-header-common和linux-header<br>这里我下载的是<a target="_blank" rel="noopener" href="http://http.kali.org/kali/pool/main/l/linux/linux-headers-4.15.0-kali2-common_4.15.11-1kali1_all.deb">linux-headers-4.15.0-kali2-common_4.15.11-1kali1_all.deb</a> 和<a target="_blank" rel="noopener" href="http://http.kali.org/kali/pool/main/l/linux/linux-headers-4.15.0-kali2-amd64_4.15.11-1kali1_amd64.deb">linux-headers-4.15.0-kali2-amd64_4.15.11-1kali1_amd64.deb</a> </p>
 </li>
 <li><p>编译linux-headers</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dkpg -i linux-headers-4.15.0-kali2-comon_4.15.11-1kali1_all.deb</span><br><span class="line">dkpg -i linux-headers-4.15.0-kali2-amd64_4.15.11-1kali1_amd64.deb</span><br></pre></td></tr></table></figure>
 <p>如果这里出现依赖错误，自行下载对应deb然后编译安装解决，不解决也可能不会影响后续操作，但可能会影响以后使用。</p>
 </li>
-<li><p>下载linux-image<br>这里下载<a href="http://http.kali.org/kali/pool/main/l/linux/linux-image-4.15.0-kali2-amd64_4.15.11-1kali1_amd64.deb" target="_blank" rel="noopener">linux-image-4.15.0-kali2-amd64_4.15.11-1kali1_amd64.deb</a> </p>
+<li><p>下载linux-image<br>这里下载<a target="_blank" rel="noopener" href="http://http.kali.org/kali/pool/main/l/linux/linux-image-4.15.0-kali2-amd64_4.15.11-1kali1_amd64.deb">linux-image-4.15.0-kali2-amd64_4.15.11-1kali1_amd64.deb</a> </p>
 </li>
 <li><p>编译linux-image</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dkpg -i linux-image-4.15.0-kali2-amd64_4.15.11-1kali1_amd64.deb</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dkpg -i linux-image-4.15.0-kali2-amd64_4.15.11-1kali1_amd64.deb</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p><strong>到这里基本上就完成了。记住下载的版本要一致。</strong></p>
 <ol start="7">
@@ -1118,6 +1116,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 38
@@ -1165,17 +1165,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E4%B8%AD%E8%8E%B7%E5%BE%97%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95.html" >Java中获得实例的方法</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E5%85%8B%E9%9A%86.html" >Java克隆</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
         </li>
     
     
@@ -1200,6 +1200,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock%E5%8C%85%E5%AE%9E%E7%8E%B0%E9%94%81.html" >java Lock包实现锁</a>
         </li>
     
@@ -1210,17 +1215,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
         </li>
     
     
@@ -1236,11 +1241,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E2%80%94%E2%80%94%E8%BD%AC.html" >内网穿透——转</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
@@ -1285,11 +1285,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
         </li>
     
@@ -1300,17 +1295,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
         </li>
     
     
@@ -1337,39 +1337,43 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
     
-        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
-    
         <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
     
-        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
     
         <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
     
         <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
     
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
         <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
     
         <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
-    
-        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
-    
-        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
     
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
     
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
         <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
     
         <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
     
-        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
-    
-        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
     
         <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
     
@@ -1379,25 +1383,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
     
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
-    
         <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
     
         <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
     
-        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
-    
         <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
     
         <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
     
         <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
     
         <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
     
         <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
         <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
     
@@ -1408,12 +1414,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
-    
-        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
-    
-        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

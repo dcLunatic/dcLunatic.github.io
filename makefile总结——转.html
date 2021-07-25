@@ -417,12 +417,12 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="1-makefile很重要"><a href="#1-makefile很重要" class="headerlink" title="1. makefile很重要"></a>1. makefile很重要</h1><p>什么是makefile？或许很多Winodws的程序员都不知道这个东西，因为那些Windows的IDE都为你做了这个工作，但我觉得要作一个好的和professional的程序员，makefile还是要懂。这就好像现在有这么多的HTML的编辑器，但如果你想成为一个专业人士，你还是要了解HTML的标识的含义。特别在Unix下的软件编译，你就不能不自己写makefile了，会不会写makefile，从一个侧面说明了一个人是否具备完成大型工程的能力。因为，makefile关系到了整个工程的编译规则。一个工程中的源文件不计数，其按类型、功能、模块分别放在若干个目录中，makefile定义了一系列的规则来指定，哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作，因为makefile就像一个Shell脚本一样，其中也可以执行<a href="http://lib.csdn.net/base/operatingsystem" target="_blank" rel="noopener">操作系统</a>的命令。makefile带来的好处就是——“自动化编译”，一旦写好，只需要一个make命令，整个工程完全自动编译，极大的提高了软件开发的效率。make是一个命令工具，是一个解释makefile中指令的命令工具，一般来说，大多数的IDE都有这个命令，比如：Delphi的make，VisualC++的nmake，<a href="http://lib.csdn.net/base/linux" target="_blank" rel="noopener">Linux</a>下GNU的make。可见，makefile都成为了一种在工程方面的编译方法。</p>
+        <h1 id="1-makefile很重要"><a href="#1-makefile很重要" class="headerlink" title="1. makefile很重要"></a>1. makefile很重要</h1><p>什么是makefile？或许很多Winodws的程序员都不知道这个东西，因为那些Windows的IDE都为你做了这个工作，但我觉得要作一个好的和professional的程序员，makefile还是要懂。这就好像现在有这么多的HTML的编辑器，但如果你想成为一个专业人士，你还是要了解HTML的标识的含义。特别在Unix下的软件编译，你就不能不自己写makefile了，会不会写makefile，从一个侧面说明了一个人是否具备完成大型工程的能力。因为，makefile关系到了整个工程的编译规则。一个工程中的源文件不计数，其按类型、功能、模块分别放在若干个目录中，makefile定义了一系列的规则来指定，哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作，因为makefile就像一个Shell脚本一样，其中也可以执行<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/operatingsystem">操作系统</a>的命令。makefile带来的好处就是——“自动化编译”，一旦写好，只需要一个make命令，整个工程完全自动编译，极大的提高了软件开发的效率。make是一个命令工具，是一个解释makefile中指令的命令工具，一般来说，大多数的IDE都有这个命令，比如：Delphi的make，VisualC++的nmake，<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/linux">Linux</a>下GNU的make。可见，makefile都成为了一种在工程方面的编译方法。</p>
 <p>现在讲述如何写makefile的文章比较少，这是我想写这篇文章的原因。当然，不同产商的make各不相同，也有不同的语法，但其本质都是在“文件依赖性”上做文章，这里，我仅对GNU的make进行讲述，我的环境是RedHatLinux8.0，make的版本是3.80。必竟，这个make是应用最为广泛的，也是用得最多的。而且其还是最遵循于IEEE1003.2-1992标准的（POSIX.2）。</p>
 <p>在这篇文档中，将以C/C++的源码作为我们基础，所以必然涉及一些关于C/C++的编译的知识，相关于这方面的内容，还请各位查看相关的编译器的文档。这里所默认的编译器是UNIX下的GCC和CC。</p>
 <h2 id="1-1-关于程序的编译和链接"><a href="#1-1-关于程序的编译和链接" class="headerlink" title="1.1 关于程序的编译和链接"></a>1.1 关于程序的编译和链接</h2><p>在此，我想多说关于程序编译的一些规范和方法，一般来说，无论是C、C++、还是pas，首先要把源文件编译成<strong>中间代码文件</strong>，在Windows下也就是.obj文件，UNIX下是.o文件，即ObjectFile，这个动作叫做<strong>编译（compile）</strong>。然后再把大量的ObjectFile合成执行文件，这个动作叫作链接（link）。</p>
 <p><strong>编译时</strong>，编译器需要的是语法的正确，函数与变量的声明的正确。对于后者，通常是你需要告诉编译器头文件的所在位置（头文件中应该只是声明，而定义应该放在C/C++文件中），只要所有的语法正确，编译器就可以编译出中间目标文件。一般来说，每个源文件都应该对应于一个中间目标文件（O文件或是OBJ文件）。</p>
-<p><strong>链接时</strong>，主要是链接函数和全局变量，所以，我们可以使用这些中间目标文件（O文件或是OBJ文件）来链接我们的应用程序。链接器并不管函数所在的源文件，只管函数的中间目标文件（ObjectFile），在大多数时候，由于源文件太多，编译生成的中间目标文件太多，而在链接时需要明显地指出中间目标文件名，这对于编译很不方便，所以，我们要给中间目标文件打个包，在Windows下这种包叫“<strong>库文件”（LibraryFile)</strong>，也就是.lib文件，在UNIX下，是ArchiveFile，也就是.a文件。</p>
+<p><strong>链接时</strong>，主要是链接函数和全局变量，所以，我们可以使用这些中间目标文件（O文件或是OBJ文件）来链接我们的应用程序。链接器并不管函数所在的源文件，只管函数的中间目标文件（ObjectFile），在大多数时候，由于源文件太多，编译生成的中间目标文件太多，而在链接时需要明显地指出中间目标文件名，这对于编译很不方便，所以，我们要给中间目标文件打个包，在Windows下这种包叫“**库文件”（LibraryFile)**，也就是.lib文件，在UNIX下，是ArchiveFile，也就是.a文件。</p>
 <p>总结一下，源文件首先会生成中间目标文件，再由中间目标文件生成执行文件。在编译时，编译器只检测程序语法，和函数、变量是否被声明。如果函数未被声明，编译器会给出一个警告，但可以生成ObjectFile。而在链接程序时，链接器会在所有的ObjectFile中找寻函数的实现，如果找不到，那到就会报链接错误码（LinkerError），在VC下，这种错误一般是：Link2001错误，意思说是说，链接器未能找到函数的实现。你需要指定函数的ObjectFile.</p>
 <p>好，言归正传，GNU的make有许多的内容，闲言少叙，还是让我们开始吧。</p>
 <h1 id="2-Makefile介绍"><a href="#2-Makefile介绍" class="headerlink" title="2. Makefile介绍"></a>2. Makefile介绍</h1><p>make命令执行时，需要一个Makefile文件，以告诉make命令需要怎么样的去编译和链接程序。</p>
@@ -469,7 +469,7 @@ height:50vh;
 <p><strong>反斜杠（\）</strong>是换行符的意思。这样比较便于Makefile的易读。我们可以把这个内容保存在文件为“Makefile”或“makefile”的文件中，然后在该目录下直接输入命令“make”就可以生成执行文件edit。如果要删除执行文件和所有的中间目标文件，那么，只要简单地执行一下“make clean”就可以了。</p>
 <p>在这个makefile中，目标文件（target）包含：执行文件edit和中间目标文件（*.o），依赖文件（prerequisites）就是冒号后面的那些.c文件和.h文件。每一个.o文件都有一组依赖文件，而这些.o文件又是执行文件edit的依赖文件。依赖关系的实质上就是说明了目标文件是由哪些文件生成的，换言之，目标文件是哪些文件更新的。</p>
 <p>在定义好依赖关系后，后续的那一行定义了如何生成目标文件的<strong>操作系统命令，一定要以一个Tab键作为开头。记住，make并不管命令是怎么工作的，他只管执行所定义的命令</strong>。make会比较targets文件和prerequisites文件的修改日期，如果prerequisites文件的日期要比targets文件的日期要新，或者target不存在的话，那么，make就会执行后续定义的命令。</p>
-<p>这里要说明一点的是，clean不是一个文件，它只不过是一个动作名字，有点像<a href="http://lib.csdn.net/base/c" target="_blank" rel="noopener"><strong>C语言</strong></a>中的lable一样，其冒号后什么也没有，那么，make就不会自动去找文件的依赖性，也就不会自动执行其后所定义的命令。要执行其后的命令，就要在make命令后明显得指出这个lable的名字。这样的方法非常有用，我们可以在一个makefile中定义不用的编译或是和编译无关的命令，比如程序的打包，程序的备份，等等。</p>
+<p>这里要说明一点的是，clean不是一个文件，它只不过是一个动作名字，有点像<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/c"><strong>C语言</strong></a>中的lable一样，其冒号后什么也没有，那么，make就不会自动去找文件的依赖性，也就不会自动执行其后所定义的命令。要执行其后的命令，就要在make命令后明显得指出这个lable的名字。这样的方法非常有用，我们可以在一个makefile中定义不用的编译或是和编译无关的命令，比如程序的打包，程序的备份，等等。</p>
 <h2 id="2-3-make是如何工作的"><a href="#2-3-make是如何工作的" class="headerlink" title="2.3 make是如何工作的"></a>2.3 make是如何工作的</h2><p>在默认的方式下，也就是我们只输入make命令。那么，</p>
 <p>make会在当前目录下找名字叫“Makefile”或“makefile”的文件。</p>
 <p>如果找到，它会找文件中的第一个目标文件（target），在上面的例子中，他会找到“edit”这个文件，并把这个文件作为最终的目标文件。</p>
@@ -564,7 +564,7 @@ height:50vh;
 <h2 id="3-2-Makefile的文件名"><a href="#3-2-Makefile的文件名" class="headerlink" title="3.2 Makefile的文件名"></a>3.2 Makefile的文件名</h2><p>默认的情况下，make命令会在当前目录下按顺序找寻文件名为<strong>“GNUmakefile”、“makefile”、“Makefile”</strong>的文件，找到了解释这个文件。在这三个文件名中，最好使用“Makefile”这个文件名，因为，这个文件名第一个字符为大写，这样有一种显目的感觉。最好不要用“GNUmakefile”，这个文件是GNU的make识别的。有另外一些make只对全小写的“makefile”文件名敏感，但是基本上来说，大多数的make都支持“<strong>makefile”和“Makefile”</strong>这两种默认文件名。</p>
 <p>当然，你可以使用别的文件名来书写Makefile，比如：“Make.Linux”，“Make.Solaris”，“Make.AIX”等，如果要<strong>指定特定的Makefile，你可以使用make的“-f”和“–file”参数</strong>，如：make –f Make.Linux或make –file Make.AIX。</p>
 <h2 id="3-3-引用其它的Makefile"><a href="#3-3-引用其它的Makefile" class="headerlink" title="3.3 引用其它的Makefile"></a>3.3 引用其它的Makefile</h2><p>在Makefile使用include关键字可以把别的Makefile包含进来，这很像C语言的#include，被包含的文件会原模原样的放在当前文件的包含位置。include的语法是：</p>
-<p><strong>include<filename></filename></strong>filename可以是当前操作系统Shell的文件模式（可以保含路径和通配符）</p>
+<p>**include<filename>**filename可以是当前操作系统Shell的文件模式（可以保含路径和通配符）</p>
 <p><strong>在include前面可以有一些空字符，但是绝不能是[Tab]键开始。include和可以用一个或多个空格隔开。</strong>举个例子，你有这样几个Makefile：a.mk、b.mk、c.mk，还有一个文件叫foo.make，以及一个变量$(bar)，其包含了e.mk和f.mk，那么，下面的语句：</p>
 <p>include foo.make *.mk$(bar)</p>
 <p>等价于：</p>
@@ -573,7 +573,7 @@ height:50vh;
 <p>1.如果make执行时，有“-I”或“–include-dir”参数，那么make就会在这个参数所指定的目录下去寻找。</p>
 <p>2.如果目录/include（一般是：/usr/local/bin或/usr/include）存在的话，make也会去找。</p>
 <p>如果有文件没有找到的话，make会生成一条警告信息，但不会马上出现致命错误。它会继续载入其它的文件，一旦完成makefile的读取，make会再重试这些没有找到，或是不能读取的文件，如果还是不行，make才会出现一条致命信息。如果你想让make不理那些无法读取的文件，而继续执行，你可以在include前加一个减号“-”。如：</p>
-<p>-include<filename></filename></p>
+<p>-include<filename></p>
 <p>其表示，无论include过程中出现什么错误，都不要报错继续执行。和其它版本make兼容的相关命令是sinclude，其作用和这一个是一样的。</p>
 <h2 id="3-4-环境变量MAKEFILES"><a href="#3-4-环境变量MAKEFILES" class="headerlink" title="3.4 环境变量MAKEFILES"></a>3.4 环境变量MAKEFILES</h2><p>如果你的当前环境中定义了环境变量MAKEFILES，那么，make会把这个变量中的值做一个类似于include的动作。这个变量中的值是其它的Makefile，用空格分隔。只是，它和include不同的是，从这个环境变中引入的Makefile的“目标”不会起作用，如果环境变量中定义的文件发现错误，make也会不理。</p>
 <p>但是在这里我还是建议不要使用这个环境变量，因为只要这个变量一被定义，那么当你使用make时，所有的Makefile都会受到它的影响，这绝不是你想看到的。在这里提这个事，只是为了告诉大家，也许有时候你的Makefile出现了怪事，那么你可以看看当前环境中有没有定义这个变量。</p>
@@ -609,9 +609,9 @@ height:50vh;
 <p>一般来说，make会以UNIX的标准Shell，也就是/bin/sh来执行命令。</p>
 <h2 id="4-3-在规则中使用通配符"><a href="#4-3-在规则中使用通配符" class="headerlink" title="4.3 在规则中使用通配符"></a>4.3 在规则中使用通配符</h2><p>如果我们想定义一系列比较类似的文件，我们很自然地就想起使用通配符。make支持三各通配符：“*”，“?”和“[…]”。这是和Unix的B-Shell是相同的。</p>
 <p>“~”</p>
-<p>波浪号（“~”）字符在文件名中也有比较特殊的用途。如果是“~/test”，这就表示当前用户的$HOME目录下的test目录。而“~hchen/test”则表示用户hchen的宿主目录下的test目录。（这些都是Unix下的小知识了，make也支持）而在Windows或是MS-DOS下，用户没有宿主目录，那么波浪号所指的目录则根据环境变量“HOME”而定。</p>
+<p>波浪号（“<del>”）字符在文件名中也有比较特殊的用途。如果是“</del>/test”，这就表示当前用户的$HOME目录下的test目录。而“~hchen/test”则表示用户hchen的宿主目录下的test目录。（这些都是Unix下的小知识了，make也支持）而在Windows或是MS-DOS下，用户没有宿主目录，那么波浪号所指的目录则根据环境变量“HOME”而定。</p>
 <p>“*”</p>
-<p>通配符代替了你一系列的文件，如“<em>.c”表示所以后缀为c的文件。一个需要我们注意的是，如果我们的文件名中有通配符，如：“</em>”，那么可以用转义字符“\”，如“*”来表示真实的“*”字符，而不是任意长度的字符串。</p>
+<p>通配符代替了你一系列的文件，如“*.c”表示所以后缀为c的文件。一个需要我们注意的是，如果我们的文件名中有通配符，如：“<em>”，那么可以用转义字符“\”，如“*”来表示真实的“</em>”字符，而不是任意长度的字符串。</p>
 <p>好吧，还是先来看几个例子吧：</p>
 <p>clean:</p>
 <p>rm–f *.o</p>
@@ -629,13 +629,13 @@ height:50vh;
 <p>VPATH=src:../headers</p>
 <p>上面的的定义指定两个目录，“src”和“../headers”，make会按照这个顺序进行搜索。目录由“冒号”分隔。（当然，当前目录永远是最高优先搜索的地方）</p>
 <p>另一个设置文件搜索路径的方法是使用make的“vpath”关键字（注意，它是全小写的），这不是变量，这是一个make的关键字，这和上面提到的那个VPATH变量很类似，但是它更为灵活。它可以指定不同的文件在不同的搜索目录中。这是一个很灵活的功能。它的使用方法有三种：</p>
-<p>1.vpath<pattern><directories>为符合模式<pattern>的文件指定搜索目录<directories>。</directories></pattern></directories></pattern></p>
-<p>2.vpath<pattern>清除符合模式<pattern>的文件的搜索目录。</pattern></pattern></p>
+<p>1.vpath<pattern><directories>为符合模式<pattern>的文件指定搜索目录<directories>。</p>
+<p>2.vpath<pattern>清除符合模式<pattern>的文件的搜索目录。</p>
 <p>3.vpath清除所有已被设置好了的文件搜索目录。</p>
-<p>vapth使用方法中的<pattern>需要包含“%”字符。“%”的意思是匹配零或若干字符，例如，“%.h”表示所有以“.h”结尾的文件。<pattern>指定了要搜索的文件集，而<directories>则指定了的文件集的搜索的目录。例如：</directories></pattern></pattern></p>
+<p>vapth使用方法中的<pattern>需要包含“%”字符。“%”的意思是匹配零或若干字符，例如，“%.h”表示所有以“.h”结尾的文件。<pattern>指定了要搜索的文件集，而<directories>则指定了的文件集的搜索的目录。例如：</p>
 <p>vpath %.h ../headers</p>
 <p>该语句表示，要求make在“../headers”目录下搜索所有以“.h”结尾的文件。（如果某文件在当前目录没有找到的话）</p>
-<p>我们可以连续地使用vpath语句，以指定不同搜索策略。如果连续的vpath语句中出现了相同的<pattern>，或是被重复了的<pattern>，那么，make会按照vpath语句的先后顺序来执行搜索。如：</pattern></pattern></p>
+<p>我们可以连续地使用vpath语句，以指定不同搜索策略。如果连续的vpath语句中出现了相同的<pattern>，或是被重复了的<pattern>，那么，make会按照vpath语句的先后顺序来执行搜索。如：</p>
 <p>vpath %.c foo</p>
 <p>vpath % blish</p>
 <p>vpath %.c bar</p>
@@ -683,14 +683,14 @@ height:50vh;
 <p>generate text.g -little&gt; littleoutput</p>
 <p>其中，-$(subst output,,$@)中的“$”表示执行一个Makefile的函数，函数名为subst，后面的为参数。关于函数，将在后面讲述。这里的这个函数是截取字符串的意思，“$@”表示目标的集合，就像一个数组，“$@”依次取出目标，并执于命令。</p>
 <h2 id="4-7-静态模式"><a href="#4-7-静态模式" class="headerlink" title="4.7 静态模式"></a>4.7 静态模式</h2><p>静态模式可以更加容易地定义多目标的规则，可以让我们的规则变得更加的有弹性和灵活。我们还是先来看一下语法：</p>
-<p>&lt;targets…&gt;:<target-pattern>:&lt;prereq-patterns…&gt;</target-pattern></p>
+<p>&lt;targets…&gt;:<target-pattern>:&lt;prereq-patterns…&gt;</p>
 <commands>
 
 <p>…</p>
 <p>targets定义了一系列的目标文件，可以有通配符。是目标的一个集合。</p>
 <p>target-parrtern是指明了targets的模式，也就是的目标集模式。</p>
 <p>prereq-parrterns是目标的依赖模式，它对target-parrtern形成的模式再进行一次依赖目标的定义。</p>
-<p>这样描述这三个东西，可能还是没有说清楚，还是举个例子来说明一下吧。如果我们的<target-parrtern>定义成“%.o”，意思是我们的集合中都是以“.o”结尾的，而如果我们的<prereq-parrterns>定义成“%.c”，意思是对<target-parrtern>所形成的目标集进行二次定义，其计算方法是，取<target-parrtern>模式中的“%”（也就是去掉了[.o]这个结尾），并为其加上[.c]这个结尾，形成的新集合。</target-parrtern></target-parrtern></prereq-parrterns></target-parrtern></p>
+<p>这样描述这三个东西，可能还是没有说清楚，还是举个例子来说明一下吧。如果我们的<target-parrtern>定义成“%.o”，意思是我们的集合中都是以“.o”结尾的，而如果我们的<prereq-parrterns>定义成“%.c”，意思是对<target-parrtern>所形成的目标集进行二次定义，其计算方法是，取<target-parrtern>模式中的“%”（也就是去掉了[.o]这个结尾），并为其加上[.c]这个结尾，形成的新集合。</p>
 <p>所以，我们的“目标模式”或是“依赖模式”中都应该有“%”这个字符，如果你的文件名中有“%”那么你可以使用反斜杠“\”进行转义，来标明真实的“%”字符。</p>
 <p>看一个例子：</p>
 <p>objects=foo.o bar.o</p>
@@ -964,10 +964,10 @@ height:50vh;
 <p>variable +=more</p>
 <p>由于前次的赋值符是“=”，所以“+=”也会以“=”来做为赋值，那么岂不会发生变量的递补归定义，这是很不好的，所以make会自动为我们解决这个问题，我们不必担心这个问题。</p>
 <h2 id="6-5-override指示符"><a href="#6-5-override指示符" class="headerlink" title="6.5 override指示符"></a>6.5 override指示符</h2><p>如果有变量是通常make的命令行参数设置的，那么Makefile中对这个变量的赋值会被忽略。如果你想在Makefile中设置这类参数的值，那么，你可以使用“override”指示符。其语法是：</p>
-<p>override <variable>=<value></value></variable></p>
-<p>override <variable>:=<value></value></variable></p>
+<p>override <variable>=<value></p>
+<p>override <variable>:=<value></p>
 <p>当然，你还可以追加：</p>
-<p>override <variable>+= <moretext></moretext></variable></p>
+<p>override <variable>+= <moretext></p>
 <p>对于多行的变量定义，我们用define指示符，在define指示符前，也同样可以使用ovveride指示符，如：</p>
 <p>override define foo</p>
 <p>bar</p>
@@ -985,9 +985,9 @@ height:50vh;
 <h2 id="6-8-目标变量"><a href="#6-8-目标变量" class="headerlink" title="6.8 目标变量"></a>6.8 目标变量</h2><p>前面我们所讲的在Makefile中定义的变量都是“全局变量”，在整个文件，我们都可以访问这些变量。当然，“自动化变量”除外，如“$&lt;”等这种类量的自动化变量就属于“规则型变量”，这种变量的值依赖于规则的目标和依赖目标的定义。</p>
 <p>当然，我们同样可以为某个目标设置局部变量，这种变量被称为“Target-specific Variable”，它可以和“全局变量”同名，因为它的作用范围只在这条规则以及连带规则中，所以其值也只在作用范围内有效。而不会影响规则链以外的全局变量的值。</p>
 <p>其语法是：</p>
-<p>&lt;target…&gt; :<variable-assignment></variable-assignment></p>
-<p>&lt;target…&gt; :override<variable-assignment></variable-assignment></p>
-<p><variable-assignment>可以是前面讲过的各种赋值表达式，如“=”、“:=”、“+=”或是“？=”。第二个语法是针对于make命令行带入的变量，或是系统环境变量。</variable-assignment></p>
+<p>&lt;target…&gt; :<variable-assignment></p>
+<p>&lt;target…&gt; :override<variable-assignment></p>
+<p><variable-assignment>可以是前面讲过的各种赋值表达式，如“=”、“:=”、“+=”或是“？=”。第二个语法是针对于make命令行带入的变量，或是系统环境变量。</p>
 <p>这个特性非常的有用，当我们设置了这样一个变量，这个变量会作用到由这个目标所引发的所有的规则中去。如：</p>
 <p>prog:CFLAGS = -g</p>
 <p>prog:prog.o foo.o bar.o</p>
@@ -1003,8 +1003,8 @@ height:50vh;
 <p>我们知道，make的“模式”一般是至少含有一个“%”的，所以，我们可以以如下方式给所有以[.o]结尾的目标定义目标变量：</p>
 <p>%.o:CFLAGS =-O</p>
 <p>同样，模式变量的语法和“目标变量”一样：</p>
-<p>&lt;pattern…&gt;:<variable-assignment></variable-assignment></p>
-<p>&lt;pattern…&gt;:override<variable-assignment></variable-assignment></p>
+<p>&lt;pattern…&gt;:<variable-assignment></p>
+<p>&lt;pattern…&gt;:override<variable-assignment></p>
 <p>override同样是针对于系统环境传入的变量，或是make命令行指定的变量。</p>
 <h1 id="7-使用条件判断"><a href="#7-使用条件判断" class="headerlink" title="7. 使用条件判断"></a>7. 使用条件判断</h1><p>使用条件判断，可以让make根据运行时的不同情况选择不同的执行分支。条件表达式可以是比较变量的值，或是比较变量和常量的值。</p>
 <h2 id="7-1-示例"><a href="#7-1-示例" class="headerlink" title="7.1 示例"></a>7.1 示例</h2><p>下面的例子，判断$(CC)变量是否“gcc”，如果是的话，则使用GNU函数编译目标。</p>
@@ -1035,37 +1035,43 @@ height:50vh;
 <p>foo:$(objects)</p>
 <p>$(CC) -o foo $(objects)$(libs)</p>
 <h2 id="7-2-语法"><a href="#7-2-语法" class="headerlink" title="7.2 语法"></a>7.2 语法</h2><p>条件表达式的语法为：</p>
-<p><conditional-directive></conditional-directive></p>
-<p><text-if-true></text-if-true></p>
+<conditional-directive>
+
+<text-if-true>
+
 <p>endif</p>
 <p>以及：</p>
-<p><conditional-directive></conditional-directive></p>
-<p><text-if-true></text-if-true></p>
+<conditional-directive>
+
+<text-if-true>
+
 <p>else</p>
-<p><text-if-false></text-if-false></p>
+<text-if-false>
+
 <p>endif</p>
-<p>其中<conditional-directive>表示条件关键字，如“ifeq”。这个关键字有四个。</conditional-directive></p>
+<p>其中<conditional-directive>表示条件关键字，如“ifeq”。这个关键字有四个。</p>
 <p>第一个是我们前面所见过的“ifeq”</p>
-<p>ifeq(<arg1>,<arg2>)</arg2></arg1></p>
-<p>ifeq’<arg1>‘’<arg2>‘</arg2></arg1></p>
-<p>ifeq”<arg1>“”<arg2>“</arg2></arg1></p>
-<p>ifeq”<arg1>“‘<arg2>‘</arg2></arg1></p>
-<p>ifeq’<arg1>‘“<arg2>“</arg2></arg1></p>
+<p>ifeq(<arg1>,<arg2>)</p>
+<p>ifeq’<arg1>‘’<arg2>‘</p>
+<p>ifeq”<arg1>“”<arg2>“</p>
+<p>ifeq”<arg1>“‘<arg2>‘</p>
+<p>ifeq’<arg1>‘“<arg2>“</p>
 <p>比较参数“arg1”和“arg2”的值是否相同。当然，参数中我们还可以使用make的函数。如：</p>
 <p>ifeq($(strip $(foo)),)</p>
-<p><text-if-empty></text-if-empty></p>
+<text-if-empty>
+
 <p>endif</p>
-<p>这个示例中使用了“strip”函数，如果这个函数的返回值是空（Empty），那么<text-if-empty>就生效。</text-if-empty></p>
+<p>这个示例中使用了“strip”函数，如果这个函数的返回值是空（Empty），那么<text-if-empty>就生效。</p>
 <p>第二个条件关键字是“ifneq”。语法是：</p>
-<p>ifneq(<arg1>,<arg2>)</arg2></arg1></p>
-<p>ifneq’<arg1>‘’<arg2>‘</arg2></arg1></p>
-<p>ifneq”<arg1>“”<arg2>“</arg2></arg1></p>
-<p>ifneq”<arg1>“‘<arg2>‘</arg2></arg1></p>
-<p>ifneq’<arg1>‘“<arg2>“</arg2></arg1></p>
+<p>ifneq(<arg1>,<arg2>)</p>
+<p>ifneq’<arg1>‘’<arg2>‘</p>
+<p>ifneq”<arg1>“”<arg2>“</p>
+<p>ifneq”<arg1>“‘<arg2>‘</p>
+<p>ifneq’<arg1>‘“<arg2>“</p>
 <p>其比较参数“arg1”和“arg2”的值是否相同，如果不同，则为真。和“ifeq”类似。</p>
 <p>第三个条件关键字是“ifdef”。语法是：</p>
-<p>ifdef<variable-name></variable-name></p>
-<p>如果变量<variable-name>的值非空，那到表达式为真。否则，表达式为假。当然，<variable-name>同样可以是一个函数的返回值。注意，ifdef只是测试一个变量是否有值，其并不会把变量扩展到当前位置。还是来看两个例子：</variable-name></variable-name></p>
+<p>ifdef<variable-name></p>
+<p>如果变量<variable-name>的值非空，那到表达式为真。否则，表达式为假。当然，<variable-name>同样可以是一个函数的返回值。注意，ifdef只是测试一个变量是否有值，其并不会把变量扩展到当前位置。还是来看两个例子：</p>
 <p>示例一：</p>
 <p>bar=</p>
 <p>foo=$(bar)</p>
@@ -1083,17 +1089,17 @@ height:50vh;
 <p>endif</p>
 <p>第一个例子中，“$(frobozz)”值是“yes”，第二个则是“no”。</p>
 <p>第四个条件关键字是“ifndef”。其语法是：</p>
-<p>ifndef<variable-name></variable-name></p>
+<p>ifndef<variable-name></p>
 <p>这个我就不多说了，和“ifdef”是相反的意思。</p>
-<p>在<conditional-directive>这一行上，多余的空格是被允许的，但是不能以[Tab]键做为开始（不然就被认为是命令）。而注释符“#”同样也是安全的。“else”和“endif”也一样，只要不是以[Tab]键开始就行了。</conditional-directive></p>
+<p>在<conditional-directive>这一行上，多余的空格是被允许的，但是不能以[Tab]键做为开始（不然就被认为是命令）。而注释符“#”同样也是安全的。“else”和“endif”也一样，只要不是以[Tab]键开始就行了。</p>
 <p>特别注意的是，make是在读取Makefile时就计算条件表达式的值，并根据条件表达式的值来选择语句，所以，你最好不要把自动化变量（如“$@”等）放入条件表达式中，因为自动化变量是在运行时才有的。</p>
 <p>而且，为了避免混乱，make不允许把整个条件语句分成两部分放在不同的文件中。</p>
 <h1 id="8-使用函数"><a href="#8-使用函数" class="headerlink" title="8. 使用函数"></a>8. 使用函数</h1><p>在Makefile中可以使用函数来处理变量，从而让我们的命令或是规则更为的灵活和具有智能。make所支持的函数也不算很多，不过已经足够我们的操作了。函数调用后，函数的返回值可以当做变量来使用。</p>
 <h2 id="8-1-函数的调用语法"><a href="#8-1-函数的调用语法" class="headerlink" title="8.1 函数的调用语法"></a>8.1 函数的调用语法</h2><p>函数调用，很像变量的使用，也是以“$”来标识的，其语法如下：</p>
-<p>$(<function><arguments>)</arguments></function></p>
+<p>$(<function><arguments>)</p>
 <p>或是</p>
-<p>${<function><arguments>}</arguments></function></p>
-<p>这里，<function>就是函数名，make支持的函数不多。<arguments>是函数的参数，参数间以逗号“,”分隔，而函数名和参数之间以“空格”分隔。函数调用以“$”开头，以圆括号或花括号把函数名和参数括起。感觉很像一个变量，是不是？函数中的参数可以使用变量，为了风格的统一，函数和变量的括号最好一样，如使用“$(substa,b,$(x))”这样的形式，而不是“$(substa,b,${x})”的形式。因为统一会更清楚，也会减少一些不必要的麻烦。</arguments></function></p>
+<p>${<function><arguments>}</p>
+<p>这里，<function>就是函数名，make支持的函数不多。<arguments>是函数的参数，参数间以逗号“,”分隔，而函数名和参数之间以“空格”分隔。函数调用以“$”开头，以圆括号或花括号把函数名和参数括起。感觉很像一个变量，是不是？函数中的参数可以使用变量，为了风格的统一，函数和变量的括号最好一样，如使用“$(substa,b,$(x))”这样的形式，而不是“$(substa,b,${x})”的形式。因为统一会更清楚，也会减少一些不必要的麻烦。</p>
 <p>还是来看一个示例：</p>
 <p>comma:=,</p>
 <p>empty:=</p>
@@ -1101,93 +1107,93 @@ height:50vh;
 <p>foo:=a b c</p>
 <p>bar:=$(subst $(space),$(comma),$(foo))</p>
 <p>在这个示例中，$(comma)的值是一个逗号。$(space)使用了$(empty)定义了一个空格，$(foo)的值是“abc”，$(bar)的定义用，调用了函数“subst”，这是一个替换函数，这个函数有三个参数，第一个参数是被替换字串，第二个参数是替换字串，第三个参数是替换操作作用的字串。这个函数也就是把$(foo)中的空格替换成逗号，所以$(bar)的值是“a,b,c”。</p>
-<h2 id="8-2-字符串处理函数"><a href="#8-2-字符串处理函数" class="headerlink" title="8.2 字符串处理函数"></a>8.2 字符串处理函数</h2><p><strong>$(subst <from>,<to>,<text>)</text></to></from></strong></p>
+<h2 id="8-2-字符串处理函数"><a href="#8-2-字符串处理函数" class="headerlink" title="8.2 字符串处理函数"></a>8.2 字符串处理函数</h2><p><strong>$(subst <from>,<to>,<text>)</strong></p>
 <p>名称：字符串替换函数——subst。</p>
-<p>功能：把字串<text>中的<from>字符串替换成<to>。</to></from></text></p>
+<p>功能：把字串<text>中的<from>字符串替换成<to>。</p>
 <p>返回：函数返回被替换过后的字符串。</p>
 <p>示例：</p>
 <p>$(subst ee,EE,feetonthestreet)，</p>
 <p>把“feetonthestreet”中的“ee”替换成“EE”，返回结果是“fEEtonthestrEEt”。</p>
-<p><strong>$(patsubst <pattern>,<replacement>,<text>)</text></replacement></pattern></strong></p>
+<p><strong>$(patsubst <pattern>,<replacement>,<text>)</strong></p>
 <p>名称：模式字符串替换函数——patsubst。</p>
-<p>功能：查找<text>中的单词（单词以“空格”、“Tab”或“回车”“换行”分隔）是否符合模式<pattern>，如果匹配的话，则以<replacement>替换。这里，<pattern>可以包括通配符“%”，表示任意长度的字串。如果<replacement>中也包含“%”，那么，<replacement>中的这个“%”将是<pattern>中的那个“%”所代表的字串。（可以用“\”来转义，以“\%”来表示真实含义的“%”字符）返回：函数返回被替换过后的字符串。</pattern></replacement></replacement></pattern></replacement></pattern></text></p>
+<p>功能：查找<text>中的单词（单词以“空格”、“Tab”或“回车”“换行”分隔）是否符合模式<pattern>，如果匹配的话，则以<replacement>替换。这里，<pattern>可以包括通配符“%”，表示任意长度的字串。如果<replacement>中也包含“%”，那么，<replacement>中的这个“%”将是<pattern>中的那个“%”所代表的字串。（可以用“\”来转义，以“%”来表示真实含义的“%”字符）返回：函数返回被替换过后的字符串。</p>
 <p>示例：</p>
 <p>$(patsubst %.c,%.o,x.c.cbar.c)</p>
 <p>把字串“x.c.c bar.c”符合模式[%.c]的单词替换成[%.o]，返回结果是“x.c.o bar.o”</p>
 <p>备注：</p>
 <p>这和我们前面“变量章节”说过的相关知识有点相似。如：</p>
-<p>“$(var:<pattern>=<replacement>)”</replacement></pattern></p>
+<p>“$(var:<pattern>=<replacement>)”</p>
 <p>相当于</p>
-<p>“$(patsubst <pattern>,<replacement>,$(var))”，</replacement></pattern></p>
+<p>“$(patsubst <pattern>,<replacement>,$(var))”，</p>
 <p>而</p>
-<p>“$(var:<suffix>=<replacement>)”</replacement></suffix></p>
+<p>“$(var:<suffix>=<replacement>)”</p>
 <p>则相当于</p>
-<p>“$(patsubst %<suffix>,%<replacement>,$(var))”。</replacement></suffix></p>
+<p>“$(patsubst %<suffix>,%<replacement>,$(var))”。</p>
 <p>例如有：objects=foo.o bar.o baz.o，</p>
 <p>那么，“$(objects:.o=.c)”和“$(patsubst %.o,%.c,$(objects))”是一样的。</p>
-<p><strong>$(strip <string>)</string></strong></p>
+<p><strong>$(strip <string>)</strong></p>
 <p>名称：去空格函数——strip。</p>
-<p>功能：去掉<string>字串中开头和结尾的空字符。</string></p>
+<p>功能：去掉<string>字串中开头和结尾的空字符。</p>
 <p>返回：返回被去掉空格的字符串值。</p>
 <p>示例：</p>
 <p>$(strip abc)</p>
 <p>把字串“abc”去到开头和结尾的空格，结果是“abc”。</p>
-<p><strong>$(findstring<find>,<in>)</in></find></strong></p>
+<p><strong>$(findstring<find>,<in>)</strong></p>
 <p>名称：查找字符串函数——findstring。</p>
-<p>功能：在字串<in>中查找<find>字串。</find></in></p>
-<p>返回：如果找到，那么返回<find>，否则返回空字符串。</find></p>
+<p>功能：在字串<in>中查找<find>字串。</p>
+<p>返回：如果找到，那么返回<find>，否则返回空字符串。</p>
 <p>示例：</p>
 <p>$(findstring a,a b c)</p>
 <p>$(findstring a,b c)</p>
 <p>第一个函数返回“a”字符串，第二个返回“”字符串（空字符串）</p>
-<p><strong>$(filter &lt;pattern…&gt;,<text>)</text></strong></p>
+<p><strong>$(filter &lt;pattern…&gt;,<text>)</strong></p>
 <p>名称：过滤函数——filter。</p>
-<p>功能：以<pattern>模式过滤<text>字符串中的单词，保留符合模式<pattern>的单词。可以有多个模式。</pattern></text></pattern></p>
-<p>返回：返回符合模式<pattern>的字串。</pattern></p>
+<p>功能：以<pattern>模式过滤<text>字符串中的单词，保留符合模式<pattern>的单词。可以有多个模式。</p>
+<p>返回：返回符合模式<pattern>的字串。</p>
 <p>示例：</p>
 <p>sources:=foo.c bar.c baz.sugh.h</p>
 <p>foo:$(sources)</p>
 <p>cc $(filter %.c %.s,$(sources))-o foo</p>
 <p>$(filter%.c%.s,$(sources))返回的值是“foo.c bar.c baz.s”。</p>
-<p><strong>$(filter-out &lt;pattern…&gt;,<text>)</text></strong></p>
+<p><strong>$(filter-out &lt;pattern…&gt;,<text>)</strong></p>
 <p>名称：反过滤函数——filter-out。</p>
-<p>功能：以<pattern>模式过滤<text>字符串中的单词，去除符合模式<pattern>的单词。可以有多个模式。</pattern></text></pattern></p>
-<p>返回：返回不符合模式<pattern>的字串。</pattern></p>
+<p>功能：以<pattern>模式过滤<text>字符串中的单词，去除符合模式<pattern>的单词。可以有多个模式。</p>
+<p>返回：返回不符合模式<pattern>的字串。</p>
 <p>示例：</p>
 <p>objects=main1.o foo.omain2.o bar.o</p>
 <p>mains=main1.o main2.o</p>
 <p>$(filter-out $(mains),$(objects))返回值是“foo.o bar.o”。</p>
-<p><strong>$(sort <list>)</list></strong></p>
+<p><strong>$(sort <list>)</strong></p>
 <p>名称：排序函数——sort。</p>
-<p>功能：给字符串<list>中的单词排序（升序）。</list></p>
+<p>功能：给字符串<list>中的单词排序（升序）。</p>
 <p>返回：返回排序后的字符串。</p>
 <p>示例：$(sort foobarlose)返回“barfoolose”。</p>
-<p>备注：sort函数会去掉<list>中相同的单词。</list></p>
-<p><strong>$(word <n>,<text>)</text></n></strong></p>
+<p>备注：sort函数会去掉<list>中相同的单词。</p>
+<p><strong>$(word <n>,<text>)</strong></p>
 <p>名称：取单词函数——word。</p>
-<p>功能：取字符串<text>中第<n>个单词。（从一开始）</n></text></p>
-<p>返回：返回字符串<text>中第<n>个单词。如果<n>比<text>中的单词数要大，那么返回空字符串。</text></n></n></text></p>
+<p>功能：取字符串<text>中第<n>个单词。（从一开始）</p>
+<p>返回：返回字符串<text>中第<n>个单词。如果<n>比<text>中的单词数要大，那么返回空字符串。</p>
 <p>示例：$(word 2,foo bar baz)返回值是“bar”。</p>
-<p><strong>$(wordlist <s>,<e>,<text>)</text></e></s></strong></p>
+<p><strong>$(wordlist <s>,<e>,<text>)</strong></p>
 <p>名称：取单词串函数——wordlist。</p>
-<p>功能：从字符串<text>中取从<s>开始到<e>的单词串。<s>和<e>是一个数字。</e></s></e></s></text></p>
-<p>返回：返回字符串<text>中从<s>到<e>的单词字串。如果<s>比<text>中的单词数要大，那</text></s></e></s></text></p>
-<p>么返回空字符串。如果<e>大于<text>的单词数，那么返回从<s>开始，到<text>结束的单</text></s></text></e></p>
+<p>功能：从字符串<text>中取从<s>开始到<e>的单词串。<s>和<e>是一个数字。</p>
+<p>返回：返回字符串<text>中从<s>到<e>的单词字串。如果<s>比<text>中的单词数要大，那</p>
+<p>么返回空字符串。如果<e>大于<text>的单词数，那么返回从<s>开始，到<text>结束的单</p>
 <p>词串。</p>
 <p>示例：$(wordlist 2,3,foo bar baz)返回值是“bar baz”。</p>
-<p><strong>$(words <text>)</text></strong></p>
+<p><strong>$(words <text>)</strong></p>
 <p>名称：单词个数统计函数——words。</p>
-<p>功能：统计<text>中字符串中的单词个数。</text></p>
-<p>返回：返回<text>中的单词数。</text></p>
+<p>功能：统计<text>中字符串中的单词个数。</p>
+<p>返回：返回<text>中的单词数。</p>
 <p>示例：$(words,foo bar baz)返回值是“3”。</p>
-<p>备注：如果我们要取<text>中最后的一个单词，我们可以这样：$(word $(words<text></text></text></p>
-<p>),<text>)。</text></p>
-<p><strong>$(firstword <text>)</text></strong></p>
+<p>备注：如果我们要取<text>中最后的一个单词，我们可以这样：$(word $(words<text></p>
+<p>),<text>)。</p>
+<p><strong>$(firstword <text>)</strong></p>
 <p>名称：首单词函数——firstword。</p>
-<p>功能：取字符串<text>中的第一个单词。</text></p>
-<p>返回：返回字符串<text>的第一个单词。</text></p>
+<p>功能：取字符串<text>中的第一个单词。</p>
+<p>返回：返回字符串<text>的第一个单词。</p>
 <p>示例：$(firstword foo bar)返回值是“foo”。</p>
-<p>备注：这个函数可以用word函数来实现：$(word 1,<text>)。</text></p>
+<p>备注：这个函数可以用word函数来实现：$(word 1,<text>)。</p>
 <p>以上，是所有的字符串操作函数，如果搭配混合使用，可以完成比较复杂的功能。这里，举一个现实中应用的例子。我们知道，make使用“VPATH”变量来指定“依赖文件”的搜索路径。于是，我们可以利用这个搜索路径来指定编译器对头文件的搜索路径参数CFLAGS，如：</p>
 <p>override CFLAGS +=$(patsubst%,-I%,$(subst:,,$(VPATH)))</p>
 <p>如果我们的“$(VPATH)”值是“src:../headers”，那么“$(patsubst %,-I%,$(subst:,,$(VPATH)))”将返回“-Isrc-I../headers”，这正是cc或gcc搜索头文件路径的参数。</p>
@@ -1195,59 +1201,59 @@ height:50vh;
 <p>一系列的文件名来对待。</p>
 <p>$(dir &lt;names…&gt;)</p>
 <p>名称：取目录函数——dir。</p>
-<p>功能：从文件名序列<names>中取出目录部分。目录部分是指最后一个反斜杠（“/”）之</names></p>
+<p>功能：从文件名序列<names>中取出目录部分。目录部分是指最后一个反斜杠（“/”）之</p>
 <p>前的部分。如果没有反斜杠，那么返回“./”。</p>
-<p>返回：返回文件名序列<names>的目录部分。</names></p>
+<p>返回：返回文件名序列<names>的目录部分。</p>
 <p>示例：$(dir src/foo.chacks)返回值是“src/./”。</p>
 <p>$(notdir &lt;names…&gt;)</p>
 <p>名称：取文件函数——notdir。</p>
-<p>功能：从文件名序列<names>中取出非目录部分。非目录部分是指最后一个反斜杠（“/”）之后的部分。</names></p>
-<p>返回：返回文件名序列<names>的非目录部分。</names></p>
+<p>功能：从文件名序列<names>中取出非目录部分。非目录部分是指最后一个反斜杠（“/”）之后的部分。</p>
+<p>返回：返回文件名序列<names>的非目录部分。</p>
 <p>示例：$(notdir src/foo.chacks)返回值是“foo.chacks”。</p>
 <p>$(suffix&lt;names…&gt;)</p>
 <p>名称：取后缀函数——suffix。</p>
-<p>功能：从文件名序列<names>中取出各个文件名的后缀。</names></p>
-<p>返回：返回文件名序列<names>的后缀序列，如果文件没有后缀，则返回空字串。</names></p>
+<p>功能：从文件名序列<names>中取出各个文件名的后缀。</p>
+<p>返回：返回文件名序列<names>的后缀序列，如果文件没有后缀，则返回空字串。</p>
 <p>示例：$(suffix src/foo.c src-1.0/bar.chacks)返回值是“.c.c”。</p>
 <p>$(basename &lt;names…&gt;)</p>
 <p>名称：取前缀函数——basename。</p>
-<p>功能：从文件名序列<names>中取出各个文件名的前缀部分。</names></p>
-<p>返回：返回文件名序列<names>的前缀序列，如果文件没有前缀，则返回空字串。</names></p>
+<p>功能：从文件名序列<names>中取出各个文件名的前缀部分。</p>
+<p>返回：返回文件名序列<names>的前缀序列，如果文件没有前缀，则返回空字串。</p>
 <p>示例：$(basename src/foo.c src-1.0/bar.chacks)返回值是“src/foo src-1.0/bar hacks”。</p>
-<p>$(addsuffix <suffix>,&lt;names…&gt;)</suffix></p>
+<p>$(addsuffix <suffix>,&lt;names…&gt;)</p>
 <p>名称：加后缀函数——addsuffix。</p>
-<p>功能：把后缀<suffix>加到<names>中的每个单词后面。</names></suffix></p>
+<p>功能：把后缀<suffix>加到<names>中的每个单词后面。</p>
 <p>返回：返回加过后缀的文件名序列。</p>
 <p>示例：$(addsuffix.c,foobar)返回值是“foo.c bar.c”。</p>
-<p>$(addprefix <prefix>,&lt;names…&gt;)</prefix></p>
+<p>$(addprefix <prefix>,&lt;names…&gt;)</p>
 <p>名称：加前缀函数——addprefix。</p>
-<p>功能：把前缀<prefix>加到<names>中的每个单词后面。</names></prefix></p>
+<p>功能：把前缀<prefix>加到<names>中的每个单词后面。</p>
 <p>返回：返回加过前缀的文件名序列。</p>
 <p>示例：$(addprefix src/,foo bar)返回值是“src/foosrc/bar”。</p>
-<p>$(join<list1>,<list2>)</list2></list1></p>
+<p>$(join<list1>,<list2>)</p>
 <p>名称：连接函数——join。</p>
-<p>功能：把<list2>中的单词对应地加到<list1>的单词后面。如果<list1>的单词个数要比<list2>的多，那么，<list1>中的多出来的单词将保持原样。如果<list2>的单词个数要比<list1>多，那么，<list2>多出来的单词将被复制到<list2>中。</list2></list2></list1></list2></list1></list2></list1></list1></list2></p>
+<p>功能：把<list2>中的单词对应地加到<list1>的单词后面。如果<list1>的单词个数要比<list2>的多，那么，<list1>中的多出来的单词将保持原样。如果<list2>的单词个数要比<list1>多，那么，<list2>多出来的单词将被复制到<list2>中。</p>
 <p>返回：返回连接过后的字符串。</p>
 <p>示例：$(join aaa bbb,111 222 333)返回值是“aaa111 bbb222 333”。</p>
 <h2 id="8-4-foreach函数"><a href="#8-4-foreach函数" class="headerlink" title="8.4 foreach函数"></a>8.4 foreach函数</h2><p>foreach函数和别的函数非常的不一样。因为这个函数是用来做循环用的，Makefile中的foreach函数几乎是仿照于Unix标准Shell（/bin/sh）中的for语句，或是C-Shell（/bin/csh）中的foreach语句而构建的。它的语法是：</p>
-<p>$(foreach<var>,<list>,<text>)</text></list></var></p>
-<p>这个函数的意思是，把参数<list>中的单词逐一取出放到参数<var>所指定的变量中，然后再执行<text>所包含的表达式。每一次<text>会返回一个字符串，循环过程中，<text>的所返回的每个字符串会以空格分隔，最后当整个循环结束时，<text>所返回的每个字符串所组成的整个字符串（以空格分隔）将会是foreach函数的返回值。</text></text></text></text></var></list></p>
-<p>所以，<var>最好是一个变量名，<list>可以是一个表达式，而<text>中一般会使用<var></var></text></list></var></p>
-<p>这个参数来依次枚举<list>中的单词。举个例子：</list></p>
+<p>$(foreach<var>,<list>,<text>)</p>
+<p>这个函数的意思是，把参数<list>中的单词逐一取出放到参数<var>所指定的变量中，然后再执行<text>所包含的表达式。每一次<text>会返回一个字符串，循环过程中，<text>的所返回的每个字符串会以空格分隔，最后当整个循环结束时，<text>所返回的每个字符串所组成的整个字符串（以空格分隔）将会是foreach函数的返回值。</p>
+<p>所以，<var>最好是一个变量名，<list>可以是一个表达式，而<text>中一般会使用<var></p>
+<p>这个参数来依次枚举<list>中的单词。举个例子：</p>
 <p>names:=a b c d</p>
 <p>files:=$(foreach n,$(names),$(n).o)</p>
 <p>上面的例子中，$(name)中的单词会被挨个取出，并存到变量“n”中，“$(n).o”每次根据“$(n)”计算出一个值，这些值以空格分隔，最后作为foreach函数的返回，所以，$(files)的值是“a.o b.o c.o d.o”。</p>
-<p>注意，foreach中的<var>参数是一个临时的局部变量，foreach函数执行完后，参数<var>的变量将不在作用，其作用域只在foreach函数当中。</var></var></p>
+<p>注意，foreach中的<var>参数是一个临时的局部变量，foreach函数执行完后，参数<var>的变量将不在作用，其作用域只在foreach函数当中。</p>
 <h2 id="8-5-if函数"><a href="#8-5-if函数" class="headerlink" title="8.5 if函数"></a>8.5 if函数</h2><p>if函数很像GNU的make所支持的条件语句——ifeq（参见前面所述的章节），if函数的语法是：</p>
-<p>$(if<condition>,<then-part>)</then-part></condition></p>
+<p>$(if<condition>,<then-part>)</p>
 <p>或是</p>
-<p>$(if<condition>,<then-part>,<else-part>)</else-part></then-part></condition></p>
-<p>可见，if函数可以包含“else”部分，或是不含。即if函数的参数可以是两个，也可以是三个。<condition>参数是if的表达式，如果其返回的为非空字符串，那么这个表达式就相当于返回真，于是，<then-part>会被计算，否则<else-part>会被计算。</else-part></then-part></condition></p>
-<p>而if函数的返回值是，如果<condition>为真（非空字符串），那个<then-part>会是整个函数的返回值，如果<condition>为假（空字符串），那么<else-part>会是整个函数的返回值，此时如果<else-part>没有被定义，那么，整个函数返回空字串。</else-part></else-part></condition></then-part></condition></p>
-<p>所以，<then-part>和<else-part>只会有一个被计算。</else-part></then-part></p>
+<p>$(if<condition>,<then-part>,<else-part>)</p>
+<p>可见，if函数可以包含“else”部分，或是不含。即if函数的参数可以是两个，也可以是三个。<condition>参数是if的表达式，如果其返回的为非空字符串，那么这个表达式就相当于返回真，于是，<then-part>会被计算，否则<else-part>会被计算。</p>
+<p>而if函数的返回值是，如果<condition>为真（非空字符串），那个<then-part>会是整个函数的返回值，如果<condition>为假（空字符串），那么<else-part>会是整个函数的返回值，此时如果<else-part>没有被定义，那么，整个函数返回空字串。</p>
+<p>所以，<then-part>和<else-part>只会有一个被计算。</p>
 <h2 id="8-6-call函数"><a href="#8-6-call函数" class="headerlink" title="8.6 call函数"></a>8.6 call函数</h2><p>call函数是唯一一个可以用来创建新的参数化的函数。你可以写一个非常复杂的表达式，这个表达式中，你可以定义许多参数，然后你可以用call函数来向这个表达式传递参数。其语法是：</p>
-<p>$(call <expression>,<parm1>,<parm2>,<parm3>…)</parm3></parm2></parm1></expression></p>
-<p>当make执行这个函数时，<expression>参数中的变量，如$(1)，$(2)，$(3)等，会被参数<parm1>，<parm2>，<parm3>依次取代。而<expression>的返回值就是call函数的返回值。例如：</expression></parm3></parm2></parm1></expression></p>
+<p>$(call <expression>,<parm1>,<parm2>,<parm3>…)</p>
+<p>当make执行这个函数时，<expression>参数中的变量，如$(1)，$(2)，$(3)等，会被参数<parm1>，<parm2>，<parm3>依次取代。而<expression>的返回值就是call函数的返回值。例如：</p>
 <p>reverse=$(1) $(2)</p>
 <p>foo=$(call reverse,a,b)</p>
 <p>那么，foo的值就是“a b”。当然，参数的次序是可以自定义的，不一定是顺序的，如：</p>
@@ -1255,23 +1261,23 @@ height:50vh;
 <p>foo=$(call reverse,a,b)</p>
 <p>此时的foo的值就是“b a”。</p>
 <h2 id="8-7-origin函数"><a href="#8-7-origin函数" class="headerlink" title="8.7 origin函数"></a>8.7 origin函数</h2><p>origin函数不像其它的函数，他并不操作变量的值，他只是告诉你你的这个变量是哪里来的？其语法是：</p>
-<p>$(origin <variable>)</variable></p>
-<p>注意，<variable>是变量的名字，不应该是引用。所以你最好不要在<variable>中使用“$”字符。Origin函数会以其返回值来告诉你这个变量的“出生情况”，下面，是origin函</variable></variable></p>
+<p>$(origin <variable>)</p>
+<p>注意，<variable>是变量的名字，不应该是引用。所以你最好不要在<variable>中使用“$”字符。Origin函数会以其返回值来告诉你这个变量的“出生情况”，下面，是origin函</p>
 <p>数的返回值:</p>
 <p>“undefined”</p>
-<p>如果<variable>从来没有定义过，origin函数返回这个值“undefined”。</variable></p>
+<p>如果<variable>从来没有定义过，origin函数返回这个值“undefined”。</p>
 <p>“default”</p>
-<p>如果<variable>是一个默认的定义，比如“CC”这个变量，这种变量我们将在后面讲述。</variable></p>
+<p>如果<variable>是一个默认的定义，比如“CC”这个变量，这种变量我们将在后面讲述。</p>
 <p>“environment”</p>
-<p>如果<variable>是一个环境变量，并且当Makefile被执行时，“-e”参数没有被打开。</variable></p>
+<p>如果<variable>是一个环境变量，并且当Makefile被执行时，“-e”参数没有被打开。</p>
 <p>“file”</p>
-<p>如果<variable>这个变量被定义在Makefile中。</variable></p>
+<p>如果<variable>这个变量被定义在Makefile中。</p>
 <p>“command line”</p>
-<p>如果<variable>这个变量是被命令行定义的。</variable></p>
+<p>如果<variable>这个变量是被命令行定义的。</p>
 <p>“override”</p>
-<p>如果<variable>是被override指示符重新定义的。</variable></p>
+<p>如果<variable>是被override指示符重新定义的。</p>
 <p>“automatic”</p>
-<p>如果<variable>是一个命令运行中的自动化变量。关于自动化变量将在后面讲述。</variable></p>
+<p>如果<variable>是一个命令运行中的自动化变量。关于自动化变量将在后面讲述。</p>
 <p>这些信息对于我们编写Makefile是非常有用的，例如，假设我们有一个Makefile其包了一个定义文件Make.def，在Make.def中定义了一个变量“bletch”，而我们的环境中也有一个环境变量“bletch”，此时，我们想判断一下，如果变量来源于环境，那么我们就把之重定义了，如果来源于Make.def或是命令行等非环境的，那么我们就不重新定义它。于是，在我们的Makefile中，我们可以这样写：</p>
 <p>ifdef bletch</p>
 <p>ifeq”$(origin bletch)””environment”</p>
@@ -1327,7 +1333,7 @@ height:50vh;
 <p><strong>“tar”</strong>这个伪目标功能是把源程序打包备份。也就是一个tar文件。</p>
 <p><strong>“dist”</strong>这个伪目标功能是创建一个压缩文件，一般是把tar文件压成Z文件。或是gz文件。</p>
 <p><strong>“TAGS”</strong>这个伪目标功能是更新所有的目标，以备完整地重编译使用。</p>
-<p><strong>“check”和“test”</strong>这两个伪目标一般用来<a href="http://lib.csdn.net/base/softwaretest" target="_blank" rel="noopener"><strong>测试</strong></a>makefile的流程。</p>
+<p><strong>“check”和“test”</strong>这两个伪目标一般用来<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/softwaretest"><strong>测试</strong></a>makefile的流程。</p>
 <p>当然一个项目的makefile中也不一定要书写这样的目标，这些东西都是GNU的东西，但是我想，GNU搞出这些东西一定有其可取之处（等你的UNIX下的程序文件一多时你就会发现这些功能很有用了），这里只不过是说明了，如果你要书写这种功能，最好使用这种名字命名你的目标，这样规范一些，规范的好处就是——不用解释，大家都明白。而且如果你的makefile中有这些功能，一是很实用，二是可以显得你的makefile很专业（不是那种初学者的作品）。</p>
 <h2 id="9-4-检查规则"><a href="#9-4-检查规则" class="headerlink" title="9.4 检查规则"></a>9.4 检查规则</h2><p>有时候，我们不想让我们的makefile中的规则执行起来，我们只想检查一下我们的命令，或是执行的序列。于是我们可以使用make命令的下述参数：</p>
 <p>“-n”</p>
@@ -1341,10 +1347,10 @@ height:50vh;
 <p>“-q”</p>
 <p>“–question”</p>
 <p>这个参数的行为是找目标的意思，也就是说，如果目标存在，那么其什么也不会输出，当然也不会执行编译，如果目标不存在，其会打印出一条出错信息。</p>
-<p>“-W <file>”</file></p>
-<p>“–what-if=<file>”</file></p>
-<p>“–assume-new=<file>”</file></p>
-<p>“–new-file=<file>”</file></p>
+<p>“-W <file>”</p>
+<p>“–what-if=<file>”</p>
+<p>“–assume-new=<file>”</p>
+<p>“–new-file=<file>”</p>
 <p>这个参数需要指定一个文件。一般是是源文件（或依赖文件），Make会根据规则推导来运行依赖于这个文件的命令，一般来说，可以和“-n”参数一同使用，来查看这个依赖文件所发生的规则命令。</p>
 <p>另外一个很有意思的用法是结合“-p”和“-v”来输出makefile被执行时的信息（这个将在后面讲述）。</p>
 <h2 id="9-5-make的参数"><a href="#9-5-make的参数" class="headerlink" title="9.5 make的参数"></a>9.5 make的参数</h2><p>下面列举了所有GNU make 3.80版的参数定义。其它版本和产商的make大同小异，不过其它产商的make的具体参数还是请参考各自的产品文档。</p>
@@ -1354,11 +1360,11 @@ height:50vh;
 <p>“-B”</p>
 <p>“–always-make”</p>
 <p>认为所有的目标都需要更新（重编译）。</p>
-<p>“-C <dir>”</dir></p>
-<p>“–directory=<dir>”</dir></p>
+<p>“-C <dir>”</p>
+<p>“–directory=<dir>”</p>
 <p>指定读取makefile的目录。如果有多个“-C”参数，make的解释是后面的路径以前面的作为相对路径，并以最后的目录作为被指定目录。如：“make –C ~hchen/test–C prog”等价于“make –C ~hchen/test/prog”。</p>
-<p>“—debug[=<options>]”</options></p>
-<p>输出make的调试信息。它有几种不同的级别可供选择，如果没有参数，那就是输出最简单的调试信息。下面是<options>的取值：</options></p>
+<p>“—debug[=<options>]”</p>
+<p>输出make的调试信息。它有几种不同的级别可供选择，如果没有参数，那就是输出最简单的调试信息。下面是<options>的取值：</p>
 <p>a——也就是all，输出所有的调试信息。（会非常的多）</p>
 <p>b——也就是basic，只输出简单的调试信息。即输出不需要重编译的目标。</p>
 <p>v——也就是verbose，在b选项的级别之上。输出的信息包括哪个makefile被解析，不需要被重编译的依赖文件（或是依赖目标）等。</p>
@@ -1369,9 +1375,9 @@ height:50vh;
 <p>“-e”</p>
 <p>“–environment-overrides”</p>
 <p>指明环境变量的值覆盖makefile中定义的变量的值。</p>
-<p>“-f=<file>”</file></p>
-<p>“–file=<file>”</file></p>
-<p>“–makefile=<file>”</file></p>
+<p>“-f=<file>”</p>
+<p>“–file=<file>”</p>
+<p>“–makefile=<file>”</p>
 <p>指定需要执行的makefile。</p>
 <p>“-h”</p>
 <p>“–help”</p>
@@ -1379,28 +1385,28 @@ height:50vh;
 <p>“-i”</p>
 <p>“–ignore-errors”</p>
 <p>在执行时忽略所有的错误。</p>
-<p>“-I<dir>”</dir></p>
-<p>“–include-dir=<dir>”</dir></p>
+<p>“-I<dir>”</p>
+<p>“–include-dir=<dir>”</p>
 <p>指定一个被包含makefile的搜索目标。可以使用多个“-I”参数来指定多个目录。</p>
-<p>“-j[<jobsnum>]”</jobsnum></p>
-<p>“–jobs[=<jobsnum>]”</jobsnum></p>
+<p>“-j[<jobsnum>]”</p>
+<p>“–jobs[=<jobsnum>]”</p>
 <p>指同时运行命令的个数。如果没有这个参数，make运行命令时能运行多少就运行多少。如果有一个以上的“-j”参数，那么仅最后一个“-j”才是有效的。（注意这个参数在MS-DOS中是无用的）</p>
 <p>“-k”</p>
 <p>“–keep-going”</p>
 <p>出错也不停止运行。如果生成一个目标失败了，那么依赖于其上的目标就不会被执行了。</p>
-<p>“-l<load>”</load></p>
+<p>“-l<load>”</p>
 <p>“–load-average[=&lt;load]”</p>
-<p>“—max-load[=<load>]”</load></p>
+<p>“—max-load[=<load>]”</p>
 <p>指定make运行命令的负载。</p>
 <p>“-n”</p>
 <p>“–just-print”</p>
 <p>“–dry-run”</p>
 <p>“–recon”</p>
 <p>仅输出执行过程中的命令序列，但并不执行。</p>
-<p>“-o<file>”</file></p>
-<p>“–old-file=<file>”</file></p>
-<p>“–assume-old=<file>”</file></p>
-<p>不重新生成的指定的<file>，即使这个目标的依赖文件新于它。</file></p>
+<p>“-o<file>”</p>
+<p>“–old-file=<file>”</p>
+<p>“–assume-old=<file>”</p>
+<p>不重新生成的指定的<file>，即使这个目标的依赖文件新于它。</p>
 <p>“-p”</p>
 <p>“–print-data-base”</p>
 <p>输出makefile中的所有数据，包括所有的规则和变量。这个参数会让一个简单的makefile都会输出一堆信息。如果你只是想输出信息而不想执行makefile，你可以使用“make -q p”命令。如果你想查看执行makefile前的预设变量和规则，你可以使用“make–p–f/dev/null”。这个参数输出的信息会包含着你的makefile文件的文件名和行号，所以，用这个参数来调试你的makefile会是很有用的，特别是当你的环境变量很复杂的时候。</p>
@@ -1432,11 +1438,11 @@ height:50vh;
 <p>输出运行makefile之前和之后的信息。这个参数对于跟踪嵌套式调用make时很有用。</p>
 <p>“–no-print-directory”</p>
 <p>禁止“-w”选项。</p>
-<p>“-W <file>”</file></p>
-<p>“–what-if=<file>”</file></p>
-<p>“–new-file=<file>”</file></p>
-<p>“–assume-file=<file>”</file></p>
-<p>假定目标<file>需要更新，如果和“-n”选项使用，那么这个参数会输出该目标更新时的运行动作。如果没有“-n”那么就像运行UNIX的“touch”命令一样，使得<file>的修改时间为当前时间。</file></file></p>
+<p>“-W <file>”</p>
+<p>“–what-if=<file>”</p>
+<p>“–new-file=<file>”</p>
+<p>“–assume-file=<file>”</p>
+<p>假定目标<file>需要更新，如果和“-n”选项使用，那么这个参数会输出该目标更新时的运行动作。如果没有“-n”那么就像运行UNIX的“touch”命令一样，使得<file>的修改时间为当前时间。</p>
 <p>“–warn-undefined-variables”</p>
 <p>只要make发现有未定义的变量，那么就输出警告信息。</p>
 <h1 id="10-隐含规则"><a href="#10-隐含规则" class="headerlink" title="10. 隐含规则"></a>10. 隐含规则</h1><p>在我们使用Makefile时，有一些我们会经常使用，而且使用频率非常高的东西，比如，我们编译C/C++的源程序为中间目标文件（Unix下是[.o]文件，Windows下是[.obj]文件）。本章讲述的就是一些在Makefile中的“隐含的”，早先约定了的，不需要我们再写出来的规则。</p>
@@ -1462,26 +1468,26 @@ height:50vh;
 <p>当然，即使是我们指定了“-r”参数，某些隐含规则还是会生效，因为有许多的隐含规则都是使用了“后缀规则”来定义的，所以，只要隐含规则中有“后缀列表”（也就一系统定义在目标.SUFFIXES的依赖目标），那么隐含规则就会生效。默认的后缀列表是：.out,.a,.ln,.o,.c,.cc,.C,.p,.f,.F,.r,.y,.l,.s,.S,.mod,.sym,.def,.h,.info,.dvi,.tex,.texinfo,.texi,.txinfo,.w,.ch.web,.sh,.elc,.el。具体的细节，我们会在后面讲述。</p>
 <p>还是先来看一看常用的隐含规则吧。</p>
 <p>1、编译C程序的隐含规则。</p>
-<p>“<n>.o”的目标的依赖目标会自动推导为“<n>.c”，并且其生成命令是“$(CC)–c $(CPPFLAGS) $(CFLAGS)”</n></n></p>
+<p>“<n>.o”的目标的依赖目标会自动推导为“<n>.c”，并且其生成命令是“$(CC)–c $(CPPFLAGS) $(CFLAGS)”</p>
 <p>2、编译C++程序的隐含规则。</p>
-<p>“<n>.o”的目标的依赖目标会自动推导为“<n>.cc”或是“<n>.C”，并且其生成命令是“$(CXX)–c $(CPPFLAGS) $(CFLAGS)”。（建议使用“.cc”作为C++源文件的后缀，而不是“.C”）</n></n></n></p>
+<p>“<n>.o”的目标的依赖目标会自动推导为“<n>.cc”或是“<n>.C”，并且其生成命令是“$(CXX)–c $(CPPFLAGS) $(CFLAGS)”。（建议使用“.cc”作为C++源文件的后缀，而不是“.C”）</p>
 <p>3、编译Pascal程序的隐含规则。</p>
-<p>“<n>.o”的目标的依赖目标会自动推导为“<n>.p”，并且其生成命令是“$(PC)–c $(PFLAGS)”。</n></n></p>
+<p>“<n>.o”的目标的依赖目标会自动推导为“<n>.p”，并且其生成命令是“$(PC)–c $(PFLAGS)”。</p>
 <p>4、编译Fortran/Ratfor程序的隐含规则。</p>
-<p>“<n>.o”的目标的依赖目标会自动推导为“<n>.r”或“<n>.F”或“<n>.f”，并且其生成命令是:</n></n></n></n></p>
+<p>“<n>.o”的目标的依赖目标会自动推导为“<n>.r”或“<n>.F”或“<n>.f”，并且其生成命令是:</p>
 <p>“.f”“$(FC)–c$(FFLAGS)”</p>
 <p>“.F”“$(FC)–c$(FFLAGS)$(CPPFLAGS)”</p>
 <p>“.f”“$(FC)–c$(FFLAGS)$(RFLAGS)”</p>
 <p>5、预处理Fortran/Ratfor程序的隐含规则。</p>
-<p>“<n>.f”的目标的依赖目标会自动推导为“<n>.r”或“<n>.F”。这个规则只是转换Ratfor或有预处理的Fortran程序到一个标准的Fortran程序。其使用的命令是：</n></n></n></p>
+<p>“<n>.f”的目标的依赖目标会自动推导为“<n>.r”或“<n>.F”。这个规则只是转换Ratfor或有预处理的Fortran程序到一个标准的Fortran程序。其使用的命令是：</p>
 <p>“.F”“$(FC)–F $(CPPFLAGS) $(FFLAGS)”</p>
 <p>“.r”“$(FC)–F $(FFLAGS) $(RFLAGS)”</p>
 <p>6、编译Modula-2程序的隐含规则。</p>
-<p>“<n>.sym”的目标的依赖目标会自动推导为“<n>.def”，并且其生成命令是：“$(M2C) $(M2FLAGS)$(DEFFLAGS)”。“&lt;n.o&gt;”的目标的依赖目标会自动推导为“<n>.mod”，并且其生成命令是：“$(M2C) $(M2FLAGS) $(MODFLAGS)”。</n></n></n></p>
+<p>“<n>.sym”的目标的依赖目标会自动推导为“<n>.def”，并且其生成命令是：“$(M2C) $(M2FLAGS)$(DEFFLAGS)”。“&lt;n.o&gt;”的目标的依赖目标会自动推导为“<n>.mod”，并且其生成命令是：“$(M2C) $(M2FLAGS) $(MODFLAGS)”。</p>
 <p>7、汇编和汇编预处理的隐含规则。</p>
-<p>“<n>.o”的目标的依赖目标会自动推导为“<n>.s”，默认使用编译品“as”，并且其生成命令是：“$(AS) $(ASFLAGS)”。“<n>.s”的目标的依赖目标会自动推导为“<n>.S”，默认使用C预编译器“cpp”，并且其生成命令是：“$(AS)$(ASFLAGS)”。</n></n></n></n></p>
+<p>“<n>.o”的目标的依赖目标会自动推导为“<n>.s”，默认使用编译品“as”，并且其生成命令是：“$(AS) $(ASFLAGS)”。“<n>.s”的目标的依赖目标会自动推导为“<n>.S”，默认使用C预编译器“cpp”，并且其生成命令是：“$(AS)$(ASFLAGS)”。</p>
 <p>8、链接Object文件的隐含规则。</p>
-<p>“<n>”目标依赖于“<n>.o”，通过运行C的编译器来运行链接程序生成（一般是“ld”），其生成命令是：“$(CC) $(LDFLAGS)<n>.o$(LOADLIBES) $(LDLIBS)”。这个规则对于只有一个源文件的工程有效，同时也对多个Object文件（由不同的源文件生成）的也有效。例如如下规则：</n></n></n></p>
+<p>“<n>”目标依赖于“<n>.o”，通过运行C的编译器来运行链接程序生成（一般是“ld”），其生成命令是：“$(CC) $(LDFLAGS)<n>.o$(LOADLIBES) $(LDLIBS)”。这个规则对于只有一个源文件的工程有效，同时也对多个Object文件（由不同的源文件生成）的也有效。例如如下规则：</p>
 <p>x:y.o z.o</p>
 <p>并且“x.c”、“y.c”和“z.c”都存在时，隐含规则将执行如下命令：</p>
 <p>cc -c x.c -o x.o</p>
@@ -1493,13 +1499,13 @@ height:50vh;
 <p>rm -f z.o</p>
 <p>如果没有一个源文件（如上例中的x.c）和你的目标名字（如上例中的x）相关联，那么，你最好写出自己的生成规则，不然，隐含规则会报错的。</p>
 <p>9、Yacc C程序时的隐含规则。</p>
-<p>“<n>.c”的依赖文件被自动推导为“n.y”（Yacc生成的文件），其生成命令是：“$(YACC) $(YFALGS)”。（“Yacc”是一个语法分析器，关于其细节请查看相关资料）</n></p>
+<p>“<n>.c”的依赖文件被自动推导为“n.y”（Yacc生成的文件），其生成命令是：“$(YACC) $(YFALGS)”。（“Yacc”是一个语法分析器，关于其细节请查看相关资料）</p>
 <p>10、LexC程序时的隐含规则。</p>
-<p>“<n>.c”的依赖文件被自动推导为“n.l”（Lex生成的文件），其生成命令是：“$(LEX)$(LFALGS)”。（关于“Lex”的细节请查看相关资料）</n></p>
+<p>“<n>.c”的依赖文件被自动推导为“n.l”（Lex生成的文件），其生成命令是：“$(LEX)$(LFALGS)”。（关于“Lex”的细节请查看相关资料）</p>
 <p>11、LexRatfor程序时的隐含规则。</p>
-<p>“<n>.r”的依赖文件被自动推导为“n.l”（Lex生成的文件），其生成命令是：“$(LEX)$(LFALGS)”。</n></p>
+<p>“<n>.r”的依赖文件被自动推导为“n.l”（Lex生成的文件），其生成命令是：“$(LEX)$(LFALGS)”。</p>
 <p>12、从C程序、Yacc文件或Lex文件创建Lint库的隐含规则。</p>
-<p>“<n>.ln”（lint生成的文件）的依赖文件被自动推导为“n.c”，其生成命令是：“$(LINT)$(LINTFALGS)$(CPPFLAGS)-i”。对于“<n>.y”和“<n>.l”也是同样的规则。</n></n></n></p>
+<p>“<n>.ln”（lint生成的文件）的依赖文件被自动推导为“n.c”，其生成命令是：“$(LINT)$(LINTFALGS)$(CPPFLAGS)-i”。对于“<n>.y”和“<n>.l”也是同样的规则。</p>
 <h2 id="10-3-隐含规则使用的变量"><a href="#10-3-隐含规则使用的变量" class="headerlink" title="10.3 隐含规则使用的变量"></a>10.3 隐含规则使用的变量</h2><p>在隐含规则中的命令中，基本上都是使用了一些预先设置的变量。你可以在你的makefile中改变这些变量的值，或是在make的命令行中传入这些值，或是在你的环境变量中设置这些值，无论怎么样，只要设置了这些特定的变量，那么其就会对隐含规则起作用。当然，你也可以利用make的“-R”或“–no–builtin-variables”参数来取消你所定义的变量对隐含规则的作用。</p>
 <p>例如，第一条隐含规则——编译C程序的隐含规则的命令是“$(CC)–c $(CFLAGS) $(CPPFLAGS)”。Make默认的编译命令是“cc”，如果你把变量“$(CC)”重定义成“gcc”，把变量“$(CFLAGS)”重定义成“-g”，那么，隐含规则中的命令全部会以“gcc–c-g $(CPPFLAGS)”的样子来执行了。</p>
 <p>我们可以把隐含规则中使用的变量分成两种：一种是命令相关的，如“CC”；一种是参数相的关，如“CFLAGS”。下面是所有隐含规则中会用到的变量：</p>
@@ -1591,7 +1597,7 @@ height:50vh;
 <p>下面的这个例子中有两个目标是模式的：</p>
 <p>%.tab.c %.tab.h:%.y</p>
 <p>bison -d $&lt;</p>
-<p>这条规则告诉make把所有的[.y]文件都以”bison -d <n>.y”执行，然后生成”<n>.tab.c”和”<n>.tab.h”文件。（其中，”<n>“表示一个任意字符串）。如果我们的执行程序”foo”依赖于文件”parse.tab.o”和”scan.o”，并且文件”scan.o”依赖于文件”parse.tab.h”，如果”parse.y”文件被更新了，那么根据上述的规则，”bison -d parse.y”就会被执行一次，于是，”parse.tab.o”和”scan.o”的依赖文件就齐了。（假设，”parse.tab.o”由”parse.tab.c”生成，和”scan.o”由”scan.c”生成，而”foo”由”parse.tab.o”和”scan.o”链接生成，而且foo和其[.o]文件的依赖关系也写好，那么，所有的目标都会得到满足）</n></n></n></n></p>
+<p>这条规则告诉make把所有的[.y]文件都以”bison -d <n>.y”执行，然后生成”<n>.tab.c”和”<n>.tab.h”文件。（其中，”<n>“表示一个任意字符串）。如果我们的执行程序”foo”依赖于文件”parse.tab.o”和”scan.o”，并且文件”scan.o”依赖于文件”parse.tab.h”，如果”parse.y”文件被更新了，那么根据上述的规则，”bison -d parse.y”就会被执行一次，于是，”parse.tab.o”和”scan.o”的依赖文件就齐了。（假设，”parse.tab.o”由”parse.tab.c”生成，和”scan.o”由”scan.c”生成，而”foo”由”parse.tab.o”和”scan.o”链接生成，而且foo和其[.o]文件的依赖关系也写好，那么，所有的目标都会得到满足）</p>
 <h3 id="3、自动化变量"><a href="#3、自动化变量" class="headerlink" title="3、自动化变量"></a>3、自动化变量</h3><p>在上述的模式规则中，目标和依赖文件都是一系例的文件，那么我们如何书写一个命令来完成从不同的依赖文件生成相应的目标？因为在每一次的对模式规则的解析时，都会是不同的目标和依赖文件。</p>
 <p>自动化变量就是完成这个功能的。在前面，我们已经对自动化变量有所提涉，相信你看到这里已对它有一个感性认识了。所谓自动化变量，就是这种变量会把模式中所定义的一系列的文件自动地挨个取出，直至所有的符合模式的文件都取完了。这种自动化变量只应出现在规则的命令中。</p>
 <p>下面是所有的自动化变量及其说明：</p>
@@ -1620,7 +1626,7 @@ height:50vh;
 <p>表示”$@”的文件部分，如果”$@”值是”dir/foo.o”，那么”$(@F)”就是”foo.o”，”$(@F)”相当于函数”$(notdir$@)”。</p>
 <p>“$(*D)”</p>
 <p>“$(*F)”</p>
-<p>和上面所述的同理，也是取文件的目录部分和文件部分。对于上面的那个例子，”$(<em>D)”返回”dir”，而”$(</em>F)”返回”foo”</p>
+<p>和上面所述的同理，也是取文件的目录部分和文件部分。对于上面的那个例子，”$(*D)”返回”dir”，而”$(*F)”返回”foo”</p>
 <p>“$(%D)”</p>
 <p>“$(%F)”</p>
 <p>分别表示了函数包文件成员的目录部分和文件部分。这对于形同”archive(member)”形式的目标中的”member”中包含了不同的目录很有用。</p>
@@ -1674,7 +1680,7 @@ height:50vh;
 <p>1）推导其”茎”S，S应该是T或是N匹配于模式中”%”非空的部分。</p>
 <p>2）计算依赖文件。把依赖文件中的”%”都替换成”茎”S。如果目标模式中没有包含斜框字符，而把D加在第一个依赖文件的开头。</p>
 <p>3）测试是否所有的依赖文件都存在或是理当存在。（如果有一个文件被定义成另外一个规则的目标文件，或者是一个显式规则的依赖文件，那么这个文件就叫”理当存在”）</p>
-<p>4）如果所有的依赖文件存在或是理当存在，或是就没有依赖文件。那么这条规则将被采用，退出该<a href="http://lib.csdn.net/base/datastructure" target="_blank" rel="noopener"><strong>算法</strong></a>。</p>
+<p>4）如果所有的依赖文件存在或是理当存在，或是就没有依赖文件。那么这条规则将被采用，退出该<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/datastructure"><strong>算法</strong></a>。</p>
 <p>6、如果经过第5步，没有模式规则被找到，那么就做更进一步的搜索。对于存在于列表中的第一个模式规则：</p>
 <p>1）如果规则是终止规则，那就忽略它，继续下一条模式规则。</p>
 <p>2）计算依赖文件。（同第5步）</p>
@@ -1719,18 +1725,18 @@ height:50vh;
 <p>我欢迎任何形式的交流，无论是讨论技术还是管理，或是其它海阔天空的东西。除了政治和娱乐新闻我不关心，其它只要积极向上的东西我都欢迎！</p>
 <p>最最后，我还想介绍一下make程序的设计开发者。</p>
 <p>首当其冲的是：Richard Stallman</p>
-<p>开源软件的领袖和先驱，从来没有领过一天工资，从来没有使用过Windows操作系统。对于他的事迹和他的软件以及他的思想，我无需说过多的话，相信大家对这个人并不比我陌生，这是他的主页：<a href="http://www.stallman.org/。" target="_blank" rel="noopener">http://www.stallman.org/。</a></p>
+<p>开源软件的领袖和先驱，从来没有领过一天工资，从来没有使用过Windows操作系统。对于他的事迹和他的软件以及他的思想，我无需说过多的话，相信大家对这个人并不比我陌生，这是他的主页：<a target="_blank" rel="noopener" href="http://www.stallman.org/%E3%80%82">http://www.stallman.org/。</a></p>
 <p>第二位是：Roland McGrath</p>
-<p>个人主页是：<a href="http://www.frob.com/~roland/，下面是他的一些事迹：" target="_blank" rel="noopener">http://www.frob.com/~roland/，下面是他的一些事迹：</a></p>
+<p>个人主页是：<a target="_blank" rel="noopener" href="http://www.frob.com/~roland/%EF%BC%8C%E4%B8%8B%E9%9D%A2%E6%98%AF%E4%BB%96%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B%E8%BF%B9%EF%BC%9A">http://www.frob.com/~roland/，下面是他的一些事迹：</a></p>
 <p>1）合作编写了并维护GNUmake。</p>
 <p>2）和ThomasBushnell一同编写了GNUHurd。</p>
 <p>3）编写并维护着GNUClibrary。</p>
 <p>4）合作编写并维护着部分的GNUEmacs。</p>
 <p>在此，向这两位开源项目的斗士致以最真切的敬意</p>
 <blockquote>
-<p><strong>本文转自<a href="http://blog.csdn.net/haoel" target="_blank" rel="noopener">haoel</a>，原文请点击<a href="http://blog.csdn.net/haoel/article/details/2886" target="_blank" rel="noopener">这里</a></strong></p>
+<p><strong>本文转自<a target="_blank" rel="noopener" href="http://blog.csdn.net/haoel">haoel</a>，原文请点击<a target="_blank" rel="noopener" href="http://blog.csdn.net/haoel/article/details/2886">这里</a></strong></p>
 </blockquote>
-</commands>
+
     </article>
     <!-- license  -->
     
@@ -2391,6 +2397,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 38
@@ -2438,17 +2446,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E4%B8%AD%E8%8E%B7%E5%BE%97%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95.html" >Java中获得实例的方法</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E5%85%8B%E9%9A%86.html" >Java克隆</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
         </li>
     
     
@@ -2473,6 +2481,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock%E5%8C%85%E5%AE%9E%E7%8E%B0%E9%94%81.html" >java Lock包实现锁</a>
         </li>
     
@@ -2483,17 +2496,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
         </li>
     
     
@@ -2509,11 +2522,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E2%80%94%E2%80%94%E8%BD%AC.html" >内网穿透——转</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
@@ -2558,11 +2566,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
         </li>
     
@@ -2573,17 +2576,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
         </li>
     
     
@@ -2610,39 +2618,43 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
     
-        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
-    
         <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
     
-        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
     
         <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
     
         <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
     
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
         <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
     
         <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
-    
-        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
-    
-        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
     
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
     
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
         <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
     
         <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
     
-        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
-    
-        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
     
         <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
     
@@ -2652,25 +2664,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
     
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
-    
         <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
     
         <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
     
-        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
-    
         <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
     
         <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
     
         <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
     
         <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
     
         <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
         <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
     
@@ -2681,12 +2695,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
-    
-        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
-    
-        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

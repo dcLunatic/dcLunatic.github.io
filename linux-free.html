@@ -427,6 +427,7 @@ height:50vh;
 <li>–help 帮助信息</li>
 </ul>
 <h2 id="使用例子"><a href="#使用例子" class="headerlink" title="使用例子"></a>使用例子</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">root@dcLunatic:~# free -w</span><br><span class="line">              total        used        free      shared     buffers       cache   available</span><br><span class="line">Mem:        3926756     2412980      161048      647120      122744     1229984      572224</span><br><span class="line">Swap:       4077564      539392     3538172</span><br><span class="line">root@dcLunatic:~# free</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        3926756     2367412      202764      650948     1356580      613964</span><br><span class="line">Swap:       4077564      539392     3538172</span><br><span class="line">root@dcLunatic:~# free -l</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        3926756     2414160      156844      649888     1355752      568276</span><br><span class="line">Low:        3926756     3769912      156844</span><br><span class="line">High:             0           0           0</span><br><span class="line">Swap:       4077564      539392     3538172</span><br><span class="line">root@dcLunatic:~# free -s 2</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        3926756     2347848      230980      642984     1347928      641492</span><br><span class="line">Swap:       4077564      539392     3538172</span><br><span class="line"></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        3926756     2349916      227616      644280     1349224      638128</span><br><span class="line">Swap:       4077564      539392     3538172</span><br><span class="line"></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        3926756     2348464      226452      646880     1351840      636980</span><br><span class="line">Swap:       4077564      539392     3538172</span><br><span class="line"></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        3926756     2350080      222344      649372     1354332      632872</span><br><span class="line">Swap:       4077564      539392     3538172</span><br><span class="line"></span><br><span class="line">^C</span><br><span class="line">root@dcLunatic:~# free -c 3</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        3926756     2409828      167828      643920     1349100      578576</span><br><span class="line">Swap:       4077564      539392     3538172</span><br><span class="line"></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        3926756     2412628      162124      646824     1352004      572872</span><br><span class="line">Swap:       4077564      539392     3538172</span><br><span class="line"></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        3926756     2414612      159288      647676     1352856      570036</span><br><span class="line">Swap:       4077564      539392     3538172</span><br><span class="line">root@dcLunatic:~# free -c 3 -s 5</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        3926756     2362972      206864      651716     1356920      617636</span><br><span class="line">Swap:       4077564      539392     3538172</span><br><span class="line"></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        3926756     2312708      249220      659616     1364828      660000</span><br><span class="line">Swap:       4077564      539392     3538172</span><br><span class="line"></span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        3926756     2331168      237764      652612     1357824      648544</span><br><span class="line">Swap:       4077564      539392     3538172</span><br><span class="line">root@dcLunatic:~# free -h</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:          3.7Gi       2.3Gi       170Mi       634Mi       1.3Gi       571Mi</span><br><span class="line">Swap:         3.9Gi       526Mi       3.4Gi</span><br></pre></td></tr></table></figure>
+
 <h2 id="数值解释"><a href="#数值解释" class="headerlink" title="数值解释"></a>数值解释</h2><p>total:总计物理内存的大小。</p>
 <p>used:已使用多大。</p>
 <p>free:可用有多少。</p>
@@ -441,7 +442,8 @@ height:50vh;
 <p>所以从应用程序的角度来说，可用内存=系统free memory+buffers+cached。</p>
 <h2 id="交换内存"><a href="#交换内存" class="headerlink" title="交换内存"></a>交换内存</h2><p>当可用内存少于额定值的时候，就会开会进行交换.如何看额定值：</p>
 <p><code>cat /proc/meminfo</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">MemTotal:        3926756 kB</span><br><span class="line">MemFree:          251476 kB</span><br><span class="line">MemAvailable:     687828 kB</span><br><span class="line">Buffers:           76600 kB</span><br><span class="line">Cached:          1052608 kB</span><br><span class="line">SwapCached:        49956 kB</span><br><span class="line">Active:          2515620 kB</span><br><span class="line">Inactive:         829940 kB</span><br><span class="line">Active(anon):    2148288 kB</span><br><span class="line">Inactive(anon):   581256 kB</span><br><span class="line">Active(file):     367332 kB</span><br><span class="line">Inactive(file):   248684 kB</span><br><span class="line">Unevictable:           0 kB</span><br><span class="line">Mlocked:               0 kB</span><br><span class="line">SwapTotal:       4077564 kB</span><br><span class="line">SwapFree:        3291132 kB</span><br><span class="line">Dirty:               632 kB</span><br><span class="line">Writeback:             0 kB</span><br><span class="line">AnonPages:       2037096 kB</span><br><span class="line">Mapped:           430548 kB</span><br><span class="line">Shmem:            513192 kB</span><br><span class="line">Slab:             139292 kB</span><br><span class="line">SReclaimable:      60588 kB</span><br><span class="line">SUnreclaim:        78704 kB</span><br><span class="line">KernelStack:       16944 kB</span><br><span class="line">PageTables:        73408 kB</span><br><span class="line">NFS_Unstable:          0 kB</span><br><span class="line">Bounce:                0 kB</span><br><span class="line">WritebackTmp:          0 kB</span><br><span class="line">CommitLimit:     6040940 kB</span><br><span class="line">Committed_AS:   12437320 kB</span><br><span class="line">VmallocTotal:   34359738367 kB</span><br><span class="line">VmallocUsed:           0 kB</span><br><span class="line">VmallocChunk:          0 kB</span><br><span class="line">HardwareCorrupted:     0 kB</span><br><span class="line">AnonHugePages:    423936 kB</span><br><span class="line">ShmemHugePages:        0 kB</span><br><span class="line">ShmemPmdMapped:        0 kB</span><br><span class="line">HugePages_Total:       0</span><br><span class="line">HugePages_Free:        0</span><br><span class="line">HugePages_Rsvd:        0</span><br><span class="line">HugePages_Surp:        0</span><br><span class="line">Hugepagesize:       2048 kB</span><br><span class="line">DirectMap4k:      260688 kB</span><br><span class="line">DirectMap2M:     3817472 kB</span><br><span class="line">DirectMap1G:     1048576 kB</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">MemTotal:        3926756 kB</span><br><span class="line">MemFree:          251476 kB</span><br><span class="line">MemAvailable:     687828 kB</span><br><span class="line">Buffers:           76600 kB</span><br><span class="line">Cached:          1052608 kB</span><br><span class="line">SwapCached:        49956 kB</span><br><span class="line">Active:          2515620 kB</span><br><span class="line">Inactive:         829940 kB</span><br><span class="line">Active(anon):    2148288 kB</span><br><span class="line">Inactive(anon):   581256 kB</span><br><span class="line">Active(file):     367332 kB</span><br><span class="line">Inactive(file):   248684 kB</span><br><span class="line">Unevictable:           0 kB</span><br><span class="line">Mlocked:               0 kB</span><br><span class="line">SwapTotal:       4077564 kB</span><br><span class="line">SwapFree:        3291132 kB</span><br><span class="line">Dirty:               632 kB</span><br><span class="line">Writeback:             0 kB</span><br><span class="line">AnonPages:       2037096 kB</span><br><span class="line">Mapped:           430548 kB</span><br><span class="line">Shmem:            513192 kB</span><br><span class="line">Slab:             139292 kB</span><br><span class="line">SReclaimable:      60588 kB</span><br><span class="line">SUnreclaim:        78704 kB</span><br><span class="line">KernelStack:       16944 kB</span><br><span class="line">PageTables:        73408 kB</span><br><span class="line">NFS_Unstable:          0 kB</span><br><span class="line">Bounce:                0 kB</span><br><span class="line">WritebackTmp:          0 kB</span><br><span class="line">CommitLimit:     6040940 kB</span><br><span class="line">Committed_AS:   12437320 kB</span><br><span class="line">VmallocTotal:   34359738367 kB</span><br><span class="line">VmallocUsed:           0 kB</span><br><span class="line">VmallocChunk:          0 kB</span><br><span class="line">HardwareCorrupted:     0 kB</span><br><span class="line">AnonHugePages:    423936 kB</span><br><span class="line">ShmemHugePages:        0 kB</span><br><span class="line">ShmemPmdMapped:        0 kB</span><br><span class="line">HugePages_Total:       0</span><br><span class="line">HugePages_Free:        0</span><br><span class="line">HugePages_Rsvd:        0</span><br><span class="line">HugePages_Surp:        0</span><br><span class="line">Hugepagesize:       2048 kB</span><br><span class="line">DirectMap4k:      260688 kB</span><br><span class="line">DirectMap2M:     3817472 kB</span><br><span class="line">DirectMap1G:     1048576 kB</span><br></pre></td></tr></table></figure>
+
 <p>交换将通过三个途径来减少系统中使用的物理页面的个数：　 </p>
 <p>1.减少缓冲与页面cache的大小， </p>
 <p>2.将系统V类型的内存页面交换出去，　 </p>
@@ -1124,6 +1126,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 38
@@ -1171,17 +1175,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E4%B8%AD%E8%8E%B7%E5%BE%97%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95.html" >Java中获得实例的方法</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E5%85%8B%E9%9A%86.html" >Java克隆</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
         </li>
     
     
@@ -1206,6 +1210,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock%E5%8C%85%E5%AE%9E%E7%8E%B0%E9%94%81.html" >java Lock包实现锁</a>
         </li>
     
@@ -1216,17 +1225,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
         </li>
     
     
@@ -1242,11 +1251,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E2%80%94%E2%80%94%E8%BD%AC.html" >内网穿透——转</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
@@ -1291,11 +1295,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
         </li>
     
@@ -1306,17 +1305,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
         </li>
     
     
@@ -1343,39 +1347,43 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
     
-        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
-    
         <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
     
-        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
     
         <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
     
         <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
     
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
         <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
     
         <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
-    
-        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
-    
-        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
     
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
     
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
         <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
     
         <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
     
-        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
-    
-        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
     
         <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
     
@@ -1385,25 +1393,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
     
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
-    
         <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
     
         <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
     
-        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
-    
         <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
     
         <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
     
         <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
     
         <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
     
         <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
         <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
     
@@ -1414,12 +1424,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
-    
-        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
-    
-        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

@@ -445,7 +445,7 @@ height:50vh;
 <ul>
 <li><h5 id="进程描述符"><a href="#进程描述符" class="headerlink" title="进程描述符"></a>进程描述符</h5><ul>
 <li>​当把一个程序加载到内存当中，此时，这个时候就有了进程，关于进程，有一个相关的叫做进程控制块（PCB），这个是系统为了方便进行管理进程所设置的一个数据结构，通过PCB，就可以记录进程的特征以及一些信息。 内核当中使用进程描述符task_struct。 这个task_struct就是一个定义的一个结构体，通过这个结构体，可以对进程的所有的相关的信息进行维护，对进程进行管理。</li>
-<li>推荐一篇<a href="https://blog.csdn.net/qq_26768741/article/details/54348586" target="_blank" rel="noopener">文章</a></li>
+<li>推荐一篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_26768741/article/details/54348586">文章</a></li>
 </ul>
 </li>
 <li><h5 id="进程的组成"><a href="#进程的组成" class="headerlink" title="进程的组成"></a>进程的组成</h5><ul>
@@ -511,7 +511,7 @@ height:50vh;
 <li><p>内核也可以通过kernel_thread函数来创建内核进程</p>
 </li>
 </ul>
-<h4 id="Linux-进程状态机"><a href="#Linux-进程状态机" class="headerlink" title="Linux 进程状态机"></a>Linux 进程状态机</h4><p><img src="/images/linux进程管理/1.jpg" alt="进程状态转换关系图"></p>
+<h4 id="Linux-进程状态机"><a href="#Linux-进程状态机" class="headerlink" title="Linux 进程状态机"></a>Linux 进程状态机</h4><p><img src="/images/linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/1.jpg" alt="进程状态转换关系图"></p>
 <ul>
 <li>虽然进程的状态有好多种，但是进程状态的变迁只有两个方向，从TASK_RUNNING到非TASK_RUNNING，或者相反。总之，进程状态的转换必然会经过TASK_RUNNING，不可能在两个非RUN状态直接转换。</li>
 <li>进程从非TASK_RUNNING状态变为TASK_RUNNING状态，是由别的进程（也可能是中断处理程序）执行唤醒操作来实现的。执行唤醒的进程设置被唤醒进程的状态为TASK_RUNNING，然后将其task_struct结构加入到某个CPU的可执行队列中。于是被唤醒的进程将有机会被调度执行。</li>
@@ -540,7 +540,7 @@ height:50vh;
 </li>
 </ul>
 <h3 id="进程的调度"><a href="#进程的调度" class="headerlink" title="进程的调度"></a>进程的调度</h3><blockquote>
-<p>无论是在<a href="https://baike.baidu.com/item/%E6%89%B9%E5%A4%84%E7%90%86%E7%B3%BB%E7%BB%9F" target="_blank" rel="noopener">批处理系统</a>还是<a href="https://baike.baidu.com/item/%E5%88%86%E6%97%B6%E7%B3%BB%E7%BB%9F" target="_blank" rel="noopener">分时系统</a>中，用户进程数一般都多于<a href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA" target="_blank" rel="noopener">处理机</a>数、这将导致它们互相争夺处理机。另外，系统进程也同样需要使用<a href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA" target="_blank" rel="noopener">处理机</a>。这就要求进程调度程序按一定的策略，动态地把<a href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA" target="_blank" rel="noopener">处理机</a>分配给处于就绪队列中的某一个<a href="https://baike.baidu.com/item/%E8%BF%9B%E7%A8%8B" target="_blank" rel="noopener">进程</a>，以使之执行。这就是进程调度。</p>
+<p>无论是在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%89%B9%E5%A4%84%E7%90%86%E7%B3%BB%E7%BB%9F">批处理系统</a>还是<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%88%86%E6%97%B6%E7%B3%BB%E7%BB%9F">分时系统</a>中，用户进程数一般都多于<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA">处理机</a>数、这将导致它们互相争夺处理机。另外，系统进程也同样需要使用<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA">处理机</a>。这就要求进程调度程序按一定的策略，动态地把<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA">处理机</a>分配给处于就绪队列中的某一个<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%BF%9B%E7%A8%8B">进程</a>，以使之执行。这就是进程调度。</p>
 </blockquote>
 <p>当cpu中正在执行的进程(process A)被移出(suspend),cpu中当前进程的相关信息写到需要移除的进程的进程描述符(task_strut)中,下一个进程(process B)被内核读取(该过程称为resume，恢复)到cpu中, 注意：进程的切换也是必须由内核来执行的。进程的切换就是通过<strong>用户空间和内核模式的不断切换</strong>来完成的。<strong>进程切换=CPU加载上下文+CPU执行+CPU保存上下文</strong></p>
 <h4 id="Linux-进程调度的目标"><a href="#Linux-进程调度的目标" class="headerlink" title="Linux 进程调度的目标"></a>Linux 进程调度的目标</h4><ul>
@@ -694,7 +694,7 @@ height:50vh;
 <li>作业调度次数少，中级调度次数略多，进程调度频率最高。</li>
 <li>进程调度是最基本的，不可或缺。</li>
 </ul>
-<p>推荐一篇<a href="https://blog.csdn.net/chengonghao/article/details/50981214" target="_blank" rel="noopener">文章</a># Linux进程</p>
+<p>推荐一篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/chengonghao/article/details/50981214">文章</a># Linux进程</p>
 <p>[TOC]</p>
 <blockquote>
 <p>进程是执行中一段程序，即一旦程序被载入到内存中并准备执行，它就是一个进程。进程是表示资源分配的的基本概念，又是调度运行的基本单位，是系统中的并发执行的单位。<br>线程：单个进程中执行中每个任务就是一个线程。线程是进程中执行运算的最小单位。<br>换句话说，进程线程都是对CPU工作时间段的描述（通过task_struct)。</p>
@@ -729,7 +729,7 @@ height:50vh;
 <ul>
 <li><h5 id="进程描述符-1"><a href="#进程描述符-1" class="headerlink" title="进程描述符"></a>进程描述符</h5><ul>
 <li>​当把一个程序加载到内存当中，此时，这个时候就有了进程，关于进程，有一个相关的叫做进程控制块（PCB），这个是系统为了方便进行管理进程所设置的一个数据结构，通过PCB，就可以记录进程的特征以及一些信息。 内核当中使用进程描述符task_struct。 这个task_struct就是一个定义的一个结构体，通过这个结构体，可以对进程的所有的相关的信息进行维护，对进程进行管理。</li>
-<li>推荐一篇<a href="https://blog.csdn.net/qq_26768741/article/details/54348586" target="_blank" rel="noopener">文章</a></li>
+<li>推荐一篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_26768741/article/details/54348586">文章</a></li>
 </ul>
 </li>
 <li><h5 id="进程的组成-1"><a href="#进程的组成-1" class="headerlink" title="进程的组成"></a>进程的组成</h5><ul>
@@ -824,7 +824,7 @@ height:50vh;
 </li>
 </ul>
 <h3 id="进程的调度-1"><a href="#进程的调度-1" class="headerlink" title="进程的调度"></a>进程的调度</h3><blockquote>
-<p>无论是在<a href="https://baike.baidu.com/item/%E6%89%B9%E5%A4%84%E7%90%86%E7%B3%BB%E7%BB%9F" target="_blank" rel="noopener">批处理系统</a>还是<a href="https://baike.baidu.com/item/%E5%88%86%E6%97%B6%E7%B3%BB%E7%BB%9F" target="_blank" rel="noopener">分时系统</a>中，用户进程数一般都多于<a href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA" target="_blank" rel="noopener">处理机</a>数、这将导致它们互相争夺处理机。另外，系统进程也同样需要使用<a href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA" target="_blank" rel="noopener">处理机</a>。这就要求进程调度程序按一定的策略，动态地把<a href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA" target="_blank" rel="noopener">处理机</a>分配给处于就绪队列中的某一个<a href="https://baike.baidu.com/item/%E8%BF%9B%E7%A8%8B" target="_blank" rel="noopener">进程</a>，以使之执行。这就是进程调度。</p>
+<p>无论是在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%89%B9%E5%A4%84%E7%90%86%E7%B3%BB%E7%BB%9F">批处理系统</a>还是<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%88%86%E6%97%B6%E7%B3%BB%E7%BB%9F">分时系统</a>中，用户进程数一般都多于<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA">处理机</a>数、这将导致它们互相争夺处理机。另外，系统进程也同样需要使用<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA">处理机</a>。这就要求进程调度程序按一定的策略，动态地把<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%A4%84%E7%90%86%E6%9C%BA">处理机</a>分配给处于就绪队列中的某一个<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%BF%9B%E7%A8%8B">进程</a>，以使之执行。这就是进程调度。</p>
 </blockquote>
 <p>当cpu中正在执行的进程(process A)被移出(suspend),cpu中当前进程的相关信息写到需要移除的进程的进程描述符(task_strut)中,下一个进程(process B)被内核读取(该过程称为resume，恢复)到cpu中, 注意：进程的切换也是必须由内核来执行的。进程的切换就是通过<strong>用户空间和内核模式的不断切换</strong>来完成的。<strong>进程切换=CPU加载上下文+CPU执行+CPU保存上下文</strong></p>
 <h4 id="Linux-进程调度的目标-1"><a href="#Linux-进程调度的目标-1" class="headerlink" title="Linux 进程调度的目标"></a>Linux 进程调度的目标</h4><ul>
@@ -966,7 +966,7 @@ height:50vh;
 <p>而在现在Linux2.6的版本中，可执行状态的进程会按照优先级顺序被挂载一个红黑树上，每次调度，找出树中优先级最高的那个进程。复杂度为O(LogN)</p>
 <p><strong>只是为了公平</strong></p>
 <p>第一种是基于空间换时间的策略，在一组数目不大的链表中来实现的，这样子优先级的取值范围很小（大了会浪费太多空间），区分度不大不能满足公平性的需求，而使用红黑树对优先级的取值没有限制，区分度可以更高。而且在同等情况下，140个优先级，O(LogN)的复杂度也不会太差。</p>
-<h4 id="处理机的三级调度-1"><a href="#处理机的三级调度-1" class="headerlink" title="处理机的三级调度"></a>处理机的三级调度</h4><p><img src="/images/linux进程管理/3.jpg" alt="三级调度"></p>
+<h4 id="处理机的三级调度-1"><a href="#处理机的三级调度-1" class="headerlink" title="处理机的三级调度"></a>处理机的三级调度</h4><p><img src="/images/linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/3.jpg" alt="三级调度"></p>
 <ul>
 <li>作业调度(高级调度)</li>
 <li>内存调度(中级调度)</li>
@@ -978,7 +978,7 @@ height:50vh;
 <li>作业调度次数少，中级调度次数略多，进程调度频率最高。</li>
 <li>进程调度是最基本的，不可或缺。</li>
 </ul>
-<p>推荐一篇<a href="https://blog.csdn.net/chengonghao/article/details/50981214" target="_blank" rel="noopener">文章</a></p>
+<p>推荐一篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/chengonghao/article/details/50981214">文章</a></p>
 
     </article>
     <!-- license  -->
@@ -1648,6 +1648,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 38
@@ -1695,17 +1697,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E4%B8%AD%E8%8E%B7%E5%BE%97%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95.html" >Java中获得实例的方法</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E5%85%8B%E9%9A%86.html" >Java克隆</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
         </li>
     
     
@@ -1730,6 +1732,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock%E5%8C%85%E5%AE%9E%E7%8E%B0%E9%94%81.html" >java Lock包实现锁</a>
         </li>
     
@@ -1740,17 +1747,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
         </li>
     
     
@@ -1766,11 +1773,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E2%80%94%E2%80%94%E8%BD%AC.html" >内网穿透——转</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
@@ -1815,11 +1817,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
         </li>
     
@@ -1830,17 +1827,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
         </li>
     
     
@@ -1867,39 +1869,43 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
     
-        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
-    
         <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
     
-        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
     
         <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
     
         <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
     
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
         <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
     
         <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
-    
-        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
-    
-        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
     
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
     
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
         <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
     
         <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
     
-        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
-    
-        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
     
         <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
     
@@ -1909,25 +1915,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
     
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
-    
         <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
     
         <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
     
-        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
-    
         <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
     
         <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
     
         <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
     
         <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
     
         <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
         <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
     
@@ -1938,12 +1946,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
-    
-        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
-    
-        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

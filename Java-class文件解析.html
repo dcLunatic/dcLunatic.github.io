@@ -413,6 +413,7 @@ height:50vh;
     <article class="article-entry">
         <p>[TOC]</p>
 <h2 id="CLASS文件结构以及各字段含义"><a href="#CLASS文件结构以及各字段含义" class="headerlink" title="CLASS文件结构以及各字段含义"></a>CLASS文件结构以及各字段含义</h2><h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ClassFile&#123;</span><br><span class="line">    u4 magic;</span><br><span class="line">    u2 minor_version;</span><br><span class="line">    u2 major_version;</span><br><span class="line">    u2 constant_pool_count;</span><br><span class="line">    cp_info constant_pool[constant_pool_count<span class="number">-1</span>];</span><br><span class="line">    u2 access_flags;</span><br><span class="line">    u2 this_class;</span><br><span class="line">    u2 super_class;</span><br><span class="line">    u2 interfaces_count;</span><br><span class="line">    u2 interfaces[interfaces_count];</span><br><span class="line">    u2 fields_count;</span><br><span class="line">    field_info fields[fields_count];</span><br><span class="line">    u2 methods_count;</span><br><span class="line">    method_info methods[methods_count];</span><br><span class="line">    u2 attributes_count;</span><br><span class="line">    attribute_info attributes[attributes_count];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="magic"><a href="#magic" class="headerlink" title="magic"></a>magic</h3><p>魔数，唯一的作用就是确定这个文件是否为一个能被JVM所接受的class文件。魔数值固定为0xCAFEBABE，不会改变。</p>
 <h3 id="minor-version、major-version"><a href="#minor-version、major-version" class="headerlink" title="minor_version、major_version"></a>minor_version、major_version</h3><p>副版本号和主版本号，他们共同构成了class文件的格式版本号。比如说某个class文件的主版本号为M，副版本号为m，那么该class的格式版本号就为M.m。</p>
 <p>一个jvm只能支持特定版本范围内的主版本号(比如说[Mi，Mj])，和0到特定范围内的副版本号([0，m])，假设一个class文件的格式版本号为V，那么只有当<code>Mi.0 &lt;= V &lt;= Mj.m</code>时，这个class文件才可以备此jvm支持接受。</p>
@@ -430,8 +431,7 @@ height:50vh;
 <th>含义</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>ACC_PUBLIC</td>
 <td>0x0001</td>
 <td>可以被包的类外访问。</td>
@@ -471,8 +471,7 @@ height:50vh;
 <td>0x4000</td>
 <td>标识枚举类型</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <ol>
 <li>带有ACC_SYNTHETIC标志的类，意味着它是由编译器自己产生的而不是由程序员编写的源代码生成的。</li>
 <li>带有ACC_ENUM标志的类，意味着它或它的父类被声明为枚举类型。</li>
@@ -493,12 +492,15 @@ height:50vh;
 <h3 id="attributes"><a href="#attributes" class="headerlink" title="attributes[]"></a>attributes[]</h3><p>属性表，attributes表的每个项的值必须是attribute_info结构。在class文件的规范中，class文件结构中的attributes表的项包括下列定义的属性：InnerClasses、EnclosingMethod、Synthetic、Signature、SourceFile、SourceDebugExtension、Deprecated、RuntimeVisibleAnnotations、RuntimeInvisibleAnnotations以及BootstrapMethods属性。支持不同版本class文件的虚拟机实现的属性也有所不同。</p>
 <h2 id="描述符"><a href="#描述符" class="headerlink" title="描述符"></a>描述符</h2><h3 id="语法符号"><a href="#语法符号" class="headerlink" title="语法符号"></a>语法符号</h3><p>描述符和签名都是用特定的语法符号来表示，这些语法是一组可表达如何根据不同的类型去产生可恰当描述它们的字符序列的标识集合。例如:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FieldType:</span><br><span class="line">	BaseType</span><br><span class="line">	ObjectType</span><br><span class="line">	ArrayType</span><br></pre></td></tr></table></figure>
+
 <p>上面文字表达的意思是FileType可以表示BaseType、ObjectType、ArrayType三者之一。</p>
 <p>当一个(*)跟随的非终止符出现在一个语法标识的右侧时，说明带有这个非终止符的语法标识将产生0或多个不同值，这些值按照顺序且无间隔的排列在非终止符后面。当一个有加号(+)跟随的非终止符出现在结构的右侧时，说明这个非终止符将产生一个或多个不同值，这些值按照顺序且无间隔的排列在非终止符后面。例如</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MethodDescriptor:</span><br><span class="line">	(ParameterDescriptor*)ReturnDescriptor</span><br></pre></td></tr></table></figure>
+
 <p>上面文字表达的意思是MethodDescriptor的是左括号”(“、0或若干个连续排列的ParameterDescriptor值、右括号”)”、ReturnDescriptor值构成。</p>
 <h3 id="字段描述符"><a href="#字段描述符" class="headerlink" title="字段描述符"></a>字段描述符</h3><p>字段描述符(Field Descriptor)，是一个表示类、实例或局部变量的语法符号，它是由语法产生的字符序列：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">FieldDescriptor:</span><br><span class="line">	FieldType</span><br><span class="line">ComponentType:</span><br><span class="line">	FieldType</span><br><span class="line">FieldType:</span><br><span class="line">	BaseType</span><br><span class="line">	ObjectType</span><br><span class="line">	ArrayType</span><br><span class="line">BaseType:</span><br><span class="line">	B</span><br><span class="line">	C</span><br><span class="line">	D</span><br><span class="line">	F</span><br><span class="line">	I</span><br><span class="line">	J</span><br><span class="line">	S</span><br><span class="line">	Z</span><br><span class="line">ObjectType:</span><br><span class="line">	L Classname;</span><br><span class="line">ArrayType:</span><br><span class="line">	[ ComponentType</span><br></pre></td></tr></table></figure>
+
 <p>所有表示基础类型(BaseType)的字符、表示对象类型(ObjectType)中的字符”L”，表示数组类型(ArrayType)的”[“字符都是ASCII编码的字符。对象类型(ObjectType)中的Classname表示一个类或接口二进制名称的内部格式。表示数组类型的有效描述符的长度应该小于等于255。所有字符类型的解释如下表所示。</p>
 <table>
 <thead>
@@ -508,8 +510,7 @@ height:50vh;
 <th>含义</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>B</td>
 <td>byte</td>
 <td>有符号字节型数</td>
@@ -559,27 +560,35 @@ height:50vh;
 <td>reference</td>
 <td>一个一维数组</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>例子：</p>
 <p>描述int实例变量的描述符是”I”；java.lang.Object的实例描述符是”Ljava/lang/Object;”。注意，这是用到的是类Object的二进制名的内部形式(此处是内部形式)。double的三维数组”double d[][][];”的描述符为”[[[D”。</p>
 <h3 id="方法描述符"><a href="#方法描述符" class="headerlink" title="方法描述符"></a>方法描述符</h3><p>方法描述符(Method Descriptor)描述一个方法所需的参数和返回值信息：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MethodDescriptor:</span><br><span class="line">	(ParameterDescriptor*)ReturnDescriptor</span><br></pre></td></tr></table></figure>
+
+
+
 <p>参数描述符(ParameterDescriptor)描述需要传给这个方法的参数信息：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ParameterDescriptor:</span><br><span class="line">	FieldType</span><br></pre></td></tr></table></figure>
+
 <p>返回值描述符(ReturnDescriptor)从从前方法返回的值，它是由语法产生的字符序列：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ReturnDescriptor:</span><br><span class="line">	FieldType</span><br><span class="line">    VoidDescriptor</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ReturnDescriptor:</span><br><span class="line">	FieldType</span><br><span class="line">    VoidDescriptor</span><br></pre></td></tr></table></figure>
+
 <p>其中VoidDescriptor表示当前方法无返回值，即返回类型是void。符号如下(字符V即void)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VoidDescriptor:</span><br><span class="line">	V</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VoidDescriptor:</span><br><span class="line">	V</span><br></pre></td></tr></table></figure>
+
 <p>如果一个方法描述符是有效的，那么它对应的方法的参数列表总长度小于等于255，对于实例方法和接口方法，需要额外考虑隐式参数this。参数列表长度的计算规则如下：每个long和double类参数长度为2，其余的都为1，方法参数列表的总长度等于所有参数的长度之和。</p>
 <p>例如，方法:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object mymethod(int i, double d, Thread t)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object mymethod(int i, double d, Thread t)</span><br></pre></td></tr></table></figure>
+
 <p>的描述符为:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(IDLjava/lang/Thread;)Ljava/lang/Object;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(IDLjava/lang/Thread;)Ljava/lang/Object;</span><br></pre></td></tr></table></figure>
+
 <p>注意：这里使用了Object和Thread的二进制名称的内部形式。</p>
 <p>无论mymethod()是静态方法还是实例方法，它的方法描述符都是相同的。尽管实例方法除了传递自身定义的参数，还需要额外传递参数this，但是这一点不是由方法描述符来表达的。参数this的传递，但是这一点不是由方法描述符来表达的。参数this的传递，是由jvm实现在调用实例方法所使用的指令中实现的隐式传递。</p>
 <h2 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h2><p>jvm指令执行时不依赖与类、接口，实例或数组的运行时布局，而是依赖常量池（constant_pool）表中的符号信息。所有的常量池项都具有如下通用格式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cp_info&#123;</span><br><span class="line">    u1 tag;</span><br><span class="line">    u1 info[];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cp_info&#123;</span><br><span class="line">    u1 tag;</span><br><span class="line">    u1 info[];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>常量池中，每个cp_info项的格式必须相同，它们都以一个表示cp_info类型的单字节”tag”项开头。后面info[]项的内容由tag的类型所决定。tag有效的类型和对应的取值在下表中列出。每个tag项必须跟随2个或更多字节，这些字节用于给定这个常量的信息，附加字节的信息格式由tag的值决定。</p>
 <table>
 <thead>
@@ -588,8 +597,7 @@ height:50vh;
 <th>值</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>CONSTANT_Class</td>
 <td>7</td>
 </tr>
@@ -645,10 +653,10 @@ height:50vh;
 <td>CONSTANT_InvokeDynamic</td>
 <td>18</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <h2 id="常见结构"><a href="#常见结构" class="headerlink" title="常见结构"></a>常见结构</h2><h3 id="CONSTANT-Class-info结构"><a href="#CONSTANT-Class-info结构" class="headerlink" title="CONSTANT_Class_info结构"></a>CONSTANT_Class_info结构</h3><p>CONSTANT_Class_info结构用于表示类和接口，格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_Class_info&#123;</span><br><span class="line">    u1 tag;</span><br><span class="line">    u2 name_index;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_Class_info&#123;</span><br><span class="line">    u1 tag;</span><br><span class="line">    u2 name_index;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>CONSTANT_Class_info结构的说明:</p>
 <ul>
 <li>tag</li>
@@ -659,11 +667,14 @@ height:50vh;
 </ul>
 <p>name_index项的值是对常量池的一个有效索引。常量池在该索引处的项必须是constant_utf8_info结构，用来代表一个有效的类或接口二进制名称的内部形式。</p>
 <h3 id="CONSTANT-Fieldref-info，-CONSTANT-Methodref-info和CONSTANT-InterfaceMethodref-info结构"><a href="#CONSTANT-Fieldref-info，-CONSTANT-Methodref-info和CONSTANT-InterfaceMethodref-info结构" class="headerlink" title="CONSTANT_Fieldref_info， CONSTANT_Methodref_info和CONSTANT_InterfaceMethodref_info结构"></a>CONSTANT_Fieldref_info， CONSTANT_Methodref_info和CONSTANT_InterfaceMethodref_info结构</h3><p>字段：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_Fieldref_info &#123;</span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 class_index; </span><br><span class="line">    u2 name_and_type_index; </span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_Fieldref_info &#123;</span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 class_index; </span><br><span class="line">    u2 name_and_type_index; </span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+
 <p>方法： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_Methodref_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 class_index; </span><br><span class="line">    u2 name_and_type_index; </span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_Methodref_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 class_index; </span><br><span class="line">    u2 name_and_type_index; </span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+
 <p>接口方法： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_InterfaceMethodref_info &#123;</span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 class_index; </span><br><span class="line">    u2 name_and_type_index; </span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_InterfaceMethodref_info &#123;</span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 class_index; </span><br><span class="line">    u2 name_and_type_index; </span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+
 <p>这些结构各项的说明如下：</p>
 <ul>
 <li><strong>tag</strong></li>
@@ -683,7 +694,8 @@ height:50vh;
 <p>在一个CONSTANT_Fieldref_info结构中，给定的描述符必须是字段描述符。而CONSTANT_Methodref_info和CONSTANT_InterfaceMethodref_info中给定的描述符必须是方法描述符。</p>
 <p>如果一个CONSTANT_Methodref_info结构的方法名以“&lt;”（’\u003c’）开头，则说明这个方法名是特殊的，即这个方法是实例初始化方法，它的返回类型必须为空。</p>
 <h3 id="CONSTANT-String-info结构"><a href="#CONSTANT-String-info结构" class="headerlink" title="CONSTANT_String_info结构"></a>CONSTANT_String_info结构</h3><p>CONSTANT_String_info用于表示java.lang.String类型的常量对象，格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_String_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 string_index; </span><br><span class="line">&#125;1234</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_String_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 string_index; </span><br><span class="line">&#125;1234</span><br></pre></td></tr></table></figure>
+
 <p>CONSTANT_String_info结构各项的说明如下：</p>
 <ul>
 <li><strong>tag</strong> </li>
@@ -694,7 +706,8 @@ height:50vh;
 </ul>
 <p>string_index项的值必须是对常量池的有效索引，常量池在该索引处的项必须是CONSTANT_Utf8_info<br>结构，表示一组Unicode码点序列，这组Unicode码点序列最终会被初始化为一个String对象。</p>
 <h3 id="CONSTANT-Integer-info和CONSTANT-Float-info结构"><a href="#CONSTANT-Integer-info和CONSTANT-Float-info结构" class="headerlink" title="CONSTANT_Integer_info和CONSTANT_Float_info结构"></a>CONSTANT_Integer_info和CONSTANT_Float_info结构</h3><p>CONSTANT_Intrger_info和CONSTANT_Float_info结构表示4字节（int和float）的数值常量：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_Integer_info &#123;</span><br><span class="line">    u1 tag; </span><br><span class="line">    u4 bytes; </span><br><span class="line">&#125; </span><br><span class="line">CONSTANT_Float_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u4 bytes;</span><br><span class="line">&#125;12345678</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_Integer_info &#123;</span><br><span class="line">    u1 tag; </span><br><span class="line">    u4 bytes; </span><br><span class="line">&#125; </span><br><span class="line">CONSTANT_Float_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u4 bytes;</span><br><span class="line">&#125;12345678</span><br></pre></td></tr></table></figure>
+
 <p>这些结构各项的说明如下：</p>
 <ul>
 <li><strong>tag</strong> </li>
@@ -713,10 +726,12 @@ height:50vh;
 <li>如果bits值在范围0x7f800001到0x7fffffff或者0xff800001到0xffffffff内，表示float值为NaN。</li>
 <li>在其它情况下，设s、e、m，它们值根据bits和如下公式计算： </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int s =((bits &gt;&gt; 31) == 0) ? 1 : -1; </span><br><span class="line">int e =((bits &gt;&gt; 23) &amp; 0xff); </span><br><span class="line">int m =(e == 0） ? (bits &amp; 0x7fffff) &lt;&lt; 1 : (bits &amp; 0x7fffff) | 0x800000;123</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int s =((bits &gt;&gt; 31) == 0) ? 1 : -1; </span><br><span class="line">int e =((bits &gt;&gt; 23) &amp; 0xff); </span><br><span class="line">int m =(e == 0） ? (bits &amp; 0x7fffff) &lt;&lt; 1 : (bits &amp; 0x7fffff) | 0x800000;123</span><br></pre></td></tr></table></figure>
+
 <p>则float的浮点值为数值表达式s·m·2e–150的计算结果。</p>
 <h3 id="CONSTANT-Long-info和CONSTANT-Double-info结构"><a href="#CONSTANT-Long-info和CONSTANT-Double-info结构" class="headerlink" title="CONSTANT_Long_info和CONSTANT_Double_info结构"></a>CONSTANT_Long_info和CONSTANT_Double_info结构</h3><p>CONSTANT_Long_info和CONSTANT_Double_info结构表示8字节（long和double）的数值常量：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_Long_info &#123;</span><br><span class="line">    u1 tag; </span><br><span class="line">    u4 high_bytes; </span><br><span class="line">    u4 low_bytes; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">CONSTANT_Double_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u4 high_bytes; </span><br><span class="line">    u4 low_bytes; </span><br><span class="line">&#125;1234567891011</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_Long_info &#123;</span><br><span class="line">    u1 tag; </span><br><span class="line">    u4 high_bytes; </span><br><span class="line">    u4 low_bytes; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">CONSTANT_Double_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u4 high_bytes; </span><br><span class="line">    u4 low_bytes; </span><br><span class="line">&#125;1234567891011</span><br></pre></td></tr></table></figure>
+
 <p>在Class文件的常量池中，所有的8字节的常量都占两个表成员（项）的空间。如果一个CONSTANT_Long_info或CONSTANT_Double_info结构的项在常量池中的索引为n，则常量池中下一个有效的项的索引为n+2，此时常量池中索引为n+1的项有效但必须被认为不可用。</p>
 <p>CONSTANT_Long_info和CONSTANT_Double_info结构各项的说明如下：</p>
 <ul>
@@ -736,10 +751,12 @@ height:50vh;
 <li>如果bits值在范围0x7ff0000000000001L到 0x7fffffffffffffffL或者0xfff0000000000001L到 0xffffffffffffffffL内，表示double值为NaN。</li>
 <li>在其它情况下，设s、e、m，它们的值根据bits和如下公式计算：</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int s =((bits &gt;&gt; 63) == 0) ? 1 : -1; </span><br><span class="line">int e =(int)((bits &gt;&gt; 52) &amp; 0x7ffL); </span><br><span class="line">long m =(e == 0) ? (bits &amp; 0xfffffffffffffL) &lt;&lt; 1 : (bits &amp; 0xfffffffffffffL) | 0x10000000000000L;123</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int s =((bits &gt;&gt; 63) == 0) ? 1 : -1; </span><br><span class="line">int e =(int)((bits &gt;&gt; 52) &amp; 0x7ffL); </span><br><span class="line">long m =(e == 0) ? (bits &amp; 0xfffffffffffffL) &lt;&lt; 1 : (bits &amp; 0xfffffffffffffL) | 0x10000000000000L;123</span><br></pre></td></tr></table></figure>
+
 <p>则double的浮点值为数学表达式s·m·2e – 1075的计算结果。</p>
 <h3 id="CONSTANT-NameAndType-info结构"><a href="#CONSTANT-NameAndType-info结构" class="headerlink" title="CONSTANT_NameAndType_info结构"></a>CONSTANT_NameAndType_info结构</h3><p>CONSTANT_NameAndType_info结构用于表示字段或方法，但是和前面介绍的3个结构不同，CONSTANT_NameAndType_info结构没有标识出它所属的类或接口，格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_NameAndType_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 name_index; </span><br><span class="line">    u2 descriptor_index;</span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_NameAndType_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 name_index; </span><br><span class="line">    u2 descriptor_index;</span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+
 <p>CONSTANT_NameAndType_info结构各项的说明如下：</p>
 <ul>
 <li><strong>tag</strong></li>
@@ -754,7 +771,8 @@ height:50vh;
 </ul>
 <p>descriptor_index项的值必须是对常量池的有效索引，常量池在该索引处的项必须是CONSTANT_Utf8_info结构，这个结构表示一个有效的字段描述符或方法描述符。</p>
 <h3 id="CONSTANT-Utf8-info结构"><a href="#CONSTANT-Utf8-info结构" class="headerlink" title="CONSTANT_Utf8_info结构"></a>CONSTANT_Utf8_info结构</h3><p>CONSTANT_Utf8_info结构用于表示字符串常量的值：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_Utf8_info &#123;</span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 length; </span><br><span class="line">    u1 bytes[length]; </span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_Utf8_info &#123;</span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 length; </span><br><span class="line">    u1 bytes[length]; </span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+
 <p>CONSTANT_Utf8_info结构各项的说明如下：</p>
 <ul>
 <li><strong>tag</strong></li>
@@ -770,7 +788,8 @@ height:50vh;
 <p>bytes[]是表示字符串值的byte数组，bytes[]数组中每个成员的byte值都不会是0，也不在0xf0至0xff范围内。</p>
 <p>字符串常量采用改进过的UTF-8编码表示。</p>
 <h3 id="CONSTANT-MethodHandle-info结构"><a href="#CONSTANT-MethodHandle-info结构" class="headerlink" title="CONSTANT_MethodHandle_info结构"></a>CONSTANT_MethodHandle_info结构</h3><p>CONSTANT_MethodHandle_info结构用于表示方法句柄，结构如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_MethodHandle_info &#123;</span><br><span class="line">    u1 tag;</span><br><span class="line">    u1 reference_kind;</span><br><span class="line">    u2 reference_index;</span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_MethodHandle_info &#123;</span><br><span class="line">    u1 tag;</span><br><span class="line">    u1 reference_kind;</span><br><span class="line">    u2 reference_index;</span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+
 <p>CONSTANT_MethodHandle_info结构各项的说明如下：</p>
 <ul>
 <li><strong>tag</strong></li>
@@ -792,7 +811,8 @@ height:50vh;
 <li>如果reference_kind项的值是8（REF_newInvokeSpecial），那么方法句柄对应的方法必须为实例初始化（）方法。</li>
 </ul>
 <h3 id="CONSTANT-MethodType-info结构"><a href="#CONSTANT-MethodType-info结构" class="headerlink" title="CONSTANT_MethodType_info结构"></a>CONSTANT_MethodType_info结构</h3><p>CONSTANT_MethodType_info结构用于表示方法类型： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_MethodType_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 descriptor_index; </span><br><span class="line">&#125;1234</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_MethodType_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 descriptor_index; </span><br><span class="line">&#125;1234</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><strong>tag</strong></li>
 </ul>
@@ -802,7 +822,8 @@ height:50vh;
 </ul>
 <p>descriptor_index项的值必须是对常量池的有效索引，常量池在该索引处的项必须是CONSTANT_Utf8_info结构，表示方法的描述符。</p>
 <h3 id="CONSTANT-InvokeDynamic-info结构"><a href="#CONSTANT-InvokeDynamic-info结构" class="headerlink" title="CONSTANT_InvokeDynamic_info结构"></a>CONSTANT_InvokeDynamic_info结构</h3><p>CONSTANT_InvokeDynamic_info用于表示invokedynamic指令所使用到的引导方法（Bootstrap Method）、引导方法使用到动态调用名称（Dynamic Invocation Name）、参数和请求返回类型、以及可以选择性的附加被称为静态参数（Static Arguments）的常量序列。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_InvokeDynamic_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 bootstrap_method_attr_index; </span><br><span class="line">    u2 name_and_type_index; </span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_InvokeDynamic_info &#123; </span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 bootstrap_method_attr_index; </span><br><span class="line">    u2 name_and_type_index; </span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+
 <p>CONSTANT_InvokeDynamic_info结构各项的说明如下：</p>
 <ul>
 <li><strong>tag</strong></li>
@@ -817,7 +838,8 @@ height:50vh;
 </ul>
 <p>name_and_type_index项的值必须是对当前常量池的有效索引，常量池在该索引处的项必须是CONSTANT_NameAndType_info结构，表示方法名和方法描述符。</p>
 <h1 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h1><p>每个字段（Field）都由field_info结构所定义，在同一个Class文件中，不会有两个字段同时具有相同的字段名和描述符。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">field_info &#123;</span><br><span class="line">    u2 access_flags; </span><br><span class="line">    u2 name_index; </span><br><span class="line">    u2 descriptor_index; </span><br><span class="line">    u2 attributes_count; </span><br><span class="line">    attribute_info attributes[attributes_count];</span><br><span class="line">&#125;1234567</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">field_info &#123;</span><br><span class="line">    u2 access_flags; </span><br><span class="line">    u2 name_index; </span><br><span class="line">    u2 descriptor_index; </span><br><span class="line">    u2 attributes_count; </span><br><span class="line">    attribute_info attributes[attributes_count];</span><br><span class="line">&#125;1234567</span><br></pre></td></tr></table></figure>
+
 <p>field_info结构各项的说明如下：</p>
 <ul>
 <li><strong>access_flags</strong> </li>
@@ -831,8 +853,7 @@ height:50vh;
 <th>说明</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>ACC_PUBLIC</td>
 <td>0x0001</td>
 <td>public，表示字段可以从任何包访问。</td>
@@ -877,8 +898,7 @@ height:50vh;
 <td>0x4000</td>
 <td>enum，表示字段为枚举类型。</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>字段如果带有ACC_SYNTHETIC标志，则说明这个字段不是由源码产生的，而是由编译器自动产生的。</p>
 <p>字段如果被标有ACC_ENUM标志，这说明这个字段是一个枚举类型成员。</p>
 <p>Class文件中的字段可以被设置多个表中的标记。不过有些标记是互斥的，一个字段最多只能设置ACC_PRIVATE， ACC_PROTECTED，和ACC_PUBLIC三个标志中的一个，也不能同时设置标志ACC_FINAL和ACC_VOLATILE。</p>
@@ -905,7 +925,8 @@ height:50vh;
 <p>Java虚拟机实现必须正确的识别和读取field_info结构的attributes表中的ConstantValue属性。如果Java虚拟机实现支持版本号为49.0或更高的Class文件，那么它必须正确的识别和读取这些Class文件中的Signature, RuntimeVisibleAnnotations和RuntimeInvisibleAnnotations结构。</p>
 <p>所有Java虚拟机实现都必须默认忽略field_info结构中attributes表所不可识别的成员。没有定义的属性不可影响Class文件的语义，它们只能提供附加描述信息。</p>
 <h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><p>所有方法（Method），包括实例初始化方法和类初始化方法在内，都由method_info结构所定义。在一个Class文件中，不会有两个方法同时具有相同的方法名和描述符。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">method_info &#123; </span><br><span class="line">    u2 access_flags; </span><br><span class="line">    u2 name_index; </span><br><span class="line">    u2 descriptor_index; </span><br><span class="line">    u2 attributes_count; </span><br><span class="line">    attribute_info attributes[attributes_count]; </span><br><span class="line">&#125;1234567</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">method_info &#123; </span><br><span class="line">    u2 access_flags; </span><br><span class="line">    u2 name_index; </span><br><span class="line">    u2 descriptor_index; </span><br><span class="line">    u2 attributes_count; </span><br><span class="line">    attribute_info attributes[attributes_count]; </span><br><span class="line">&#125;1234567</span><br></pre></td></tr></table></figure>
+
 <p>method_info结构各项的说明如下：</p>
 <ul>
 <li><strong>access_flags</strong></li>
@@ -919,8 +940,7 @@ height:50vh;
 <th>说明</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>ACC_PUBLIC</td>
 <td>0x0001</td>
 <td>public，方法可以从包外访问</td>
@@ -980,8 +1000,7 @@ height:50vh;
 <td>0x1000</td>
 <td>方法在源文件中不出现，由编译器产生</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>ACC_VARARGS 标志是用于说明方法在源码层的参数列表是否变长的。如果是变长的，则在编译时，方法的ACC_VARARGS 标志设置1，其余的方法ACC_VARARGS 标志设置为0。</p>
 <p>ACC_BRIDGE 标志用于说明这个方法是由编译生成的桥接方法。</p>
 <p>如果方法设置了ACC_SYNTHETIC[sɪn’θɛtɪk]标志，则说明这个方法是由编译器生成的并且不会在源代码中出现。</p>
@@ -1007,7 +1026,8 @@ height:50vh;
 </ul>
 <p>attributes 表的每一个成员的值必须是attribute结构，一个方法可以有任意个与之相关的属性。属性表可出现的成员有：Code，Exceptions，Synthetic，Signature，Deprecated，untimeVisibleAnnotations，RuntimeInvisibleAnnotations，RuntimeVisibleParameterAnnotations，RuntimeInvisibleParameterAnnotations和AnnotationDefault结构。Java虚拟机实现必须正确识别和读取method_info结构中的属性表的Code和Exceptions属性。如果Java虚拟机实现支持版本为49.0或更高的Class文件，那么它必须正确识别和读取这些Class文件的Signature，RuntimeVisibleAnnotations，RuntimeInvisibleAnnotations，RuntimeVisibleParameterAnnotations，RuntimeInvisibleParameterAnnotations和AnnotationDefault属性。所有Java虚拟机实现必须默认忽略method_info结构中attributes表所不可识别的成员。没有定义的属性不可影响Class 文件的语义，它们只能提供附加描述信息。</p>
 <h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><p>属性（Attributes）在Class文件格式中的ClassFile结构、field_info结构，method_info结构和Code_attribute结构都有使用，所有属性的通用格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">attribute_info &#123;</span><br><span class="line">    u2 attribute_name_index; </span><br><span class="line">    u4 attribute_length; </span><br><span class="line">    u1 info[attribute_length];</span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">attribute_info &#123;</span><br><span class="line">    u2 attribute_name_index; </span><br><span class="line">    u4 attribute_length; </span><br><span class="line">    u1 info[attribute_length];</span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+
 <p>对于任意属性，attribute_name_index必须是对当前Class文件的常量池的有效16位无符号索引。常量池在该索引处的项必须是CONSTANT_Utf8_info结构，表示当前属性的名字。attribute_length项的值给出了跟随其后的字节的长度，这个长度不包括attribute_name_index和attribute_name_index项的6个字节。</p>
 <p>有些属性因Class文件格式规范所需，已被预先定义好。这些属性在表中列出，同时，被列出的信息还包括它们首次出现的Class文件版本和Java SE版本号。在当前规范定义的环境中，也就是已包含这些预定义属性的Class文件中，它们的属性名称被保留，不能再被属性表中其他的自定义属性所使用。</p>
 <table>
@@ -1018,8 +1038,7 @@ height:50vh;
 <th>Class文件</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>ConstantValue</td>
 <td>1.0.2</td>
 <td>45.3</td>
@@ -1119,8 +1138,7 @@ height:50vh;
 <td>7</td>
 <td>51.0</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>Java虚拟机实现的Class文件加载器（Class File Reader）必须正确的识别和读取ConstantValue，Code和Exceptions属性；同样，Java虚拟机也必须能正确的解析它们的语义。</p>
 <p>InnerClasses，EnclosingMethod和Synthetic属性必须被Class文件加载器正确的识别并读入，它们用于实现Java平台的类库。</p>
 <p>如果Java虚拟机实现支持的Class文件的版本号为49.0或更高时，它的Class文件加载器必须能正确的识别并读取Class文件中的RuntimeVisibleAnnotations，RuntimeInvisibleAnnotations，RuntimeVisibleParameterAnnotations， RuntimeInvisibleParameterAnnotations和AnnotationDefault属性，它们用于实现Java平台类库。</p>
@@ -1132,7 +1150,8 @@ height:50vh;
 <p>ConstantValue属性表示一个常量字段的值。在一个field_info结构的属性表中最多只能有一个ConstantValue属性。如果该字段为静态类型（即field_info结构的access_flags项设置了ACC_STATIC标志），则说明这个field_info结构表示的常量字段值将被分配为它的ConstantValue属性表示的值，这个过程也是类或接口申明的常量字段（Constant Field）初始化的一部分。这个过程发生在引用类或接口的类初始化方法执行之前。</p>
 <p>如果field_info结构表示的非静态字段包含了ConstantValue属性，那么这个属性必须被虚拟机所忽略。所有Java虚拟机实现必须能够识别ConstantValue属性。</p>
 <p>ConstantValue属性的格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ConstantValue_attribute &#123; </span><br><span class="line">    u2 attribute_name_index; </span><br><span class="line">    u4 attribute_length; </span><br><span class="line">    u2 constantvalue_index; </span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ConstantValue_attribute &#123; </span><br><span class="line">    u2 attribute_name_index; </span><br><span class="line">    u4 attribute_length; </span><br><span class="line">    u2 constantvalue_index; </span><br><span class="line">&#125;12345</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><strong>attribute_name_index</strong></li>
 </ul>
@@ -1152,8 +1171,7 @@ height:50vh;
 <th>项类型</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>long</td>
 <td>CONSTANT_Long</td>
 </tr>
@@ -1173,10 +1191,10 @@ height:50vh;
 <td>String</td>
 <td>CONSTANT_String</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <h2 id="Code属性"><a href="#Code属性" class="headerlink" title="Code属性"></a>Code属性</h2><p>Code属性是一个变长属性，位于method_info结构的属性表。一个Code属性只为唯一一个方法、实例类初始化方法或类初始化方法保存Java虚拟机指令及相关辅助信息。所有Java虚拟机实现都必须能够识别Code属性。如果方法被声明为native或者abstract类型，那么对应的method_info结构不能有明确的Code属性，其它情况下，method_info有必须有明确的Code属性。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Code_attribute &#123;</span><br><span class="line">    u2 attribute_name_index;</span><br><span class="line">    u4 attribute_length; </span><br><span class="line">    u2 max_stack;</span><br><span class="line">    u2 max_locals;</span><br><span class="line">    u4 code_length; </span><br><span class="line">    u1 code[code_length]; </span><br><span class="line">    u2 exception_table_length; </span><br><span class="line">    &#123;   u2 start_pc;</span><br><span class="line">        u2 end_pc; </span><br><span class="line">        u2 handler_pc; </span><br><span class="line">        u2 catch_type; </span><br><span class="line">    &#125; exception_table[exception_table_length]; </span><br><span class="line">    u2 attributes_count; </span><br><span class="line">    attribute_info attributes[attributes_count];</span><br><span class="line">&#125;12345678910111213141516</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Code_attribute &#123;</span><br><span class="line">    u2 attribute_name_index;</span><br><span class="line">    u4 attribute_length; </span><br><span class="line">    u2 max_stack;</span><br><span class="line">    u2 max_locals;</span><br><span class="line">    u4 code_length; </span><br><span class="line">    u1 code[code_length]; </span><br><span class="line">    u2 exception_table_length; </span><br><span class="line">    &#123;   u2 start_pc;</span><br><span class="line">        u2 end_pc; </span><br><span class="line">        u2 handler_pc; </span><br><span class="line">        u2 catch_type; </span><br><span class="line">    &#125; exception_table[exception_table_length]; </span><br><span class="line">    u2 attributes_count; </span><br><span class="line">    attribute_info attributes[attributes_count];</span><br><span class="line">&#125;12345678910111213141516</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><strong>attribute_name_index</strong></li>
 </ul>
@@ -1233,7 +1251,8 @@ height:50vh;
 <p>我们还将用到术语“栈映射帧”（Stack Map Frame）和“类型状态”（Type State）来描述如何从方法的局部变量和操作数栈的存储单元映射到验证类型（Verification Types）。当描述Class文件侧的映射时，我们通常使用的术语是“栈映射帧”，而当描述类型检查器侧的映射关系时，我们通常使用的术语是“类型状态”。</p>
 <p>在版本号大于或等于50.0的Class文件中，如果方法的Code属性中没有附带StackMapTable属性，那就意味着它带有一个隐式的StackMap属性。这个StackMap属性的作用等同于number_of_entries值为0的StackMapTable属性。一个方法的Code属性最多只能有一个StackMapTable属性，否则将抛出ClassFormatError异常。</p>
 <p>StackMapTable属性的格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">StackMapTable_attribute &#123; </span><br><span class="line">    u2 attribute_name_index;</span><br><span class="line">    u4 attribute_length; </span><br><span class="line">    u2 number_of_entries; </span><br><span class="line">    stack_map_frame entries[number_of_entries];</span><br><span class="line">&#125;123456</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">StackMapTable_attribute &#123; </span><br><span class="line">    u2 attribute_name_index;</span><br><span class="line">    u4 attribute_length; </span><br><span class="line">    u2 number_of_entries; </span><br><span class="line">    stack_map_frame entries[number_of_entries];</span><br><span class="line">&#125;123456</span><br></pre></td></tr></table></figure>
+
 <p>StackMapTable结构项的说明如下：</p>
 <ul>
 <li><strong>attribute_name_index</strong></li>
@@ -1255,7 +1274,10 @@ height:50vh;
 <p>只要保证栈映射帧有正确的存储顺序，在类型检查时我们就可以使用增量偏移量而不是实际的字节码偏移量。此外，由于对每一个帧都使用了offset_delta+1的计算方式，我们可以确保偏移量不会重复。</p>
 <p>在Code属性的code[]数组项中，如果偏移量i的位置是某条指令的起点，同时这个Code属性包含有StackMapTable属性，它的entries项中也有一个适用于地址偏移量i的stack_map_frame结构，那我们就说这条指令拥有一个与之相对应的栈映射帧。<br>stack_map_frame结构的第一个字节作为类型标记（Tag），第一个字节后会跟随0或多个字节用于说明更多信息，这些信息因类型标记的不同而变化。</p>
 <p>一个栈映射帧可以包含若干种帧类型（Frame Types）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">union stack_map_frame &#123;</span><br><span class="line">    same_frame;</span><br><span class="line">    same_locals_1_stack_item_frame; </span><br><span class="line">    same_locals_1_stack_item_frame_extended;</span><br><span class="line">    chop_frame; </span><br><span class="line">    same_frame_extended; </span><br><span class="line">    append_frame; full_frame;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">union stack_map_frame &#123;</span><br><span class="line">    same_frame;</span><br><span class="line">    same_locals_1_stack_item_frame; </span><br><span class="line">    same_locals_1_stack_item_frame_extended;</span><br><span class="line">    chop_frame; </span><br><span class="line">    same_frame_extended; </span><br><span class="line">    append_frame; full_frame;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 
     </article>
     <!-- license  -->
@@ -1925,6 +1947,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 38
@@ -1972,17 +1996,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E4%B8%AD%E8%8E%B7%E5%BE%97%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95.html" >Java中获得实例的方法</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E5%85%8B%E9%9A%86.html" >Java克隆</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
         </li>
     
     
@@ -2007,6 +2031,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock%E5%8C%85%E5%AE%9E%E7%8E%B0%E9%94%81.html" >java Lock包实现锁</a>
         </li>
     
@@ -2017,17 +2046,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
         </li>
     
     
@@ -2043,11 +2072,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E2%80%94%E2%80%94%E8%BD%AC.html" >内网穿透——转</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
@@ -2092,11 +2116,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
         </li>
     
@@ -2107,17 +2126,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
         </li>
     
     
@@ -2144,39 +2168,43 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
     
-        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
-    
         <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
     
-        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
     
         <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
     
         <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
     
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
         <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
     
         <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
-    
-        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
-    
-        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
     
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
     
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
         <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
     
         <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
     
-        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
-    
-        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
     
         <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
     
@@ -2186,25 +2214,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
     
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
-    
         <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
     
         <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
     
-        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
-    
         <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
     
         <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
     
         <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
     
         <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
     
         <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
         <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
     
@@ -2215,12 +2245,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
-    
-        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
-    
-        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

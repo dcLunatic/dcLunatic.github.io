@@ -424,7 +424,8 @@ height:50vh;
 <li>不能接受闭源软件的</li>
 </ol>
 <h2 id="安装NVIDIA驱动和Bumblebee"><a href="#安装NVIDIA驱动和Bumblebee" class="headerlink" title="安装NVIDIA驱动和Bumblebee"></a>安装NVIDIA驱动和Bumblebee</h2><p>默认情况下，如果使用安装系统提供的独立显卡驱动nouveau会导致无法正常进入桌面，一般情况下，都是把这个驱动给禁用掉<code>nouveau.modeset=0</code>，也就是说不然独显工作，就可以正常使用了。</p>
-<p><strong>首先查看下自己电脑的显卡情况</strong>,使用命令<code>lspci | grep -i vga</code>，可以看到如下的结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                    [17:30:23] </span><br><span class="line">&gt; $ lspci | grep -i vga                                                                            </span><br><span class="line">00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)</span><br><span class="line">01:00.0 VGA compatible controller: NVIDIA Corporation GM107M [GeForce GTX 960M] (rev ff)</span><br></pre></td></tr></table></figure></p>
+<p><strong>首先查看下自己电脑的显卡情况</strong>,使用命令<code>lspci | grep -i vga</code>，可以看到如下的结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                    [17:30:23] </span><br><span class="line">&gt; $ lspci | grep -i vga                                                                            </span><br><span class="line">00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)</span><br><span class="line">01:00.0 VGA compatible controller: NVIDIA Corporation GM107M [GeForce GTX 960M] (rev ff)</span><br></pre></td></tr></table></figure>
 <p>可以看到<strong>Intel的集成显卡</strong>和<strong>NVIDIA的独立显卡</strong><br><strong>安装对应的显卡驱动</strong>，具体的可参照下图安装<br><img src="/images/display/vga.png" alt="vga"><br>这里我选用的是<strong>xf86-video-intel</strong>和<strong>nvidia</strong>，使用命令<code>pacman -S xf86-video-intel nvida</code>安装。<br><strong>闭源NVIDIA驱动</strong>支持官方的<strong>Optimus</strong>功能，它能够<strong>最大程序</strong>的发挥出<strong>NVIDIA显卡</strong>的性能，但是却<strong>不支持切换显卡</strong>，意味着你就只能使用独立显卡，再也不能使用集成显卡了，据说也会有更多的bug。</p>
 <blockquote>
 <p>这里说下Optimus技术，它是一种不依赖于硬件的独立显卡实现。独立显卡按需渲染，继而交由集显显示。当笔记本通过电池供电时，独显关闭;使用电源供电时，打开独显，通过这样，来增强笔记本的续航能力。</p>
@@ -437,34 +438,29 @@ height:50vh;
 <p>修改<strong>配置文件/etc/bumblebee/bumblebee.conf</strong>，将<code>Driver</code>的值设置为<code>nvidia</code>，来让其使用<strong>nvidia</strong>驱动，其次将<code>PMMethod</code>的值设置为<code>bbswitch</code>，让它使用刚刚安装的<strong>bbswitch</strong>来进行显卡的切换。修改<strong>配置文件/etc/modprobe.d/bbswitch.conf</strong>，添加<code>options bbswitch load_state=0 unload_state=0</code>来设置<strong>bbswitch的状态</strong>。使用命令<code>modprobe bbswitch</code>来<strong>加载这个模块</strong>。</p>
 <p>将要使用Bumblebee的用户添加到bumblebee组中，<code>gpasswd -a username bumblebee</code>，并将<strong>bumblebeed服务</strong>设为<strong>开机启动</strong>，<code>systemctl enable bumblebeed</code>，启用它<code>systemctl start bumblebeed</code>。</p>
 <h2 id="黑屏问题"><a href="#黑屏问题" class="headerlink" title="黑屏问题"></a>黑屏问题</h2><ol>
-<li>刚刚上面说的，<strong>只装了独显驱动，没有装集显驱动</strong>。</li>
+<li><p>刚刚上面说的，<strong>只装了独显驱动，没有装集显驱动</strong>。</p>
+</li>
 <li><p><strong>NVIDIA对Linux不友好</strong><br> 针对这种情况，我们只需要在内核启动时加入如下参数即可<code>acpi_osi=! acpi_osi=&#39;Windows 2009&#39;</code>，告诉它我是Windows，赶紧工作吧。</p>
 <blockquote>
-<p>此处参考<a href="https://github.com/rovo98" target="_blank" rel="noopener">rovo98</a>的某篇<a href="https://rovo98.github.io/posts/a1898ce2/" target="_blank" rel="noopener">博客</a></p>
+<p>此处参考<a target="_blank" rel="noopener" href="https://github.com/rovo98">rovo98</a>的某篇<a target="_blank" rel="noopener" href="https://rovo98.github.io/posts/a1898ce2/">博客</a></p>
 </blockquote>
 </li>
 </ol>
 <h2 id="简单用法"><a href="#简单用法" class="headerlink" title="简单用法"></a>简单用法</h2><p>到了这里后，基本上就装好了，以下附上日常的使用方法。</p>
 <ol>
-<li><p>使用<strong>glxgears</strong>可以进行<strong>帧频测试</strong>，检测Bumblebee是否工作，它包含在刚刚安装的<strong>mesa-demos</strong>包中，正常来说在刚刚安装<strong>mesa</strong>就会安装了。使用命令<code>optirun glxgears -info</code>可以进行帧频测试，并且会打印出一些必要的信息，如果去掉参数<code>-info</code>，则不输出这些信息，仅进行帧频测试。</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                                                                                    [18:47:10] </span><br><span class="line">&gt; $ optirun glxgears                                                                                                                                               </span><br><span class="line">4929 frames in 5.0 seconds = 985.449 FPS</span><br><span class="line">4955 frames in 5.0 seconds = 990.948 FPS</span><br><span class="line">4968 frames in 5.0 seconds = 993.534 FPS</span><br><span class="line">4843 frames in 5.0 seconds = 968.508 FPS</span><br><span class="line">4806 frames in 5.0 seconds = 961.181 FPS</span><br><span class="line">5712 frames in 5.0 seconds = 1142.322 FPS</span><br><span class="line">5218 frames in 5.0 seconds = 1043.451 FPS</span><br></pre></td></tr></table></figure>
-<p> <em>同时你可以在屏幕上看到一个有三个齿轮转动的窗口。</em><br> <img src="/images/display/frametest.png" alt="frametest"></p>
-</li>
+<li>使用<strong>glxgears</strong>可以进行<strong>帧频测试</strong>，检测Bumblebee是否工作，它包含在刚刚安装的<strong>mesa-demos</strong>包中，正常来说在刚刚安装<strong>mesa</strong>就会安装了。使用命令<code>optirun glxgears -info</code>可以进行帧频测试，并且会打印出一些必要的信息，如果去掉参数<code>-info</code>，则不输出这些信息，仅进行帧频测试。 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                                                                                    [18:47:10] </span><br><span class="line">&gt; $ optirun glxgears                                                                                                                                               </span><br><span class="line">4929 frames in 5.0 seconds = 985.449 FPS</span><br><span class="line">4955 frames in 5.0 seconds = 990.948 FPS</span><br><span class="line">4968 frames in 5.0 seconds = 993.534 FPS</span><br><span class="line">4843 frames in 5.0 seconds = 968.508 FPS</span><br><span class="line">4806 frames in 5.0 seconds = 961.181 FPS</span><br><span class="line">5712 frames in 5.0 seconds = 1142.322 FPS</span><br><span class="line">5218 frames in 5.0 seconds = 1043.451 FPS</span><br></pre></td></tr></table></figure>
+ <em>同时你可以在屏幕上看到一个有三个齿轮转动的窗口。</em><br> <img src="/images/display/frametest.png" alt="frametest"></li>
 <li><strong>打开NVIDIA的设置面板</strong>可以使用命令<code>opirun -b none nvidia-settings -c :8</code><br> <img src="/images/display/nvidia-settings.png" alt="nvidia-setting"></li>
-<li><p>可以查看<strong>/proc/acpi/bbswitch</strong>文件的内容来<strong>确定独立显卡是否又启用</strong>。当然也可以<strong>查看已加载的pci模块</strong>来查看。使用命令<code>lspci | grep -i vga</code>。</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                    [18:42:01] </span><br><span class="line">&gt; $ lspci | grep -i vga                                                                            </span><br><span class="line">00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)</span><br><span class="line">01:00.0 VGA compatible controller: NVIDIA Corporation GM107M [GeForce GTX 960M] (rev ff)</span><br></pre></td></tr></table></figure>
-<p> <em>最后的ff代表是关闭着的。</em></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                    [18:42:23] </span><br><span class="line">&gt; $ lspci | grep -i vga                                                                            </span><br><span class="line">00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)</span><br><span class="line">01:00.0 VGA compatible controller: NVIDIA Corporation GM107M [GeForce GTX 960M] (rev a2)</span><br></pre></td></tr></table></figure>
-</li>
+<li>可以查看**/proc/acpi/bbswitch<strong>文件的内容来</strong>确定独立显卡是否又启用<strong>。当然也可以</strong>查看已加载的pci模块**来查看。使用命令<code>lspci | grep -i vga</code>。 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                    [18:42:01] </span><br><span class="line">&gt; $ lspci | grep -i vga                                                                            </span><br><span class="line">00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)</span><br><span class="line">01:00.0 VGA compatible controller: NVIDIA Corporation GM107M [GeForce GTX 960M] (rev ff)</span><br></pre></td></tr></table></figure>
+ <em>最后的ff代表是关闭着的。</em> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                    [18:42:23] </span><br><span class="line">&gt; $ lspci | grep -i vga                                                                            </span><br><span class="line">00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)</span><br><span class="line">01:00.0 VGA compatible controller: NVIDIA Corporation GM107M [GeForce GTX 960M] (rev a2)</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p><em>这样则是开着的。</em></p>
 <ol start="4">
-<li>可以使用命令<code>tee /proc/acpi/bbswitch &lt;&lt;&lt; &quot;ON&quot;</code>或者<code>tee /proc/acpi/bbswitch &lt;&lt;&lt; &quot;OFF&quot;</code>来<strong>开启和关闭NVIDIA独立显卡</strong>。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                    [18:44:40] </span><br><span class="line">&gt; $ cat /proc/acpi/bbswitch                                                                        </span><br><span class="line">0000:01:00.0 OFF</span><br><span class="line"></span><br><span class="line">dclunatic@dcLunatic ~                                                                    [18:44:45] </span><br><span class="line">&gt; $ sudo tee /proc/acpi/bbswitch &lt;&lt;&lt; &quot;ON&quot;                                                          </span><br><span class="line">ON</span><br><span class="line"></span><br><span class="line">dclunatic@dcLunatic ~                                                                    [18:44:52] </span><br><span class="line">&gt; $ cat /proc/acpi/bbswitch                                                                        </span><br><span class="line">0000:01:00.0 ON</span><br><span class="line"></span><br><span class="line">dclunatic@dcLunatic ~                                                                    [18:44:57] </span><br><span class="line">&gt; $ sudo tee /proc/acpi/bbswitch &lt;&lt;&lt; &quot;OFF&quot;                                                         </span><br><span class="line">OFF</span><br><span class="line"></span><br><span class="line">dclunatic@dcLunatic ~                                                                    [18:45:06] </span><br><span class="line">&gt; $ cat /proc/acpi/bbswitch                                                                        </span><br><span class="line">0000:01:00.0 OFF</span><br></pre></td></tr></table></figure>
-</li>
+<li>可以使用命令<code>tee /proc/acpi/bbswitch &lt;&lt;&lt; &quot;ON&quot;</code>或者<code>tee /proc/acpi/bbswitch &lt;&lt;&lt; &quot;OFF&quot;</code>来<strong>开启和关闭NVIDIA独立显卡</strong>。 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">dclunatic@dcLunatic ~                                                                    [18:44:40] </span><br><span class="line">&gt; $ cat /proc/acpi/bbswitch                                                                        </span><br><span class="line">0000:01:00.0 OFF</span><br><span class="line"></span><br><span class="line">dclunatic@dcLunatic ~                                                                    [18:44:45] </span><br><span class="line">&gt; $ sudo tee /proc/acpi/bbswitch &lt;&lt;&lt; &quot;ON&quot;                                                          </span><br><span class="line">ON</span><br><span class="line"></span><br><span class="line">dclunatic@dcLunatic ~                                                                    [18:44:52] </span><br><span class="line">&gt; $ cat /proc/acpi/bbswitch                                                                        </span><br><span class="line">0000:01:00.0 ON</span><br><span class="line"></span><br><span class="line">dclunatic@dcLunatic ~                                                                    [18:44:57] </span><br><span class="line">&gt; $ sudo tee /proc/acpi/bbswitch &lt;&lt;&lt; &quot;OFF&quot;                                                         </span><br><span class="line">OFF</span><br><span class="line"></span><br><span class="line">dclunatic@dcLunatic ~                                                                    [18:45:06] </span><br><span class="line">&gt; $ cat /proc/acpi/bbswitch                                                                        </span><br><span class="line">0000:01:00.0 OFF</span><br></pre></td></tr></table></figure>
+<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2>参见<code>https://wiki.archlinux.org/index.php/NVIDIA_Optimus</code>，里面有使用<strong>nouveau</strong>的，还有<strong>nvidia-xrun</strong>的。</li>
 </ol>
-<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><p>参见<code>https://wiki.archlinux.org/index.php/NVIDIA_Optimus</code>，里面有使用<strong>nouveau</strong>的，还有<strong>nvidia-xrun</strong>的。</p>
 <blockquote>
-<p>参考:<br><a href="https://wiki.archlinux.org/index.php/NVIDIA_Optimus" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/NVIDIA_Optimus</a><br><a href="https://wiki.archlinux.org/index.php/Bumblebee" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/Bumblebee</a></p>
+<p>参考:<br><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/NVIDIA_Optimus">https://wiki.archlinux.org/index.php/NVIDIA_Optimus</a><br><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Bumblebee">https://wiki.archlinux.org/index.php/Bumblebee</a></p>
 </blockquote>
 
     </article>
@@ -1135,6 +1131,8 @@ top:50vh;
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 38
@@ -1182,17 +1180,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E4%B8%AD%E8%8E%B7%E5%BE%97%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95.html" >Java中获得实例的方法</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E5%85%8B%E9%9A%86.html" >Java克隆</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java-%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1.html" >Java 线程通信——转</a>
         </li>
     
     
@@ -1217,6 +1215,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/java-Lock%E5%8C%85%E5%AE%9E%E7%8E%B0%E9%94%81.html" >java Lock包实现锁</a>
         </li>
     
@@ -1227,17 +1230,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B.html" >Java网络编程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/ngrok%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html" >ngrok简单使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/synchronized%E5%85%B3%E9%94%AE%E5%AD%97.html" >synchronized关键字</a>
         </li>
     
     
@@ -1253,11 +1256,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E2%80%94%E2%80%94%E8%BD%AC.html" >内网穿透——转</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/linux%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E9%93%BE%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%AC%A6.html" >linux中的命令链接操作符</a>
         </li>
     
     
@@ -1302,11 +1300,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-dd.html" >linux-dd</a>
         </li>
     
@@ -1317,17 +1310,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-du.html" >linux-du</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-iconv.html" >linux-iconv</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-ln.html" >linux-ln</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/linux-free.html" >linux-free</a>
         </li>
     
     
@@ -1354,39 +1352,43 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="IO"><span class="iconfont-archer">&#xe606;</span>IO</span>
     
-        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
-    
         <span class="sidebar-tag-name" data-tags="TIO"><span class="iconfont-archer">&#xe606;</span>TIO</span>
     
-        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+        <span class="sidebar-tag-name" data-tags="性能分析"><span class="iconfont-archer">&#xe606;</span>性能分析</span>
     
         <span class="sidebar-tag-name" data-tags="线程通信"><span class="iconfont-archer">&#xe606;</span>线程通信</span>
     
         <span class="sidebar-tag-name" data-tags="class文件"><span class="iconfont-archer">&#xe606;</span>class文件</span>
     
+        <span class="sidebar-tag-name" data-tags="克隆"><span class="iconfont-archer">&#xe606;</span>克隆</span>
+    
         <span class="sidebar-tag-name" data-tags="函数式接口"><span class="iconfont-archer">&#xe606;</span>函数式接口</span>
     
         <span class="sidebar-tag-name" data-tags="字节与字符的区别"><span class="iconfont-archer">&#xe606;</span>字节与字符的区别</span>
-    
-        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
-    
-        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
     
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="序列化"><span class="iconfont-archer">&#xe606;</span>序列化</span>
     
+        <span class="sidebar-tag-name" data-tags="kali"><span class="iconfont-archer">&#xe606;</span>kali</span>
+    
+        <span class="sidebar-tag-name" data-tags="virtualbox"><span class="iconfont-archer">&#xe606;</span>virtualbox</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
+    
         <span class="sidebar-tag-name" data-tags="Lock"><span class="iconfont-archer">&#xe606;</span>Lock</span>
     
         <span class="sidebar-tag-name" data-tags="锁"><span class="iconfont-archer">&#xe606;</span>锁</span>
     
-        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
-    
-        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
-    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="进程管理"><span class="iconfont-archer">&#xe606;</span>进程管理</span>
+    
+        <span class="sidebar-tag-name" data-tags="反射"><span class="iconfont-archer">&#xe606;</span>反射</span>
+    
+        <span class="sidebar-tag-name" data-tags="类加载机制"><span class="iconfont-archer">&#xe606;</span>类加载机制</span>
     
         <span class="sidebar-tag-name" data-tags="steam"><span class="iconfont-archer">&#xe606;</span>steam</span>
     
@@ -1396,25 +1398,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="calculate"><span class="iconfont-archer">&#xe606;</span>calculate</span>
     
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络编程"><span class="iconfont-archer">&#xe606;</span>网络编程</span>
-    
         <span class="sidebar-tag-name" data-tags="拷贝烧录"><span class="iconfont-archer">&#xe606;</span>拷贝烧录</span>
     
         <span class="sidebar-tag-name" data-tags="文件目录详解"><span class="iconfont-archer">&#xe606;</span>文件目录详解</span>
     
-        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
-    
         <span class="sidebar-tag-name" data-tags="内网穿透"><span class="iconfont-archer">&#xe606;</span>内网穿透</span>
     
         <span class="sidebar-tag-name" data-tags="ngrok"><span class="iconfont-archer">&#xe606;</span>ngrok</span>
+    
+        <span class="sidebar-tag-name" data-tags="同步锁"><span class="iconfont-archer">&#xe606;</span>同步锁</span>
     
         <span class="sidebar-tag-name" data-tags="vim"><span class="iconfont-archer">&#xe606;</span>vim</span>
     
         <span class="sidebar-tag-name" data-tags="编码"><span class="iconfont-archer">&#xe606;</span>编码</span>
     
         <span class="sidebar-tag-name" data-tags="clipboard"><span class="iconfont-archer">&#xe606;</span>clipboard</span>
+    
+        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
+    
+        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
         <span class="sidebar-tag-name" data-tags="volatile"><span class="iconfont-archer">&#xe606;</span>volatile</span>
     
@@ -1425,12 +1429,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="递归攻击"><span class="iconfont-archer">&#xe606;</span>递归攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="makefile"><span class="iconfont-archer">&#xe606;</span>makefile</span>
-    
-        <span class="sidebar-tag-name" data-tags="编译器"><span class="iconfont-archer">&#xe606;</span>编译器</span>
-    
-        <span class="sidebar-tag-name" data-tags="file"><span class="iconfont-archer">&#xe606;</span>file</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
